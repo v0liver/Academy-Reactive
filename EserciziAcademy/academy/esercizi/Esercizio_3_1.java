@@ -5,7 +5,7 @@ public class Esercizio_3_1 {
         int[][] tombola = new int[9][10];
         int x = 5;
         int y = 5;
-        int numero = 45;
+        int numero = 90;
         popolaTombola(tombola);
         System.out.println("Le coordinate inserite portano al numero:  " + (tombola[x - 1][y - 1]));
         stampaElementiAdiacenti(x, y, tombola);
@@ -54,12 +54,13 @@ public class Esercizio_3_1 {
 
     private static void popolaTombola(int[][] tombola) {
         int contatore = 1;
-        for (int righe = 0; righe < 9; righe++) {
-            for (int colonne = 0; colonne < 10; colonne++) {
+        for (int righe = 0; righe < tombola.length; righe++) {
+            for (int colonne = 0; colonne < tombola[righe].length; colonne++) {
                 tombola[righe][colonne] = contatore++;
                 System.out.printf("%2d ", tombola[righe][colonne]);
 
             }
+
             System.out.println();
 
         }
