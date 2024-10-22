@@ -3,7 +3,6 @@ package academy.esercizi;
 public class Esercizio_3_1 {
     public static void main(String[] args) {
         int[][] tombola = new int[9][10];
-        int contatore = 1;
         int x = 5;
         int y = 5;
         int numero = 45;
