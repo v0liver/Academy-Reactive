@@ -1,5 +1,6 @@
 package academy.esercizi;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class Esercizio_9_1 {
@@ -9,11 +10,12 @@ public class Esercizio_9_1 {
 
         String nazionalita = scanner.nextLine();
         System.out.print("Inserisci RAL: ");
-        int ral = scanner.nextInt();
-
+        int inputRal = scanner.nextInt();
+        BigDecimal ral = new BigDecimal(inputRal);
         if (nazionalita.equalsIgnoreCase("italiana")) {
-            double tasse = calcolaTasseItaliane(ral);
-            double redditoNetto = ral - tasse;
+
+            BigDecimal tasse = calcolaTasseItaliane(ral);
+            BigDecimal redditoNetto = ral.subtract(tasse);
 
             System.out.printf("Tasse da pagare: %.2f €%n", tasse);
             System.out.printf("Reddito netto: %.2f €%n", redditoNetto);
@@ -22,8 +24,8 @@ public class Esercizio_9_1 {
             System.out.print("Inserisci lo stato civile (coniugato/non coniugato): ");
             scanner.nextLine();
             String statoCivile = scanner.nextLine();
-            double tasse = calcolaTasseAmericane(ral, statoCivile);
-            double redditoNetto = ral - tasse;
+            double tasse = calcolaTasseAmericane(inputRal, statoCivile);
+            double redditoNetto = inputRal - tasse;
             System.out.printf("Tasse da pagare: %.2f €%n", tasse);
             System.out.printf("Reddito netto: %.2f €%n", redditoNetto);
 
@@ -58,17 +60,26 @@ public class Esercizio_9_1 {
     }
 
 
-    public static double calcolaTasseItaliane(double reddito) {
-        double tasse;
+    public static BigDecimal calcolaTasseItaliane(BigDecimal reddito) {
+        BigDecimal tasse;
+        BigDecimal soglia15k = new BigDecimal(15000);
+        BigDecimal soglia28k = new BigDecimal(28000);
+        BigDecimal soglia50k = new BigDecimal(50000);
+        BigDecimal tassazione23 = new BigDecimal("0.23");
+        BigDecimal tassazione25 = new BigDecimal("0.25");
+        BigDecimal tassazione35 = new BigDecimal("0.35");
+        BigDecimal tassazione43 = new BigDecimal("0.43");
+        if (reddito.compareTo(soglia15k) <= 0) {
+            tasse = reddito.multiply(tassazione23);
+        } else if (reddito.compareTo(soglia28k) <= 0) {
+            tasse = soglia15k.multiply(tassazione23).add(reddito.subtract(soglia15k).multiply(tassazione25));
+        } else if (reddito.compareTo(soglia50k) <= 0) {
+            // tasse = 15000 * 0.23 + (28000 - 15000) * 0.25 + (reddito - 28000) * 0.35;
 
-        if (reddito <= 15000) {
-            tasse = reddito * 0.23;
-        } else if (reddito <= 28000) {
-            tasse = 15000 * 0.23 + (reddito - 15000) * 0.25;
-        } else if (reddito <= 50000) {
-            tasse = 15000 * 0.23 + (28000 - 15000) * 0.25 + (reddito - 28000) * 0.35;
+            tasse = soglia15k.multiply(tassazione23).add(soglia28k.subtract(soglia15k).multiply(tassazione25).add(reddito.subtract(soglia28k).multiply(tassazione35)));
         } else {
-            tasse = 15000 * 0.23 + (28000 - 15000) * 0.25 + (50000 - 28000) * 0.35 + (reddito - 50000) * 0.43;
+            // tasse = 15000 * 0.23 + (28000 - 15000) * 0.25 + (50000 - 28000) * 0.35 + (reddito - 50000) * 0.43;
+            tasse = soglia15k.multiply(tassazione23).add(soglia28k.subtract(soglia15k).multiply(tassazione25).add(reddito.subtract(soglia28k).multiply(tassazione35))).add(reddito.subtract(soglia50k).multiply(tassazione43));
         }
 
         return tasse;
