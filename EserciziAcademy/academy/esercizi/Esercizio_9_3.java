@@ -18,6 +18,31 @@ public class Esercizio_9_3 {
         double d3 = distanzaTraDuePuntiAlQuadrato(punto1, punto2);
         double d4 = distanzaTraDuePuntiAlQuadrato(punto1, punto2);
 
-        return d1 == d2 && d2 == d3 && d3 == d4;
+        return d1 == d2 && d2 == d3 && d3 == d4 && angoliSonoRetti(punto1,punto2,punto3,punto4);
+    }
+
+    public boolean angoliSonoRetti(int [] punto1, int[] punto2, int[] punto3, int[] punto4) {
+        //Todo
+        int vettore1x;//Vettore dal punto 0 al punto 1
+        int vettore1y;
+        int vettore2x;//vettore dal punto 1 al punto 2
+        int vettore2y;
+        int vettore3x;//Vettore dal punto 2 al punto 3
+        int vettore3y;
+        int vettore4x;//Vettore dal punto 3 al punto 4
+        int vettore4y;
+
+        return true; // Prodotto scalare tra i vettori per verificare l'ortogonalità
+    }
+
+    public boolean isARettangolo(int[] punto1, int[] punto2, int[] punto3, int[] punto4){
+        //Todo
+        return true;
+    }
+
+
+    public boolean isARombo(int[] punto1, int[] punto2, int[] punto3, int[] punto4){
+       //todo
+        return true;
     }
 }
