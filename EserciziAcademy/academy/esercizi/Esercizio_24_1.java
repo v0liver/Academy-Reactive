@@ -80,7 +80,7 @@ public class Esercizio_24_1 {
             }
 
         }
-        
+
         return -1; //  biglie = potenza quindi nessuna mossa intelligente da poter fare
     }
 
