@@ -22,7 +22,6 @@ public class Esercizio_24_1 {
         System.out.println();
         System.out.println("Il mucchio iniziale contiene " + biglie + " biglie.");
         System.out.println((turnoUtente ? "L'utente" : "Il computer") + " gioca per primo.");
-        System.out.println(turnoUtente ? "L'utente" : "il computer");
         System.out.println("Il computer gioca in modalità " + (modalitaIntelligente ? "intelligente." : "stupida."));
 
         while (biglie > 1) {
