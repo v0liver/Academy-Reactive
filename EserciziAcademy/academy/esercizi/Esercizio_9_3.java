@@ -67,13 +67,7 @@ public class Esercizio_9_3 {
 
     public boolean isATrapezioRettangolo(int[] punto1, int[] punto2, int[] punto3, int[] punto4) {
 
-        if ((isParalleloAllAsseX(punto4, punto1) && isParalleloAllAsseY(punto1, punto2) && isParalleloAllAsseX(punto2, punto3) && !isParalleloAllAsseY(punto3, punto4)) || ((isParalleloAllAsseX(punto2, punto3) && isParalleloAllAsseY(punto3, punto4) && isParalleloAllAsseX(punto4, punto1) && !isParalleloAllAsseY(punto1, punto2)))) {
-
-            return true;
-
-        }
-
-        return false;
+        return (isParalleloAllAsseX(punto4, punto1) && isParalleloAllAsseY(punto1, punto2) && isParalleloAllAsseX(punto2, punto3) && !isParalleloAllAsseY(punto3, punto4)) || ((isParalleloAllAsseX(punto2, punto3) && isParalleloAllAsseY(punto3, punto4) && isParalleloAllAsseX(punto4, punto1) && !isParalleloAllAsseY(punto1, punto2)));
     }
 
 
@@ -89,7 +83,7 @@ public class Esercizio_9_3 {
     }
 
 
-    boolean stampaNomeFigura(int[] punto1, int[] punto2, int[] punto3, int[] punto4) {
+    void stampaNomeFigura(int[] punto1, int[] punto2, int[] punto3, int[] punto4) {
         String figura = "Nessuna forma prevista";
         System.out.print("La figura è: ");
         if (isAQuadrato(punto1, punto2, punto3, punto4)) {
@@ -104,7 +98,6 @@ public class Esercizio_9_3 {
             figura = "Trapezio Rettangolo";
         }
         System.out.println(figura);
-        return figura.equals("Nessuna forma prevista");
     }
 
     void stampaFigura(int[] punto1, int[] punto2, int[] punto3, int[] punto4) {
