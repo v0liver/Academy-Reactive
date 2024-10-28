@@ -10,6 +10,7 @@ public class Esercizio_24_1 {
         Scanner scanner = new Scanner(System.in);
 
 
+        //int biglie = random.nextInt(91) + 10;
         int biglie = random.nextInt(91) + 10;
 
 
@@ -72,16 +73,14 @@ public class Esercizio_24_1 {
     private static int mossaIntelligente(int biglie) {
         int[] potenze2MenoUno = {3, 7, 15, 31, 63};
 
-        for (int i = potenze2MenoUno.length-1; i>=0; i--) {
+        for (int i = potenze2MenoUno.length - 1; i >= 0; i--) {
             if (biglie > potenze2MenoUno[i]) {
 
                 return biglie - potenze2MenoUno[i];
             }
 
-        } {
-
         }
-
+        
         return -1; //  biglie = potenza quindi nessuna mossa intelligente da poter fare
     }
 
