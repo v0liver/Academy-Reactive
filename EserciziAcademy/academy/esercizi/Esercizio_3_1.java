@@ -1,17 +1,18 @@
 package academy.esercizi;
 
+import java.util.Scanner;
+
 public class Esercizio_3_1 {
     public static void main(String[] args) {
         int[][] tombola = new int[9][10];
         int x = 5;
         int y = 5;
-        int numero = 90;
+        Scanner numero = new Scanner(System.in);
         popolaTombola(tombola);
         System.out.println("Le coordinate inserite portano al numero:  " + (tombola[x - 1][y - 1]));
         stampaElementiAdiacenti(x, y, tombola);
-
-
-        stampaElementiAdiacentiDaNumero(numero, tombola);
+        System.out.print("Inserisci un numero da 1 a 90: ");
+        stampaElementiAdiacentiDaNumero(numero.nextInt(), tombola);
     }
 
     private static void stampaElementiAdiacenti(int x, int y, int[][] tombola) {
