@@ -16,7 +16,7 @@ public class Esercizio_24_1 {
         boolean turnoUtente = random.nextInt(2) == 0;
 
         // Modalità intelligente o stupida
-        boolean modalitaIntelligente = random.nextInt(2) == 1;//0 attivata, 1 disattivata
+        boolean modalitaIntelligente = random.nextInt(2) == 0;//0 attivata, 1 disattivata
 
         System.out.println("---------------Gioco di Nim---------------");
         System.out.println();
