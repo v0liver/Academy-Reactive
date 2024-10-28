@@ -28,30 +28,30 @@ public class Esercizio_24_1 {
         while (biglie > 1) {
             if (turnoUtente) {
                 // Turno dell'utente
-                int biglieDaPrendere;
+                int bigliePrese;
                 do {
                     System.out.println("Nel mucchio ci sono " + biglie + " biglie.");
                     System.out.print("Quante biglie vuoi prendere? ");
-                    biglieDaPrendere = scanner.nextInt();
-                } while (biglieDaPrendere < 1 || biglieDaPrendere > biglie / 2);
+                    bigliePrese = scanner.nextInt();
+                } while (bigliePrese < 1 || bigliePrese > biglie / 2);
 
-                biglie -= biglieDaPrendere;
-                System.out.println("Hai preso " + biglieDaPrendere + " biglie. Rimangono " + biglie + " biglie.");
+                biglie -= bigliePrese;
+                System.out.println("Hai preso " + bigliePrese + " biglie. Rimangono " + biglie + " biglie.");
             } else {
 
                 // Turno del computer
-                int biglieDAPrendere;
+                int bigliePrese;
                 if (modalitaIntelligente) {
-                    biglieDAPrendere = mossaIntelligente(biglie);
-                    if (biglieDAPrendere == -1) {
-                        biglieDAPrendere = random.nextInt(biglie / 2) + 1;
+                    bigliePrese = mossaIntelligente(biglie);
+                    if (bigliePrese == -1) {
+                        bigliePrese = random.nextInt(biglie / 2) + 1;
                     }
                 } else {
-                    biglieDAPrendere = random.nextInt(biglie / 2) + 1;
+                    bigliePrese = random.nextInt(biglie / 2) + 1;
                 }
 
-                biglie -= biglieDAPrendere;
-                System.out.println("Il computer ha preso " + biglieDAPrendere + " biglie. Rimangono " + biglie + " biglie.");
+                biglie -= bigliePrese;
+                System.out.println("Il computer ha preso " + bigliePrese + " biglie. Rimangono " + biglie + " biglie.");
             }
 
             turnoUtente = !turnoUtente; // Cambio giocatore tra un turno e l'altro
