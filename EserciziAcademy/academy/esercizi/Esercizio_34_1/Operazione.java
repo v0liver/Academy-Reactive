@@ -1,9 +1,9 @@
 package academy.esercizi.Esercizio_34_1;
 
-public class Operazione extends OggettoMatematico{
+public class Operazione extends OggettoMatematico {
     private double op1;
     private double op2;
-    char op = '+';
+    char op;
 
     public Operazione(double op1, double op2, char op) {
         this.op1 = op1;
@@ -24,9 +24,26 @@ public class Operazione extends OggettoMatematico{
     }
 
     @Override
+    public double getValore() {
+        switch (op) {
+            case '+':
+                return op1 + op2;
+            case '-':
+                return op1 - op2;
+            case '*':
+                return op1 * op2;
+            case '/':
+                return op1 / op2;
+
+        }
+
+        return -1;
+    }
+
+    @Override
     public String stampa() {
         StringBuilder tmp = new StringBuilder();
-        tmp.append(op1).append(" ").append(op).append(" ").append(op2).append(" = ").append(op1+op2);
+        tmp.append(op1).append(" ").append(op).append(" ").append(op2).append(" = ").append(getValore());
 
 
         return String.valueOf(tmp);
