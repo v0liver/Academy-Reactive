@@ -4,10 +4,14 @@ public class Esercizio_9_3 {
 
     public static void main(String[] args) {
 
-        int[] punto1 = {1, 1};
-        int[] punto2 = {3, 4};
-        int[] punto3 = {5, 4};
-        int[] punto4 = {5, 1};
+        int[] punto1 = {3, 3};
+        int[] punto2 = {3, 5};
+        int[] punto3 = {5, 3};
+        int[] punto4 = {5, 5};
+//        int[] punto1 = {2, 3};
+//        int[] punto2 = {2, 7};
+//        int[] punto3 = {5, 3};
+//        int[] punto4 = {5, 7};
 
 
         Esercizio_9_3 test = new Esercizio_9_3();
@@ -19,47 +23,67 @@ public class Esercizio_9_3 {
     }
 
 
-    static double distanzaTraDuePuntiAlQuadrato(int[] punto1, int[] punto2) {
+    static double distanzaTraDuePunti(int[] punto1, int[] punto2) {
         //return (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);//calcolo la distanza tra due coordinate al quadrato
-        return (punto2[0] - punto1[0]) * (punto2[0] - punto1[0]) + (punto2[1] - punto1[1]) * (punto2[1] - punto1[1]);
+//            return ((punto2[0] - punto1[0]) * (punto2[0] - punto1[0])) + ((punto2[1] - punto1[1]) * (punto2[1] -
+//         punto1[1]));
+
+        return Math.sqrt(Math.pow(punto2[0] - punto1[0], 2) + Math.pow(punto2[1] - punto1[1], 2));
+
+
     }
 
-    public boolean isAQuadrato(int[] punto1, int[] punto2, int[] punto3, int[] punto4) {
-        double d1 = distanzaTraDuePuntiAlQuadrato(punto1, punto2);
-        double d2 = distanzaTraDuePuntiAlQuadrato(punto2, punto3);
-        double d3 = distanzaTraDuePuntiAlQuadrato(punto3, punto4);
-        double d4 = distanzaTraDuePuntiAlQuadrato(punto4, punto1);
+    public void riconosciFigura(int[] punto1, int[] punto2, int[] punto3, int[] punto4) {
+        double d1 = distanzaTraDuePunti(punto1, punto2);
+        double d2 = distanzaTraDuePunti(punto2, punto4);
+        double d3 = distanzaTraDuePunti(punto4, punto3);
+        double d4 = distanzaTraDuePunti(punto3, punto1);
 
-        double calcolaDiagonale = distanzaTraDuePuntiAlQuadrato(punto1, punto3);
-        double calcolaDiagonale2 = distanzaTraDuePuntiAlQuadrato(punto2, punto4);
+        boolean isParalleloAsseX = isParalleloAllAsseX(punto1, punto2);
+        boolean isParalleloAsseY = isParalleloAllAsseY(punto1, punto2);
 
-        return d1 == d2 && d2 == d3 && d3 == d4 && calcolaDiagonale == calcolaDiagonale2 && isParalleloAllAsseX(punto1, punto2);
+        double diagonale1 = distanzaTraDuePunti(punto1, punto4);
+        double diagonale2 = distanzaTraDuePunti(punto2, punto3);
+
+        isAQuadrato(d1, d2, d3, d4, diagonale1, diagonale2, isParalleloAsseX, isParalleloAsseY);
+
+
+        String figura = "Nessuna forma prevista";
+        System.out.print("La figura è: ");
+        if (isAQuadrato(d1, d2, d3, d4, diagonale1, diagonale2, isParalleloAsseX, isParalleloAsseY)) {
+            figura = "Quadrato";
+        } else if (isARettangolo(d1, d2, d3, d4)) {
+
+            figura = "Rettangolo";
+        } else if (isARombo(d1, d2, d3, d4, diagonale1, diagonale2)) {
+            figura = "Rombo";
+
+        } else if (isATrapezioRettangolo(punto1, punto2, punto3, punto4)) {
+            figura = "Trapezio Rettangolo";
+        }
+        System.out.println(figura);
+
     }
 
 
-    public boolean isARettangolo(int[] punto1, int[] punto2, int[] punto3, int[] punto4) {
 
-        double d1 = distanzaTraDuePuntiAlQuadrato(punto1, punto2);
-        double d2 = distanzaTraDuePuntiAlQuadrato(punto2, punto3);
-        double d3 = distanzaTraDuePuntiAlQuadrato(punto3, punto4);
-        double d4 = distanzaTraDuePuntiAlQuadrato(punto4, punto1);
+    public boolean isAQuadrato(double d1, double d2, double d3, double d4, double diagonale1, double diagonale2, boolean isParalleloAsseX, boolean isParalleloAsseY) {
 
+
+        return d1 == d2 && d2 == d3 && d3 == d4 && diagonale1 == diagonale2 && (isParalleloAsseX || isParalleloAsseY);
+    }
+
+
+    public boolean isARettangolo(double d1, double d2, double d3, double d4) {
 
         return d1 == d3 && d2 == d4 && d1 != d2 && d3 != d4;
     }
 
 
-    public boolean isARombo(int[] punto1, int[] punto2, int[] punto3, int[] punto4) {
+    public boolean isARombo(double d1, double d2, double d3, double d4, double diagonale1, double diagonale2) {
 
-        double d1 = distanzaTraDuePuntiAlQuadrato(punto1, punto2);
-        double d2 = distanzaTraDuePuntiAlQuadrato(punto2, punto3);
-        double d3 = distanzaTraDuePuntiAlQuadrato(punto3, punto4);
-        double d4 = distanzaTraDuePuntiAlQuadrato(punto4, punto1);
 
-        double calcoloDiagonale1 = distanzaTraDuePuntiAlQuadrato(punto1, punto3);
-        double calcoloDiagonale2 = distanzaTraDuePuntiAlQuadrato(punto2, punto4);
-
-        return d1 == d2 && d2 == d3 && d3 == d4 && calcoloDiagonale1 != calcoloDiagonale2;
+        return d1 == d2 && d2 == d3 && d3 == d4 && diagonale1 != diagonale2;
 
 
     }
@@ -67,7 +91,7 @@ public class Esercizio_9_3 {
 
     public boolean isATrapezioRettangolo(int[] punto1, int[] punto2, int[] punto3, int[] punto4) {
 
-        return (isParalleloAllAsseX(punto4, punto1) && isParalleloAllAsseY(punto1, punto2) && isParalleloAllAsseX(punto2, punto3) && !isParalleloAllAsseY(punto3, punto4)) || ((isParalleloAllAsseX(punto2, punto3) && isParalleloAllAsseY(punto3, punto4) && isParalleloAllAsseX(punto4, punto1) && !isParalleloAllAsseY(punto1, punto2)));
+        return (isParalleloAllAsseX(punto3, punto1) && isParalleloAllAsseY(punto1, punto2) && isParalleloAllAsseX(punto2, punto4) && !isParalleloAllAsseY(punto4, punto3)) || ((isParalleloAllAsseX(punto2, punto3) && isParalleloAllAsseY(punto3, punto4) && isParalleloAllAsseX(punto4, punto1) && !isParalleloAllAsseY(punto1, punto2)));
     }
 
 
@@ -83,25 +107,11 @@ public class Esercizio_9_3 {
     }
 
 
-    void stampaNomeFigura(int[] punto1, int[] punto2, int[] punto3, int[] punto4) {
-        String figura = "Nessuna forma prevista";
-        System.out.print("La figura è: ");
-        if (isAQuadrato(punto1, punto2, punto3, punto4)) {
-            figura = "Quadrato";
-        } else if (isARettangolo(punto1, punto2, punto3, punto4)) {
 
-            figura = "Rettangolo";
-        } else if (isARombo(punto1, punto2, punto3, punto4)) {
-            figura = "Rombo";
-
-        } else if (isATrapezioRettangolo(punto1, punto2, punto3, punto4)) {
-            figura = "Trapezio Rettangolo";
-        }
-        System.out.println(figura);
-    }
 
     void stampaFigura(int[] punto1, int[] punto2, int[] punto3, int[] punto4) {
-        stampaNomeFigura(punto1, punto2, punto3, punto4);
+        // stampaNomeFigura(punto1, punto2, punto3, punto4);
+        riconosciFigura(punto1, punto2, punto3, punto4);
 
         int maxAscisse = 0;
         int maxOrdinate = 0;
