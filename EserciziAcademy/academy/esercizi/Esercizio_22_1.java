@@ -37,6 +37,7 @@ public class Esercizio_22_1 {
             resto = quantitaDenaroPagato - sommaDaPagare;
             System.out.println();
         }
+        
         int dollari = resto / 100;
         resto = resto % 100;
 
