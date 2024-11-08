@@ -44,8 +44,8 @@ public class Esercizio_24_4 {
         }
 
 
-        for (int i = 0; i < nomi.length; i++) {
-            System.out.print(nomi[i] + " ");
+        for (String s : nomi) {
+            System.out.print(s + " ");
         }
         System.out.println();
     }
@@ -79,9 +79,9 @@ public class Esercizio_24_4 {
     public static int valoreMassimo(int[] valori) {
         int valoreMassimo = 0;
 
-        for (int i = 0; i < valori.length; i++) {
-            if (valori[i] > valoreMassimo) {
-                valoreMassimo = valori[i];
+        for (int j : valori) {
+            if (j > valoreMassimo) {
+                valoreMassimo = j;
 
             }
 

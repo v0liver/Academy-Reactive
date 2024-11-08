@@ -9,9 +9,9 @@ public class Esercizio_25_3 {
     }
 
     private void risolvi() {
-        final int DIMENSIONE_RING = 4;
-        int[] combinazioneAttuale = new int[DIMENSIONE_RING];
-        int[] combinazioneCorretta = new int[DIMENSIONE_RING];
+
+        int[] combinazioneAttuale ;
+        int[] combinazioneCorretta;
 
         combinazioneAttuale = new int[]{9, 2, 3, 4};
         combinazioneCorretta = new int[]{1, 1, 4, 5};
