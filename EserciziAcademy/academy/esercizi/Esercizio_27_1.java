@@ -114,16 +114,16 @@ public class Esercizio_27_1 {
         return somma;
     }
 
-    public static boolean contieneNumeriDa1a16(int[][] matrice) {
+    public  boolean contieneNumeriDa1a16(int[][] matrice) {
 
-        boolean[] numeriTrovati = new boolean[16];
+        boolean[] numeriTrovati = new boolean[DIMENSIONE_MATRICE*DIMENSIONE_MATRICE];
 
 
         for (int i = 0; i < matrice.length; i++) {
             for (int j = 0; j < matrice[i].length; j++) {
                 int numero = matrice[i][j];
 
-                if (numero >= 1 && numero <= 16) {
+                if (numero >= 1 && numero <= DIMENSIONE_MATRICE*DIMENSIONE_MATRICE) {
                     numeriTrovati[numero - 1] = true;
                 }
             }
