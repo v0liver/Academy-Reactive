@@ -27,6 +27,13 @@ public class Esercizio_27_1 {
             }
             System.out.println();
         }
+
+        if (contieneNumeriDa1a16(matrice)) {
+            System.out.println("La matrice contiene tutti i numeri da 1 a 16.");
+        } else {
+            System.out.println("La matrice NON contiene tutti i numeri da 1 a 16.");
+        }
+
         if (calcoloDiagonale1(matrice) == calcoloDiagonale2(matrice) && calcoloDiagonale1(matrice) == calcolaSommaColonne(matrice) && calcolaSommaColonne(matrice) == calcolaSommaRighe(matrice)) {
             System.out.println("Il quadrato è un quadrato magico.");
 
@@ -107,5 +114,29 @@ public class Esercizio_27_1 {
         return somma;
     }
 
+    public static boolean contieneNumeriDa1a16(int[][] matrice) {
+
+        boolean[] numeriTrovati = new boolean[16];
+
+
+        for (int i = 0; i < matrice.length; i++) {
+            for (int j = 0; j < matrice[i].length; j++) {
+                int numero = matrice[i][j];
+
+                if (numero >= 1 && numero <= 16) {
+                    numeriTrovati[numero - 1] = true;
+                }
+            }
+        }
+
+
+        for (boolean trovato : numeriTrovati) {
+            if (!trovato) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }
 
