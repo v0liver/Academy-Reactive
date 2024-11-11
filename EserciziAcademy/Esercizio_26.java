@@ -71,16 +71,16 @@ public class Esercizio_26 {
         int somma = 0;
 
         for (int i = 0; i < mucchietti; i++) {
-            //pile[i] = generaNumeroCasuale(carteMassime - (mucchietti - i));
+
 
             pile[i] = generaNumeroCasuale(carteMassime - (mucchietti - (i + 1)));
 
             somma += pile[i];
-            // carteMassime -= pile[i];
+
             carteMassime = NUMERO_DI_CARTE - somma;
 
         }
-        //pile[mucchietti - 1] = carteMassime;
+
 
         for (int i : pile) {
             if (i != 0) {
@@ -95,45 +95,18 @@ public class Esercizio_26 {
 
     private boolean finito(int[] pile) {
         int[] arrayDiAppoggio = new int[9];
-
-        for (int i = 1; i <= 9; i++) {
-            boolean numeroEsistente = false;
-            for (int j = 0; j < pile.length-1; j++) {
-                if (pile[j] == i && !numeroEsistente) {
-                    arrayDiAppoggio[j] = 1;
-                    numeroEsistente=true;
-
-                }
-
+        for (int pila : pile) {
+            if (pila >= 1 && pila <= 9) {
+                arrayDiAppoggio[pila - 1] = 1;
             }
-
         }
-        return checkFine(arrayDiAppoggio);
-    }
-
-    private boolean checkFine(int[] arrayDiAppoggio) {
-        int quanteVolteUno = 0;
-
-        int[] arraydiprova = new int[45];
-        int i = 0;
-
         for (int numero : arrayDiAppoggio) {
-
-            if (numero == 1 ) {
-                quanteVolteUno++;
-                arraydiprova[i] = numero;
-                i++;
-
-
+            if (numero == 0) {
+                return false;
             }
-            if (quanteVolteUno == 9) {
-                for (int arraydiprovum : arraydiprova) {
-                    System.out.print(arraydiprovum + " ");
-                }
-
-            }
-
         }
-        return quanteVolteUno == 9;
+        return true;
     }
+
+
 }
