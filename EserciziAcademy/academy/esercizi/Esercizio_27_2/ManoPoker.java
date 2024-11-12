@@ -11,13 +11,13 @@ public class ManoPoker {
     public String verificaMano() {
         ordinaCarte();
 
-        // Controlliamo la frequenza di ogni valore e seme
-        int[] valoreFrequenza = new int[14];  // 13 valori + 1 per l'indice 0 non utilizzato
-        int[] semeFrequenza = new int[4];     // 4 semi
+        // Controlliamo quante volte un valore o un seme compaiono
+        int[] quanteVolteValoreCompare = new int[14];  // 13 valori + 1 per l'indice 0 non utilizzato
+        int[] quanteVolteSemeCompare = new int[4];     // 4 semi
 
         for (Carta carta : mano) {
-            valoreFrequenza[carta.getValore().getValoreNumerico()]++;
-            semeFrequenza[carta.getSeme().ordinal()]++;
+            quanteVolteValoreCompare[carta.getValore().getValoreNumerico()]++;
+            quanteVolteSemeCompare[carta.getSeme().ordinal()]++;
         }
 
         boolean IsStessoColore = false;
@@ -28,28 +28,28 @@ public class ManoPoker {
 
         // Controlla se è un Colore (tutti lo stesso seme)
         for (int i = 0; i < 4; i++) {
-            if (semeFrequenza[i] == NUMERO_CARTE_MANO) {
+            if (quanteVolteSemeCompare[i] == NUMERO_CARTE_MANO) {
                 IsStessoColore = true;
                 break;
             }
         }
 
-        
+
         if (IsStessoColore && IsScala && mano[0].getValore().getValoreNumerico() == 10) {
             return "Scala Reale";
         } else if (IsStessoColore && IsScala) {
             return "Scala Colore";
-        } else if (haTris(valoreFrequenza) && haCoppia(valoreFrequenza)) {
+        } else if (haTris(quanteVolteValoreCompare) && haCoppia(quanteVolteValoreCompare)) {
             return "Full";
         } else if (IsStessoColore) {
             return "Colore";
         } else if (IsScala) {
             return "Scala";
-        } else if (haTris(valoreFrequenza)) {
+        } else if (haTris(quanteVolteValoreCompare)) {
             return "Tris";
-        } else if (haDoppiaCoppia(valoreFrequenza)) {
+        } else if (haDoppiaCoppia(quanteVolteValoreCompare)) {
             return "Doppia Coppia";
-        } else if (haCoppia(valoreFrequenza)) {
+        } else if (haCoppia(quanteVolteValoreCompare)) {
             return "Coppia";
         } else {
             return "Niente";
