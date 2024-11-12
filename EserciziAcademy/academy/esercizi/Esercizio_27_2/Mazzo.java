@@ -38,7 +38,8 @@ public class Mazzo {
         if (indiceProssimaCartaDaEstrarre >= NUMERO_CARTE) {
             return null; // Se il mazzo è vuoto
         }
-        return carte[indiceProssimaCartaDaEstrarre];
+        indiceProssimaCartaDaEstrarre++;
+        return carte[indiceProssimaCartaDaEstrarre - 1];
     }
 
 }
