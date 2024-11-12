@@ -42,12 +42,12 @@ public class Esercizio_26 {
                 sommaCarte++;
             }
         }
-        for (int i = 0; sommaCarte > 0; i++) {
-            if (pile[i] == 0) {
-                pile[i] = sommaCarte;
-                sommaCarte = 0;
+
+        int i=0;
+        while (pile[i]!=0) {
+                i++;
             }
-        }
+        pile[i]=sommaCarte;
 
         stampa(pile);
 
@@ -69,24 +69,24 @@ public class Esercizio_26 {
     }
 
     private void configurazioneIniziale(int[] pile, int mucchietti) {
-        int carteMassime = NUMERO_DI_CARTE;
         int somma = 0;
+        int i;
+        for ( i = 0; i < mucchietti-1; i++) {
 
-        for (int i = 0; i < mucchietti; i++) {
 
+            pile[i] = generaNumeroCasuale(NUMERO_DI_CARTE - somma- (mucchietti - (i + 1)));
 
-            pile[i] = generaNumeroCasuale(carteMassime - (mucchietti - (i + 1)));
 
             somma += pile[i];
 
-            carteMassime = NUMERO_DI_CARTE - somma;
 
         }
+        pile[i]=NUMERO_DI_CARTE-somma;
 
 
-        for (int i : pile) {
-            if (i != 0) {
-                System.out.print(i + " ");
+        for (int numero : pile) {
+            if (numero != 0) {
+                System.out.print(numero + " ");
             }
 
         }
