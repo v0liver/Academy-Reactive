@@ -5,51 +5,52 @@ public class ManoPoker {
     private static final int NUMERO_CARTE_MANO = 5;
 
     public ManoPoker(Carta[] mano) {
-        this.mano = mano.clone();
+        this.mano = mano;
     }
 
     public String verificaMano() {
         ordinaCarte();
 
+
         // Controlliamo quante volte un valore o un seme compaiono
         int[] quanteVolteValoreCompare = new int[14];  // 13 valori + 1 per l'indice 0 non utilizzato
-        int[] quanteVolteSemeCompare = new int[4];     // 4 semi
+        int[] quanteVolteSemeCompare = new int[3];     // 4 semi
 
         for (Carta carta : mano) {
             quanteVolteValoreCompare[carta.getValore().getValoreNumerico()]++;
             quanteVolteSemeCompare[carta.getSeme().ordinal()]++;
         }
 
-        boolean IsStessoColore = false;
-        boolean IsScala = false;
+        boolean isStessoColore = false;
+        boolean isScala = false;
 
         // Controlla se è una Scala (con valori consecutivi)
-        IsScala = isScala();
+        isScala = isScala();
 
         // Controlla se è un Colore (tutti lo stesso seme)
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i <quanteVolteSemeCompare.length; i++) {
             if (quanteVolteSemeCompare[i] == NUMERO_CARTE_MANO) {
-                IsStessoColore = true;
+                isStessoColore = true;
                 break;
             }
         }
 
 
-        if (IsStessoColore && IsScala && mano[0].getValore().getValoreNumerico() == 10) {
+        if (isStessoColore && isScala && mano[0].getValore().getValoreNumerico() == 10) {
             return "Scala Reale";
-        } else if (IsStessoColore && IsScala) {
+        } else if (isStessoColore && isScala) {
             return "Scala Colore";
-        } else if (haTris(quanteVolteValoreCompare) && haCoppia(quanteVolteValoreCompare)) {
+        } else if (isTris(quanteVolteValoreCompare) && isCoppia(quanteVolteValoreCompare)) {
             return "Full";
-        } else if (IsStessoColore) {
+        } else if (isStessoColore) {
             return "Colore";
-        } else if (IsScala) {
+        } else if (isScala) {
             return "Scala";
-        } else if (haTris(quanteVolteValoreCompare)) {
+        } else if (isTris(quanteVolteValoreCompare)) {
             return "Tris";
-        } else if (haDoppiaCoppia(quanteVolteValoreCompare)) {
+        } else if (isDoppiaCoppia(quanteVolteValoreCompare)) {
             return "Doppia Coppia";
-        } else if (haCoppia(quanteVolteValoreCompare)) {
+        } else if (isCoppia(quanteVolteValoreCompare)) {
             return "Coppia";
         } else {
             return "Niente";
@@ -59,9 +60,18 @@ public class ManoPoker {
 
 
     private boolean isScala() {
-        ordinaCarte();
         for (int i = 0; i < NUMERO_CARTE_MANO - 1; i++) {
-            if (mano[i].getValore().getValoreNumerico() != mano[i + 1].getValore().getValoreNumerico() - 1) {
+            int valoreNumericoPrimaCarta = mano[i].getValore().getValoreNumerico();
+            int valoreNumericoSecondaCarta = mano[i + 1].getValore().getValoreNumerico();
+            int valoreUltimaCarta = mano[NUMERO_CARTE_MANO-1].getValore().getValoreNumerico();
+            if (valoreUltimaCarta==1 ){
+                valoreUltimaCarta=14;
+            }
+            if (i==NUMERO_CARTE_MANO-2){
+                return valoreNumericoPrimaCarta == valoreUltimaCarta - 1;
+            }
+
+            if (valoreNumericoPrimaCarta != valoreNumericoSecondaCarta - 1) {
                 return false;
             }
         }
@@ -72,17 +82,32 @@ public class ManoPoker {
     private void ordinaCarte() {
         for (int i = 0; i < NUMERO_CARTE_MANO - 1; i++) {
             for (int j = i + 1; j < NUMERO_CARTE_MANO; j++) {
-                if (mano[i].getValore().getValoreNumerico() > mano[j].getValore().getValoreNumerico()) {
+                int valoreNumericoPrimaCarta = mano[i].getValore().getValoreNumerico();
+                int valoreNumericoSecondaCarta = mano[j].getValore().getValoreNumerico();
+                if (valoreNumericoPrimaCarta > valoreNumericoSecondaCarta) {
                     Carta temp = mano[i];
                     mano[i] = mano[j];
                     mano[j] = temp;
                 }
             }
         }
+        if (mano[0].getValore().getValoreNumerico()==1 && mano[1].getValore().getValoreNumerico()!=2){
+            Carta tmp = mano[0];
+            for (int i = 1; i < mano.length; i++) {
+                mano[i-1] = mano[i];
+            }
+            mano[mano.length - 1] = tmp;
+
+        }
+        System.out.println();
+        System.out.println("Le tue carte dopo l'ordinamento: ");
+        for (Carta carta : mano) {
+            System.out.println(carta);
+        }
     }
 
 
-    private boolean haTris(int[] valoreFrequenza) {
+    private boolean isTris(int[] valoreFrequenza) {
         for (int i = 1; i <= 13; i++) {
             if (valoreFrequenza[i] == 3) {
                 return true;
@@ -91,7 +116,7 @@ public class ManoPoker {
         return false;
     }
 
-    private boolean haCoppia(int[] valoreFrequenza) {
+    private boolean isCoppia(int[] valoreFrequenza) {
         for (int i = 1; i <= 13; i++) {
             if (valoreFrequenza[i] == 2) {
                 return true;
@@ -100,7 +125,7 @@ public class ManoPoker {
         return false;
     }
 
-    private boolean haDoppiaCoppia(int[] valoreFrequenza) {
+    private boolean isDoppiaCoppia(int[] valoreFrequenza) {
         int coppie = 0;
         for (int i = 1; i <= 13; i++) {
             if (valoreFrequenza[i] == 2) {

@@ -13,6 +13,8 @@ public class TestVideoPoker {
             carteGiocatore[i] = mazzo.pescaUnaCarta();
         }
 
+
+
         System.out.println("Le tue carte: ");
         for (int i = 0; i < 5; i++) {
             System.out.println((i + 1) + ". " + carteGiocatore[i]);
@@ -28,6 +30,11 @@ public class TestVideoPoker {
             carteGiocatore[index] = mazzo.pescaUnaCarta();
         }
 
+//        carteGiocatore[0] = new Carta( Valore.ASSO,Seme.CUORI);
+//        carteGiocatore[1] = new Carta( Valore.RE,Seme.CUORI);
+//        carteGiocatore[2] = new Carta( Valore.REGINA,Seme.CUORI);
+//        carteGiocatore[3] = new Carta( Valore.FANTE,Seme.CUORI);
+//        carteGiocatore[4] = new Carta( Valore.DIECI,Seme.CUORI);
 
         System.out.println("Le tue carte dopo lo scarto: ");
         for (Carta carta : carteGiocatore) {
@@ -38,5 +45,7 @@ public class TestVideoPoker {
         ManoPoker manoPoker = new ManoPoker(carteGiocatore);
         String risultato = manoPoker.verificaMano();
         System.out.println("Hai ottenuto: " + risultato);
+
+
+        }
     }
-}
