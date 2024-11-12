@@ -34,7 +34,7 @@ public class ManoPoker {
             }
         }
 
-        // Determiniamo la mano migliore
+        
         if (IsStessoColore && IsScala && mano[0].getValore().getValoreNumerico() == 10) {
             return "Scala Reale";
         } else if (IsStessoColore && IsScala) {
@@ -57,7 +57,7 @@ public class ManoPoker {
 
     }
 
-    // Verifica se la mano è una Scala
+
     private boolean isScala() {
         ordinaCarte();
         for (int i = 0; i < NUMERO_CARTE_MANO - 1; i++) {
@@ -68,7 +68,7 @@ public class ManoPoker {
         return true;
     }
 
-    // Ordina le carte per valore numerico
+
     private void ordinaCarte() {
         for (int i = 0; i < NUMERO_CARTE_MANO - 1; i++) {
             for (int j = i + 1; j < NUMERO_CARTE_MANO; j++) {
