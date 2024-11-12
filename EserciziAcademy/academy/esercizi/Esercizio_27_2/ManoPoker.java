@@ -3,6 +3,9 @@ package academy.esercizi.Esercizio_27_2;
 public class ManoPoker {
     private final Carta[] mano;
     private static final int NUMERO_CARTE_MANO = 5;
+    private final int MAX_VALORI_POSSIBILI = 14;
+    private final int MAX_SEMI_POSSIBILI = 4;
+
 
     public ManoPoker(Carta[] mano) {
         this.mano = mano;
@@ -13,8 +16,8 @@ public class ManoPoker {
 
 
         // Controlliamo quante volte un valore o un seme compaiono
-        int[] quanteVolteValoreCompare = new int[14];  // 13 valori + 1 per l'indice 0 non utilizzato
-        int[] quanteVolteSemeCompare = new int[3];     // 4 semi
+        int[] quanteVolteValoreCompare = new int[MAX_VALORI_POSSIBILI];  // 13 valori + 1 per l'indice 0 non utilizzato
+        int[] quanteVolteSemeCompare = new int[MAX_SEMI_POSSIBILI];
 
         for (Carta carta : mano) {
             quanteVolteValoreCompare[carta.getValore().getValoreNumerico()]++;
@@ -22,14 +25,14 @@ public class ManoPoker {
         }
 
         boolean isStessoColore = false;
-        boolean isScala = false;
+        boolean isScala;
 
         // Controlla se è una Scala (con valori consecutivi)
         isScala = isScala();
 
         // Controlla se è un Colore (tutti lo stesso seme)
-        for (int i = 0; i <quanteVolteSemeCompare.length; i++) {
-            if (quanteVolteSemeCompare[i] == NUMERO_CARTE_MANO) {
+        for (int semeIndividuato : quanteVolteSemeCompare) {
+            if (semeIndividuato == NUMERO_CARTE_MANO) {
                 isStessoColore = true;
                 break;
             }
@@ -40,6 +43,9 @@ public class ManoPoker {
             return "Scala Reale";
         } else if (isStessoColore && isScala) {
             return "Scala Colore";
+
+        } else if (isPoker(quanteVolteValoreCompare)) {
+            return "Poker";
         } else if (isTris(quanteVolteValoreCompare) && isCoppia(quanteVolteValoreCompare)) {
             return "Full";
         } else if (isStessoColore) {
@@ -63,11 +69,11 @@ public class ManoPoker {
         for (int i = 0; i < NUMERO_CARTE_MANO - 1; i++) {
             int valoreNumericoPrimaCarta = mano[i].getValore().getValoreNumerico();
             int valoreNumericoSecondaCarta = mano[i + 1].getValore().getValoreNumerico();
-            int valoreUltimaCarta = mano[NUMERO_CARTE_MANO-1].getValore().getValoreNumerico();
-            if (valoreUltimaCarta==1 ){
-                valoreUltimaCarta=14;
+            int valoreUltimaCarta = mano[NUMERO_CARTE_MANO - 1].getValore().getValoreNumerico();
+            if (valoreUltimaCarta == 1) {
+                valoreUltimaCarta = 14;
             }
-            if (i==NUMERO_CARTE_MANO-2){
+            if (i == NUMERO_CARTE_MANO - 2) {
                 return valoreNumericoPrimaCarta == valoreUltimaCarta - 1;
             }
 
@@ -91,10 +97,10 @@ public class ManoPoker {
                 }
             }
         }
-        if (mano[0].getValore().getValoreNumerico()==1 && mano[1].getValore().getValoreNumerico()!=2){
+        if (mano[0].getValore().getValoreNumerico() == 1 && mano[1].getValore().getValoreNumerico() != 2) {
             Carta tmp = mano[0];
             for (int i = 1; i < mano.length; i++) {
-                mano[i-1] = mano[i];
+                mano[i - 1] = mano[i];
             }
             mano[mano.length - 1] = tmp;
 
@@ -107,8 +113,17 @@ public class ManoPoker {
     }
 
 
+    private boolean isPoker(int[] valoreFrequenza) {
+        for (int i = 1; i < MAX_VALORI_POSSIBILI; i++) {
+            if (valoreFrequenza[i] == 4) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean isTris(int[] valoreFrequenza) {
-        for (int i = 1; i <= 13; i++) {
+        for (int i = 1; i < MAX_VALORI_POSSIBILI; i++) {
             if (valoreFrequenza[i] == 3) {
                 return true;
             }
@@ -117,7 +132,7 @@ public class ManoPoker {
     }
 
     private boolean isCoppia(int[] valoreFrequenza) {
-        for (int i = 1; i <= 13; i++) {
+        for (int i = 1; i < MAX_VALORI_POSSIBILI; i++) {
             if (valoreFrequenza[i] == 2) {
                 return true;
             }
@@ -127,7 +142,7 @@ public class ManoPoker {
 
     private boolean isDoppiaCoppia(int[] valoreFrequenza) {
         int coppie = 0;
-        for (int i = 1; i <= 13; i++) {
+        for (int i = 1; i < MAX_VALORI_POSSIBILI; i++) {
             if (valoreFrequenza[i] == 2) {
                 coppie++;
             }

@@ -1,4 +1,5 @@
 package academy.esercizi.Esercizio_27_2;
+
 public class Carta {
     private final Valore valore;
     private final Seme seme;
