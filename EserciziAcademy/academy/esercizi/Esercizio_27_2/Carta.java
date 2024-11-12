@@ -1,8 +1,4 @@
 package academy.esercizi.Esercizio_27_2;
-
-import academy.esercizi.Esercizio_27_2.Seme;
-import academy.esercizi.Esercizio_27_2.Valore;
-
 public class Carta {
     private final Valore valore;
     private final Seme seme;

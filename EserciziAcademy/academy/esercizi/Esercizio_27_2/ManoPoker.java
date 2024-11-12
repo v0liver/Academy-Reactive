@@ -1,7 +1,5 @@
 package academy.esercizi.Esercizio_27_2;
 
-import academy.esercizi.Esercizio_27_2.Carta;
-
 public class ManoPoker {
     private final Carta[] mano;
     private static final int NUMERO_CARTE_MANO = 5;
@@ -22,32 +20,32 @@ public class ManoPoker {
             semeFrequenza[carta.getSeme().ordinal()]++;
         }
 
-        boolean isFlush = false;
-        boolean isStraight = false;
+        boolean IsStessoColore = false;
+        boolean IsScala = false;
 
         // Controlla se è una Scala (con valori consecutivi)
-        isStraight = isScala();
+        IsScala = isScala();
 
         // Controlla se è un Colore (tutti lo stesso seme)
         for (int i = 0; i < 4; i++) {
             if (semeFrequenza[i] == NUMERO_CARTE_MANO) {
-                isFlush = true;
+                IsStessoColore = true;
                 break;
             }
         }
 
         // Determiniamo la mano migliore
-        if (isFlush && isStraight && mano[0].getValore().getValoreNumerico() == 10) {
+        if (IsStessoColore && IsScala && mano[0].getValore().getValoreNumerico() == 10) {
             return "Scala Reale";
-        } else if (isFlush && isStraight) {
+        } else if (IsStessoColore && IsScala) {
             return "Scala Colore";
         } else if (valoreFrequenza[4] == 1) {
             return "Poker";
         } else if (valoreFrequenza[3] == 1 && valoreFrequenza[2] == 1) {
             return "Full";
-        } else if (isFlush) {
+        } else if (IsStessoColore) {
             return "Colore";
-        } else if (isStraight) {
+        } else if (IsScala) {
             return "Scala";
         } else if (valoreFrequenza[3] == 1) {
             return "Tris";

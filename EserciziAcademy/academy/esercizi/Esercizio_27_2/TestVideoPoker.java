@@ -1,7 +1,5 @@
 package academy.esercizi.Esercizio_27_2;
 
-
-
 import java.util.Scanner;
 
 public class TestVideoPoker {
@@ -12,7 +10,7 @@ public class TestVideoPoker {
         // Distribuiamo le prime 5 carte
         Carta[] carteGiocatore = new Carta[5];
         for (int i = 0; i < 5; i++) {
-            carteGiocatore[i] = mazzo.estraiCarta();
+            carteGiocatore[i] = mazzo.pescaUnaCarta();
         }
 
         System.out.println("Le tue carte: ");
@@ -20,23 +18,23 @@ public class TestVideoPoker {
             System.out.println((i + 1) + ". " + carteGiocatore[i]);
         }
 
-        // Chiediamo al giocatore quali carte scartare
+
         System.out.print("Scegli le carte da scartare (es. 1 3 5 per scartare la 1a, 3a, e 5a): ");
         String input = scanner.nextLine();
         String[] carteDaScartare = input.split(" ");
 
         for (String s : carteDaScartare) {
             int index = Integer.parseInt(s) - 1;
-            carteGiocatore[index] = mazzo.estraiCarta();
+            carteGiocatore[index] = mazzo.pescaUnaCarta();
         }
 
-        // Mostriamo le carte finali
+
         System.out.println("Le tue carte finali: ");
         for (Carta carta : carteGiocatore) {
             System.out.println(carta);
         }
 
-        // Determiniamo il punteggio
+
         ManoPoker manoPoker = new ManoPoker(carteGiocatore);
         String risultato = manoPoker.verificaMano();
         System.out.println("Hai ottenuto: " + risultato);
