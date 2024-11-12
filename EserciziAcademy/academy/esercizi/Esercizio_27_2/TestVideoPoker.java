@@ -19,7 +19,7 @@ public class TestVideoPoker {
         }
 
 
-        System.out.print("Scegli le carte da scartare (es. 1 3 5 per scartare la 1a, 3a, e 5a): ");
+        System.out.print("Scegli le carte da scartare : ");
         String input = scanner.nextLine();
         String[] carteDaScartare = input.split(" ");
 
@@ -29,7 +29,7 @@ public class TestVideoPoker {
         }
 
 
-        System.out.println("Le tue carte finali: ");
+        System.out.println("Le tue carte dopo lo scarto: ");
         for (Carta carta : carteGiocatore) {
             System.out.println(carta);
         }

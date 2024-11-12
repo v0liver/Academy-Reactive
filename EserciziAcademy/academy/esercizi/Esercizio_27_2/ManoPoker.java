@@ -39,23 +39,22 @@ public class ManoPoker {
             return "Scala Reale";
         } else if (IsStessoColore && IsScala) {
             return "Scala Colore";
-        } else if (valoreFrequenza[4] == 1) {
-            return "Poker";
-        } else if (valoreFrequenza[3] == 1 && valoreFrequenza[2] == 1) {
+        } else if (haTris(valoreFrequenza) && haCoppia(valoreFrequenza)) {
             return "Full";
         } else if (IsStessoColore) {
             return "Colore";
         } else if (IsScala) {
             return "Scala";
-        } else if (valoreFrequenza[3] == 1) {
+        } else if (haTris(valoreFrequenza)) {
             return "Tris";
-        } else if (valoreFrequenza[2] == 2) {
+        } else if (haDoppiaCoppia(valoreFrequenza)) {
             return "Doppia Coppia";
-        } else if (valoreFrequenza[2] == 1) {
+        } else if (haCoppia(valoreFrequenza)) {
             return "Coppia";
         } else {
             return "Niente";
         }
+
     }
 
     // Verifica se la mano è una Scala
@@ -81,4 +80,34 @@ public class ManoPoker {
             }
         }
     }
+
+
+    private boolean haTris(int[] valoreFrequenza) {
+        for (int i = 1; i <= 13; i++) {
+            if (valoreFrequenza[i] == 3) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean haCoppia(int[] valoreFrequenza) {
+        for (int i = 1; i <= 13; i++) {
+            if (valoreFrequenza[i] == 2) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean haDoppiaCoppia(int[] valoreFrequenza) {
+        int coppie = 0;
+        for (int i = 1; i <= 13; i++) {
+            if (valoreFrequenza[i] == 2) {
+                coppie++;
+            }
+        }
+        return coppie == 2;
+    }
+
 }

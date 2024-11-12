@@ -5,7 +5,7 @@ import java.util.Random;
 public class Mazzo {
     private static final int NUMERO_CARTE = 52;
     private final Carta[] carte;
-    private int indiceMazzo; // Indica la prossima carta da estrarre
+    private int indiceProssimaCartaDaEstrarre;
 
     public Mazzo() {
         carte = new Carta[NUMERO_CARTE];
@@ -14,10 +14,11 @@ public class Mazzo {
         // Creazione delle carte del mazzo
         for (Seme seme : Seme.values()) {
             for (Valore valore : Valore.values()) {
-                carte[i++] = new Carta(valore, seme);
+                carte[i] = new Carta(valore, seme);
+                i++;
             }
         }
-        indiceMazzo = 0;
+        indiceProssimaCartaDaEstrarre = 0;
         mescolaMazzo();
     }
 
@@ -34,10 +35,10 @@ public class Mazzo {
 
 
     public Carta pescaUnaCarta() {
-        if (indiceMazzo >= NUMERO_CARTE) {
+        if (indiceProssimaCartaDaEstrarre >= NUMERO_CARTE) {
             return null; // Se il mazzo è vuoto
         }
-        return carte[indiceMazzo++];
+        return carte[indiceProssimaCartaDaEstrarre];
     }
 
 }
