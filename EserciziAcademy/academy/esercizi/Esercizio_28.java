@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class Esercizio_28 {
     static Scanner scanner = new Scanner(System.in);
-    final static int RIGHE = 8;
-    final static int COLONNE = 9;
+    final static int RIGHE = 6;
+    final static int COLONNE = 7;
 
     public static void main(String[] args) {
         Esercizio_28 esercizio281 = new Esercizio_28();
@@ -109,6 +109,7 @@ public class Esercizio_28 {
             scacchiera[3] = new char[]{' ', 'o', 'o', 'o', ' ', ' ', ' '};
             scacchiera[4] = new char[]{' ', ' ', ' ', ' ', ' ', ' ', ' '};
             scacchiera[5] = new char[]{' ', ' ', ' ', ' ', ' ', ' ', ' '};
+
         }
         System.out.println("Scacchiera iniziale: ");
         stampa(scacchiera);
@@ -117,7 +118,7 @@ public class Esercizio_28 {
     private static void stampa(char[][] scacchiera) {
         for (int i = 0; i < RIGHE; i++) {
             for (int j = 0; j < COLONNE; j++) {
-                System.out.print(scacchiera[i][j]);
+                System.out.print(scacchiera[i][j] + " ");
             }
             System.out.println();
         }
