@@ -86,22 +86,30 @@ public class Esercizio_28 {
     }
 
     private static void scacchieraIniziale(char[][] scacchiera) {
+        boolean aliante = true;
         for (int i = 0; i < RIGHE; i++) {
             for (int j = 0; j < COLONNE; j++) {
                 scacchiera[i][j] = ' ';
             }
         }
-
-        System.out.println("Inserisci la scacchiera iniziale usando 'o' oppure ' ' :");
-        for (int i = 0; i < RIGHE ; i++) {
-            String input = scanner.nextLine();
-            for (int j = 0; j < COLONNE; j++) {
-                if (j  < input.length()) {
-                    scacchiera[i][j] = input.charAt(j);
+        if (!aliante) {
+            System.out.println("Inserisci la scacchiera iniziale usando 'o' oppure ' ' :");
+            for (int i = 0; i < RIGHE; i++) {
+                String input = scanner.nextLine();
+                for (int j = 0; j < COLONNE; j++) {
+                    if (j < input.length()) {
+                        scacchiera[i][j] = input.charAt(j);
+                    }
                 }
             }
+        } else {
+            scacchiera[0] = new char[]{' ', ' ', ' ', ' ', ' ', ' ', ' '};
+            scacchiera[1] = new char[]{' ', ' ', 'o', ' ', ' ', ' ', ' '};
+            scacchiera[2] = new char[]{' ', ' ', ' ', 'o', ' ', ' ', ' '};
+            scacchiera[3] = new char[]{' ', 'o', 'o', 'o', ' ', ' ', ' '};
+            scacchiera[4] = new char[]{' ', ' ', ' ', ' ', ' ', ' ', ' '};
+            scacchiera[5] = new char[]{' ', ' ', ' ', ' ', ' ', ' ', ' '};
         }
-
         System.out.println("Scacchiera iniziale: ");
         stampa(scacchiera);
     }
