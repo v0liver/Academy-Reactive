@@ -1,6 +1,6 @@
 package academy.esercizi.Eserczio_30_1;
 
-public class MultipleChoiceQuestion extends Question {
+public class MultipleChoiceQuestion extends ChoiceQuestion {
     final int RISPOSTE_MULTIPLE = 3;
     String[] choices = new String[RISPOSTE_MULTIPLE];
     int[] positionCorrect = new int[RISPOSTE_MULTIPLE];
