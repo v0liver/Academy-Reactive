@@ -30,7 +30,6 @@ public class Esercizio_30_1 {
         question4.setChoice("Daniele", 0, true);
         question4.setChoice("Mario", 1, false);
         question4.setChoice("Luigi", 2, false);
-        question4.setAnswer("Daniele");//perchè devo settare answer se ce l ho gia in choiche[positionCorrect] la mia risposta esatta?
         question4.display();
         System.out.println(question4.checkAnswer("Daniele"));
 
@@ -39,7 +38,6 @@ public class Esercizio_30_1 {
         question5.setChoice("Daniele", 0, true);
         question5.setChoice("Mario", 1, true);
         question5.setChoice("Luigi", 2, false);
-        question5.setAnswer("Daniele");//perchè devo settare answer se ce l ho gia in choiche[positionCorrect] la mia risposta esatta?
         question5.display();
         System.out.println(question5.checkAnswer("Daniele,Mario"));
     }
