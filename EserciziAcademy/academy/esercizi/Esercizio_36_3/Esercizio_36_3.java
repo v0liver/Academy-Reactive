@@ -9,7 +9,9 @@ public class Esercizio_36_3 {
     public void soluzione()  {
         ContoCorrente contoCorrente = new ContoCorrente(100, "1568795652");
         contoCorrente.versa(2000);
+        System.out.println("------------");
         contoCorrente.versa(500);
+        System.out.println("------------");
         try {
             contoCorrente.preleva(200);
         } catch (PrelievoNonValidoException e) {
