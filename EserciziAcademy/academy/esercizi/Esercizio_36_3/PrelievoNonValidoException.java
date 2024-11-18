@@ -2,16 +2,14 @@ package academy.esercizi.Esercizio_36_3;
 
 public class PrelievoNonValidoException extends Exception {
 
-    public PrelievoNonValidoException(double saldoCorrente, String numeroConto, double importoDaPrelevare) {
-
-        System.out.printf("Impossibile prelevare %f in quanto il conto %s ha una disponibilità di soli %f",
-                importoDaPrelevare, numeroConto, saldoCorrente);
+    public PrelievoNonValidoException(double saldoCorrente, String numeroConto, double importoDaPrelevare, String message) {
+        super(message);
+        System.out.printf("Numero conto: %s\nSaldo conto: %f\nImporto da prelevare: %f",numeroConto,
+                saldoCorrente, importoDaPrelevare);
         System.out.println();
     }
 
-    public PrelievoNonValidoException(String message) {
-        super(message);
-    }
+
 
 }
 

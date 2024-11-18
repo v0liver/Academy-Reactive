@@ -25,7 +25,7 @@ public class ContoCorrente {
 
     public void preleva(double importo) throws PrelievoNonValidoException {
         if (importo > saldo) {
-            throw new PrelievoNonValidoException(saldo, numeroConto, importo);
+            throw new PrelievoNonValidoException(saldo, numeroConto, importo,"Prelievo non effettuato per fondi insufficiente.");
         }
         saldo -= importo;
         System.out.println("Prelievo di " + importo + " euro effettuato. Saldo attuale: " + saldo + " euro.");
