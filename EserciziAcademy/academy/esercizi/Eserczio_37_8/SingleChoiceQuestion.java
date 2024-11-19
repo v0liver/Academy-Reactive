@@ -2,14 +2,14 @@ package academy.esercizi.Eserczio_37_8;
 
 import java.util.Scanner;
 
-public class SingleChoiceQuestion<A> extends Question<String,A> {
+public class SingleChoiceQuestion<A> extends Question<String, A> {
 
     String[] choices;
 
 
-    public SingleChoiceQuestion(String text, A answer,String[] choices) {
+    public SingleChoiceQuestion(String text, A answer, String... choices) {
         super(text, answer);
-        this.choices=choices;
+        this.choices = choices;
     }
 
 
@@ -18,7 +18,6 @@ public class SingleChoiceQuestion<A> extends Question<String,A> {
         System.out.println("Inserisci una risposta tra le proposte date.");
         Integer rispostaUtente = Integer.valueOf(scanner.next());
 
-        // Se A è effettivamente Integer, non serve usare instanceof
         if (checkAnswer((A) rispostaUtente)) {
             System.out.println("Risposta corretta!!");
             return true;
@@ -27,8 +26,6 @@ public class SingleChoiceQuestion<A> extends Question<String,A> {
             return false;
         }
     }
-
-
 
 
     @Override

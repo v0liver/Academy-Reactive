@@ -16,22 +16,20 @@ public abstract class Question<T, A> {
         this.text = text;
     }
 
-    public void setAnswer(A answer) {
-        this.answer = answer;
-    }
 
 
-    public A getAnswer() {
-        return answer;
-    }
+
+
 
     abstract boolean rispondi(Scanner scanner) throws ParseException;
 
     abstract boolean checkAnswer(A rispostaData) throws ParseException;
 
-     void display(){
-         System.out.println(text);
-     };
+    void display() {
+        System.out.println(text);
+    }
+
+
 
 
 }
