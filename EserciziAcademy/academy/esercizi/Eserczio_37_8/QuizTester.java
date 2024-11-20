@@ -3,6 +3,7 @@ package academy.esercizi.Eserczio_37_8;
 
 import java.text.ParseException;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class QuizTester {
@@ -28,15 +29,13 @@ public class QuizTester {
         }
     }
 
-    private void verifica(Scanner scanner, Question question) {
+    private void verifica(Scanner scanner, Question<?,?> question) {
         boolean b;
         do {
             question.display();
-            try {
+
                 b = question.rispondi(scanner);
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
+
         } while (!b);
     }
 }

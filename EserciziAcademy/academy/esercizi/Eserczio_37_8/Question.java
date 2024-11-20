@@ -21,7 +21,7 @@ public abstract class Question<T, A> {
 
 
 
-    abstract boolean rispondi(Scanner scanner) throws ParseException;
+    abstract boolean rispondi(Scanner scanner) ;
 
     abstract boolean checkAnswer(A rispostaData) throws ParseException;
 

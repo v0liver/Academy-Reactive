@@ -15,32 +15,38 @@ public class NumericQuestion extends Question<String, Number> {
     }
 
     @Override
-    public boolean checkAnswer(Number answer) throws ParseException {
-        return answer.equals((numberFormat.parse(String.valueOf(this.answer))));
+    public boolean checkAnswer(Number answer)  {
+        try {
+            return answer.equals((numberFormat.parse(String.valueOf(this.answer))));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public boolean rispondi(Scanner scanner) throws ParseException {
-        Number rispostaUtente;
+    public boolean rispondi(Scanner scanner)  {
+        Number rispostaUtente=null;
         boolean flag = false;
         do {
-            System.out.println("Inserisci una risposta");
-            String risposta = scanner.next();
-
             try {
-                rispostaUtente = numberFormat.parse(risposta);
-            } catch (ParseException e) {
-                throw new ParseException("Non corretto", 1);
-            }
-            if (!risposta.equals(String.valueOf(rispostaUtente))) {
-                throw new ParseException("Non corretto", 1);
-            }
-            if (checkAnswer(rispostaUtente)) {
-                System.out.println("Risposta Corretta");
-                flag = true;
+                System.out.println("Inserisci una risposta");
+                String risposta = scanner.next();
 
-            } else {
-                System.out.println("Risposta: " + rispostaUtente + " non corretta. Riprova");
+                rispostaUtente = numberFormat.parse(risposta);
+
+                if (!risposta.equals(String.valueOf(rispostaUtente))) {
+                    throw new ParseException("Non corretto", 1);
+                }
+                if (checkAnswer(rispostaUtente)) {
+                    System.out.println("Risposta Corretta");
+                    flag = true;
+
+                } else {
+                    System.out.println("Risposta: " + rispostaUtente + " non corretta. Riprova");
+                }
+            } catch (ParseException e) {
+                System.err.println(e.getMessage());
+
             }
         } while (!flag);
         return checkAnswer(rispostaUtente);
