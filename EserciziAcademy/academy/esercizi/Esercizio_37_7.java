@@ -1,4 +1,41 @@
 package academy.esercizi;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.util.*;
+import java.util.stream.Collectors;
+
 public class Esercizio_37_7 {
+    public static void main(String[] args) throws IOException {
+        Esercizio_37_7 prova = new Esercizio_37_7();
+        prova.letturaFileTxt();
+    }
+
+    public void letturaFileTxt() throws IOException {
+
+        try (BufferedReader fileTxt = new BufferedReader(new FileReader(new File("EserciziAcademy\\academy\\esercizi\\File\\File_Esercizio_37_7.txt")))) {
+            List<String> listaFile = new ArrayList<>();
+
+            while (fileTxt.ready()) {
+                String rigaFile = fileTxt.readLine();
+
+                String[] rigaFileSplit = rigaFile.split("[\\s.,]");
+                Collections.addAll(listaFile, rigaFileSplit);
+                listaFile.sort(Comparator.naturalOrder());
+                mappa(listaFile).forEach((s, i) -> System.out.println("La parola " + "\"" + s + "\"" + " è ripetuta " + i + " volte."));
+
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Map<String, Long> mappa(List<String> listaFile) {
+        Map<String, Long> mappa = new TreeMap<>();
+        mappa = listaFile.stream().collect(Collectors.groupingBy(s -> s, Collectors.counting()));
+        //mappa = listaFile.stream().collect(Collectors.toMap(s -> s, pippo->10L));
+        return mappa;
+    }
+
 }
