@@ -9,6 +9,8 @@ public class Esercizio_37_7 {
     public static void main(String[] args) throws IOException {
         Esercizio_37_7 prova = new Esercizio_37_7();
         prova.letturaFileTxt();
+        System.out.println("-------------------------------------------------------------------------------");
+        prova.letturaFileJava();
     }
 
     public void letturaFileTxt() throws IOException {
@@ -38,4 +40,26 @@ public class Esercizio_37_7 {
         return mappa;
     }
 
+
+    public void letturaFileJava() throws FileNotFoundException {
+        String url = "C:\\Users\\V.Oliveri-cons\\Documents\\rootGit\\gitAcademy\\EserciziAcademy\\academy\\esercizi\\Esercizio_22_1.java";
+        int contatoreRiga = 1;
+        try (Scanner scanner = new Scanner(new File(url))) {
+            while (scanner.hasNextLine()) {
+                String riga = scanner.nextLine();
+                String[] rigaSplittata = riga.split("[^A-Za-z0-9_]+");
+                for (int i = 0; i < rigaSplittata.length; i++) {
+                    if (!rigaSplittata[i].isEmpty()) {
+                        System.out.printf("L'identificatore %-20s è presente sulla riga %-3d", rigaSplittata[i], contatoreRiga);
+                        System.out.println();
+                    }
+                }
+                contatoreRiga++;
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
+
+
