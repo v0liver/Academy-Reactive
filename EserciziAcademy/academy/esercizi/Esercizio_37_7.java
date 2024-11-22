@@ -42,7 +42,7 @@ public class Esercizio_37_7 {
 
 
     public void letturaFileJava() throws FileNotFoundException {
-        String url = "C:\\Users\\V.Oliveri-cons\\Documents\\rootGit\\gitAcademy\\EserciziAcademy\\academy\\esercizi\\Esercizio_22_1.java";
+        String url = "EserciziAcademy\\academy\\esercizi\\Esercizio_22_1.java";
         int contatoreRiga = 1;
         try (Scanner scanner = new Scanner(new File(url))) {
             while (scanner.hasNextLine()) {
