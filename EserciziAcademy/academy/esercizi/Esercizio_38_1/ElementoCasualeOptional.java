@@ -19,7 +19,7 @@ public class ElementoCasualeOptional {
         boolean isEmpty = new Random().nextBoolean();
         if (isEmpty){
             tmp=Optional.empty();
-        }else tmp= Optional.of(new Random().nextInt(20001 - 100) + 100);
+        }else tmp=  Optional.of(new Random().nextInt(20001 - 100) + 100);
         return tmp;
     }
 }
