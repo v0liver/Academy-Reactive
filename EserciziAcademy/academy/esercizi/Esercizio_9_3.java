@@ -5,9 +5,9 @@ public class Esercizio_9_3 {
     public static void main(String[] args) {
 
         int[] punto1 = {3, 3};
-        int[] punto2 = {3, 5};
-        int[] punto3 = {5, 3};
-        int[] punto4 = {5, 5};
+        int[] punto2 = {5, 0};
+        int[] punto3 = {5, 6};
+        int[] punto4 = {7, 3};
 //        int[] punto1 = {2, 3};
 //        int[] punto2 = {2, 7};
 //        int[] punto3 = {5, 3};
@@ -45,8 +45,6 @@ public class Esercizio_9_3 {
         double diagonale1 = distanzaTraDuePunti(punto1, punto4);
         double diagonale2 = distanzaTraDuePunti(punto2, punto3);
 
-        isAQuadrato(d1, d2, d3, d4, diagonale1, diagonale2, isParalleloAsseX, isParalleloAsseY);
-
 
         String figura = "Nessuna forma prevista";
         System.out.print("La figura è: ");
@@ -64,7 +62,6 @@ public class Esercizio_9_3 {
         System.out.println(figura);
 
     }
-
 
 
     public boolean isAQuadrato(double d1, double d2, double d3, double d4, double diagonale1, double diagonale2, boolean isParalleloAsseX, boolean isParalleloAsseY) {
@@ -105,8 +102,6 @@ public class Esercizio_9_3 {
 
         return punto1[0] == punto2[0];
     }
-
-
 
 
     void stampaFigura(int[] punto1, int[] punto2, int[] punto3, int[] punto4) {
