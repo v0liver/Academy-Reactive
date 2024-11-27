@@ -8,10 +8,11 @@ import org.springframework.stereotype.Component;
 public class Computer {
     Schermo schermo;
     HardDisk hardDisk;
+    
     Tastiera tastiera;
 
     @Autowired
-    @Qualifier("linux")
+    @Qualifier("windows")
     SistemaOperativo sistemaOperativo;
 
     public Computer(Schermo schermo, HardDisk hardDisk) {
