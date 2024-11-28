@@ -33,31 +33,40 @@ public class Test {
 
         Conto contoRisparmio = new Conto(importoContoRisparmio);
 
-        System.out.print("Che operazione vuoi eseguire? (deposit,withdrawal,transfer):");
+        System.out.print("Che operazione vuoi eseguire? (D-deposit,W-withdrawal,T-transfer):");
         operazione = scan.nextLine().toLowerCase();
 
-        System.out.printf("Su quale conto vuoi eseguire l'operazione di %s?(checking/savings)", operazione);
-        qualeConto = scan.nextLine().toLowerCase();
 
         switch (operazione) {
-            case "deposit":
-                if ("checking".equalsIgnoreCase(qualeConto)) {
+            case "d":
+                do {
 
-                    System.out.println("Quanto vuoi depositare?");
-                    BigDecimal deposito = new BigDecimal(scan.nextLine());
-                    contocOrrente.setBalance(contocOrrente.getBalance().add(deposito));
-                    System.out.println("Saldo conto corrente: " + contocOrrente.getBalance() + "$");
+                    System.out.print("Su quale conto vuoi eseguire l'operazione di deposito?(C-checking/S-savings)");
+                    qualeConto = scan.nextLine().toLowerCase();
+                    if ("c".equalsIgnoreCase(qualeConto)) {
 
-                } else if ("savings".equalsIgnoreCase(qualeConto))
+                        System.out.println("Quanto vuoi depositare?");
+                        BigDecimal deposito = new BigDecimal(scan.nextLine());
+                        contocOrrente.setBalance(contocOrrente.getBalance().add(deposito));
+                        System.out.println("Saldo conto corrente: " + contocOrrente.getBalance() + "$");
 
-                    System.out.println("Non puoi depositare direttamente nel conto di risparmio");
+                    } else if ("s".equalsIgnoreCase(qualeConto))
 
-                else System.out.println("Conto non riconosciuto");
+                        System.out.println("Non puoi depositare direttamente nel conto di risparmio");
+
+                    else System.out.println("Conto non riconosciuto");
+
+                }while ("s".equalsIgnoreCase(qualeConto));
                 break;
 
+            case "w":
 
-            case "withdrawal":
-                if ("checking".equalsIgnoreCase(qualeConto)) {
+
+                do {
+                    System.out.print("Su quale conto vuoi eseguire l'operazione di prelievo?(C-checking/S-savings)");
+                    qualeConto = scan.nextLine().toLowerCase();
+
+                if ("c".equalsIgnoreCase(qualeConto)) {
                     BigDecimal prelievo;
 
                     do {
@@ -73,17 +82,21 @@ public class Test {
 
                     } while (contocOrrente.getBalance().subtract(prelievo).compareTo(BigDecimal.ZERO) < 0);
 
-                } else if ("savings".equalsIgnoreCase(qualeConto)) {
+                } else if ("s".equalsIgnoreCase(qualeConto)) {
 
                     System.out.println("Non puoi prelevare direttamente nel conto di risparmio");
                 }
                 else System.out.println("Conto non riconosciuto");
 
+
+                }while ("s".equalsIgnoreCase(qualeConto));
                 break;
 
-            case "transfer":
+            case "t":
+                System.out.print("Su quale conto vuoi eseguire l'operazione di trasferimento?(C-checking/S-savings)");
+                qualeConto = scan.nextLine().toLowerCase();
                 BigDecimal bonifico;
-                if ("checking".equalsIgnoreCase(qualeConto)) {
+                if ("c".equalsIgnoreCase(qualeConto)) {
 
 
                     do {
@@ -101,7 +114,7 @@ public class Test {
 
                     } while (contocOrrente.getBalance().subtract(bonifico).compareTo(BigDecimal.ZERO) < 0);
 
-                } else if ("savings".equalsIgnoreCase(qualeConto)) {
+                } else if ("s".equalsIgnoreCase(qualeConto)) {
                     do {
                         System.out.print("Quanto vuoi bonificare?");
                         bonifico = new BigDecimal(scan.nextLine());
