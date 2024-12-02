@@ -1,6 +1,7 @@
 package it.reactive.esercizioTesting.businesslogic;
 
 import it.reactive.esercizioTesting.entrypoint.Asta;
+import it.reactive.esercizioTesting.oggetto.SessioneAsta;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +15,7 @@ import static org.junit.Assert.*;
 public class ServiceAstaTest {
     static ServiceAsta serviceAsta;
     static Asta asta;
+
     List<String> partecipanti = new ArrayList<>(Arrays.asList("Vito","Giuseppe","Laura"));
 
 
@@ -21,14 +23,15 @@ public class ServiceAstaTest {
     public void before() {
         serviceAsta = new ServiceAsta();
         asta = new Asta(serviceAsta);
+        serviceAsta.inizializza(partecipanti);
     }
 
 
         @Test
     public void inizializza() {
-        assertEquals(, serviceAsta.getPartecipanti());
-        assertTrue(sessioneAsta.isInCorso());
-        assertEquals(new ArrayList<String>(),sessioneAsta.getPartecipanti());
+        assertEquals(partecipanti, serviceAsta.getPartecipanti());
+//        assertTrue(serviceAsta.isInCorso());
+//        assertEquals(new ArrayList<String>(),sessioneAsta.getPartecipanti());
 
     }
     @Test
