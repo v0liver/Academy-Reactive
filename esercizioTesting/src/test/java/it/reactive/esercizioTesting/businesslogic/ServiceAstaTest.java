@@ -70,13 +70,13 @@ public class ServiceAstaTest {
         serviceAsta.rilancia("Vito", 5);
     }
 
-    public void rilanciaAstaTerminataException() {
-//        List<String> partecipanti = new ArrayList<>();
-//        partecipanti.add("Daniele");
-//        serviceAsta.inizializza(partecipanti);
-//        serviceAsta.rilancia("Vito", 5);
-        serviceAsta.rilancia("Vito",-1);
-    }
+//    public void rilanciaAstaTerminataException() {
+////        List<String> partecipanti = new ArrayList<>();
+////        partecipanti.add("Daniele");
+////        serviceAsta.inizializza(partecipanti);
+////        serviceAsta.rilancia("Vito", 5);
+//        serviceAsta.rilancia("Vito",-1);
+//    }
 
     @Test
     public void getValoreSessioneAsta() {

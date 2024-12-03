@@ -51,7 +51,7 @@ public class AstaTest {
 		String nomeBanditore = "Giuseppe";
 		int valore = 100;
 
-		
+
 		when(serviceAsta.getValoreSessioneAsta()).thenReturn(200);
 
 		int valoreCorrente = asta.rilancia(nomeBanditore, valore);
