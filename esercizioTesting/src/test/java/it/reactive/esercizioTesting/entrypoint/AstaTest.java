@@ -18,6 +18,7 @@ import it.reactive.esercizioTesting.businesslogic.ServiceAsta;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AstaTest {
@@ -27,15 +28,12 @@ public class AstaTest {
     @Mock
     ServiceAsta serviceAsta;
 
-//    @Test
-//    public void test() {
-//        fail("Not yet implemented");
-//    }
 
     private List<String> partecipanti;
 
     @Before
     public void setUp() {
+
         //partecipanti = Arrays.asList("Vito", "Giuseppe", "Laura");
         //partecipanti = new ArrayList<>();
        // when(serviceAsta.getPartecipanti()).thenReturn(partecipanti);
@@ -95,10 +93,60 @@ public class AstaTest {
     public void addPartecipante() {
       //  when(serviceAsta.getPartecipanti()).thenReturn(new ArrayList<>(Arrays.asList("Default")));
        doReturn(new ArrayList<>(Arrays.asList("Default"))).when(serviceAsta).getPartecipanti();
-        asta.addPartecipante("Ferdinando");
-        verify(serviceAsta).getPartecipanti();
+        asta.addPartecipante("Default");
+        verify(serviceAsta,times(2)).getPartecipanti();
        // verify(serviceAsta).addPartecipante(any());
     }
+
+    @Test
+    public void addPartecipanteSenzaIf() {
+        //  when(serviceAsta.getPartecipanti()).thenReturn(new ArrayList<>(Arrays.asList("Default")));
+        doReturn(new ArrayList<>(Arrays.asList("Default","Ciao"))).when(serviceAsta).getPartecipanti();
+        asta.addPartecipante("Ferdinando");
+        verify(serviceAsta,times(2)).getPartecipanti();
+        // verify(serviceAsta).addPartecipante(any());
+    }
+
+
+    @Test
+    public void addPartecipanteSenzaIf2() {
+        //  when(serviceAsta.getPartecipanti()).thenReturn(new ArrayList<>(Arrays.asList("Default")));
+        doReturn(new ArrayList<>(Arrays.asList("Topo","Ciao"))).when(serviceAsta).getPartecipanti();
+        asta.addPartecipante("Ferdinando");
+        asta.addPartecipante("Ciao");
+        verify(serviceAsta,times(3)).getPartecipanti();
+        // verify(serviceAsta).addPartecipante(any());
+    }
+    @Test
+    public void visualizzaPartecipantiSessioneCorrente(){
+        when(serviceAsta.getPartecipanti()).thenReturn(new ArrayList<>(Arrays.asList("Default")));
+        asta.visualizzaPartecipantiSessioneCorrente();
+        verify(serviceAsta,times(2)).getPartecipanti();
+
+    }
+
+    @Test
+    public void fineAstaForzata(){
+        asta.fineAstaForzata();
+        verify(serviceAsta).fine();
+        verify(serviceAsta).getValoreSessioneAsta();
+        verify(serviceAsta).getVincitore();
+        verify(serviceAsta).verificaFineAsta();
+
+    }
+    @Test
+    public void getValoreCorrente(){
+        asta.getValoreCorrente();
+        verify(serviceAsta).getValoreSessioneAsta();
+    }
+
+    @Test
+    public void setPartecipanti(){
+        List<String> tmp = new ArrayList<>(Arrays.asList("Ciao","Pippo"));
+        asta.setPartecipanti(tmp);
+        verify(serviceAsta).setPartecipanti(any());
+    }
+
 
 
 }
