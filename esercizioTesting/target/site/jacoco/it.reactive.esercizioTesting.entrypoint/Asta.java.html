@@ -58,7 +58,7 @@ public class Asta {
 	
 	public void addPartecipante(String partecipante) {
 <span class="fc" id="L60">		List&lt;String&gt; partecipanti = serviceAsta.getPartecipanti();</span>
-<span class="pc bpc" id="L61" title="1 of 4 branches missed.">		if (partecipanti.size()==1 &amp;&amp; partecipanti.contains(&quot;Default&quot;)) {</span>
+<span class="fc bfc" id="L61" title="All 4 branches covered.">		if (partecipanti.size()==1 &amp;&amp; partecipanti.contains(&quot;Default&quot;)) {</span>
 <span class="fc" id="L62">			partecipanti.remove(0);</span>
 		}
 <span class="fc" id="L64">		serviceAsta.addPartecipante(partecipante);</span>

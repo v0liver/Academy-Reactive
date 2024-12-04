@@ -1,10 +1,10 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-esercizioTesting,it.reactive.esercizioTesting.oggetto,SessioneAsta,66,43,0,0,11,17,8,8,8,8
-esercizioTesting,it.reactive.esercizioTesting.businesslogic,ServiceAsta,98,104,12,10,26,27,12,10,5,6
-esercizioTesting,it.reactive.esercizioTesting.entrypoint,Asta,0,123,1,5,0,31,1,14,0,12
+esercizioTesting,it.reactive.esercizioTesting.oggetto,SessioneAsta,49,60,0,0,4,24,3,13,3,13
+esercizioTesting,it.reactive.esercizioTesting.businesslogic,ServiceAsta,0,202,0,22,0,53,0,22,0,11
+esercizioTesting,it.reactive.esercizioTesting.entrypoint,Asta,0,123,0,6,0,31,0,15,0,12
 esercizioTesting,it.reactive.esercizioTesting.exception,AstaTerminataException,0,4,0,0,0,2,0,1,0,1
-esercizioTesting,it.reactive.esercizioTesting.exception,PartecipanteEsistenteException,11,0,0,0,2,0,1,0,1,0
-esercizioTesting,it.reactive.esercizioTesting.exception,AstaInCorsoException,4,0,0,0,2,0,1,0,1,0
+esercizioTesting,it.reactive.esercizioTesting.exception,PartecipanteEsistenteException,0,11,0,0,0,2,0,1,0,1
+esercizioTesting,it.reactive.esercizioTesting.exception,AstaInCorsoException,0,4,0,0,0,2,0,1,0,1
 esercizioTesting,it.reactive.esercizioTesting.exception,TurnoNonValidoException,0,11,0,0,0,2,0,1,0,1
 esercizioTesting,it.reactive.esercizioTesting.exception,PartecipanteNonCensitoException,0,4,0,0,0,2,0,1,0,1
 esercizioTesting,it.reactive.esercizioTesting.exception,ValoreNonAmmessoException,0,13,0,0,0,2,0,1,0,1

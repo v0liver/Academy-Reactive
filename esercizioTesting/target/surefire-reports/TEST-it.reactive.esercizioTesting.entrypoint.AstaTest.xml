@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.451" tests="12" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.434" tests="13" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -18,7 +18,7 @@
     <property name="user.country" value="IT"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Eclipse Adoptium\jdk-8.0.422.5-hotspot\jre\bin"/>
-    <property name="sun.java.command" value="C:\Users\V.Oliveri-cons\AppData\Local\Temp\surefire7217937003291046817\surefirebooter-20241204162916080_3.jar C:\Users\V.Oliveri-cons\AppData\Local\Temp\surefire7217937003291046817 2024-12-04T16-29-15_781-jvmRun1 surefire-20241204162916080_1tmp surefire_0-20241204162916080_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\V.Oliveri-cons\AppData\Local\Temp\surefire4563366782689735490\surefirebooter-20241204174630519_3.jar C:\Users\V.Oliveri-cons\AppData\Local\Temp\surefire4563366782689735490 2024-12-04T17-46-30_217-jvmRun1 surefire-20241204174630519_1tmp surefire_0-20241204174630519_2tmp"/>
     <property name="surefire.test.class.path" value="C:\Users\V.Oliveri-cons\Documents\rootGit\gitAcademy\esercizioTesting\target\test-classes;C:\Users\V.Oliveri-cons\Documents\rootGit\gitAcademy\esercizioTesting\target\classes;C:\Users\V.Oliveri-cons\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar;C:\Users\V.Oliveri-cons\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\V.Oliveri-cons\.m2\repository\org\mockito\mockito-core\2.19.0\mockito-core-2.19.0.jar;C:\Users\V.Oliveri-cons\.m2\repository\net\bytebuddy\byte-buddy\1.8.10\byte-buddy-1.8.10.jar;C:\Users\V.Oliveri-cons\.m2\repository\net\bytebuddy\byte-buddy-agent\1.8.10\byte-buddy-agent-1.8.10.jar;C:\Users\V.Oliveri-cons\.m2\repository\org\objenesis\objenesis\2.6\objenesis-2.6.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\V.Oliveri-cons"/>
@@ -31,7 +31,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="C:\Users\V.Oliveri-cons\AppData\Local\Temp\surefire7217937003291046817\surefirebooter-20241204162916080_3.jar;C:\\Users\\V.Oliveri-cons\\.m2\\repository\\org\\jacoco\\org.jacoco.agent\\0.8.8\\org.jacoco.agent-0.8.8-runtime.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\V.Oliveri-cons\AppData\Local\Temp\surefire4563366782689735490\surefirebooter-20241204174630519_3.jar;C:\\Users\\V.Oliveri-cons\\.m2\\repository\\org\\jacoco\\org.jacoco.agent\\0.8.8\\org.jacoco.agent-0.8.8-runtime.jar"/>
     <property name="sun.boot.class.path" value="C:\Program Files\Eclipse Adoptium\jdk-8.0.422.5-hotspot\jre\lib\resources.jar;C:\Program Files\Eclipse Adoptium\jdk-8.0.422.5-hotspot\jre\lib\rt.jar;C:\Program Files\Eclipse Adoptium\jdk-8.0.422.5-hotspot\jre\lib\sunrsasign.jar;C:\Program Files\Eclipse Adoptium\jdk-8.0.422.5-hotspot\jre\lib\jsse.jar;C:\Program Files\Eclipse Adoptium\jdk-8.0.422.5-hotspot\jre\lib\jce.jar;C:\Program Files\Eclipse Adoptium\jdk-8.0.422.5-hotspot\jre\lib\charsets.jar;C:\Program Files\Eclipse Adoptium\jdk-8.0.422.5-hotspot\jre\lib\jfr.jar;C:\Program Files\Eclipse Adoptium\jdk-8.0.422.5-hotspot\jre\classes"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
@@ -62,16 +62,17 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="52.0"/>
   </properties>
-  <testcase name="setPartecipanti" classname="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.422"/>
-  <testcase name="addPartecipanteSenzaIf" classname="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.002"/>
+  <testcase name="setPartecipanti" classname="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.397"/>
+  <testcase name="addPartecipanteSenzaIf" classname="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.003"/>
   <testcase name="testAvvia" classname="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.001"/>
   <testcase name="testPassa" classname="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.001"/>
-  <testcase name="testAvviaAstaFinita" classname="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.0"/>
+  <testcase name="testAvviaAstaFinita" classname="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.001"/>
   <testcase name="testRilancia" classname="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.001"/>
-  <testcase name="addPartecipanteSenzaIf2" classname="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.0"/>
-  <testcase name="visualizzaPartecipantiSessioneCorrente" classname="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.001"/>
-  <testcase name="fineAstaForzata" classname="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.0"/>
-  <testcase name="addPartecipante" classname="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.0"/>
-  <testcase name="getValoreCorrente" classname="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.001"/>
+  <testcase name="addPartecipanteSenzaIf2" classname="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.001"/>
+  <testcase name="addPartecipanteSenzaIf3" classname="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.001"/>
+  <testcase name="visualizzaPartecipantiSessioneCorrente" classname="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.0"/>
+  <testcase name="fineAstaForzata" classname="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.001"/>
+  <testcase name="addPartecipante" classname="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.001"/>
+  <testcase name="getValoreCorrente" classname="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.0"/>
   <testcase name="verificaFineAsta" classname="it.reactive.esercizioTesting.entrypoint.AstaTest" time="0.0"/>
 </testsuite>
