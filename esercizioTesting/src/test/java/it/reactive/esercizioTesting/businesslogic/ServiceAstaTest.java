@@ -97,7 +97,6 @@ public class ServiceAstaTest {
 
     @Test
     public void getVincitore() {
-        //serviceAsta.getVincitore();
         assertEquals("Vito", serviceAsta.getVincitore());
 
     }
@@ -130,16 +129,4 @@ public class ServiceAstaTest {
 
     }
 
-
-    @Test
-    public void getPartecipanti() {
-    }
-
-    @Test
-    public void fine() {
-    }
-
-    @Test
-    public void verificaFineAsta() {
-    }
 }
