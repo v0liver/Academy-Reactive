@@ -36,7 +36,7 @@ public class AstaTest {
 
         //partecipanti = Arrays.asList("Vito", "Giuseppe", "Laura");
         //partecipanti = new ArrayList<>();
-       // when(serviceAsta.getPartecipanti()).thenReturn(partecipanti);
+        // when(serviceAsta.getPartecipanti()).thenReturn(partecipanti);
     }
 
     @Test
@@ -83,7 +83,7 @@ public class AstaTest {
     }
 
     @Test
-    public void verificaFineAsta(){
+    public void verificaFineAsta() {
         when(serviceAsta.verificaFineAsta()).thenReturn(false);
         asta.verificaFineAsta();
         verify(serviceAsta).verificaFineAsta();
@@ -91,19 +91,28 @@ public class AstaTest {
 
     @Test
     public void addPartecipante() {
-      //  when(serviceAsta.getPartecipanti()).thenReturn(new ArrayList<>(Arrays.asList("Default")));
-       doReturn(new ArrayList<>(Arrays.asList("Default"))).when(serviceAsta).getPartecipanti();
+        //  when(serviceAsta.getPartecipanti()).thenReturn(new ArrayList<>(Arrays.asList("Default")));
+        doReturn(new ArrayList<>(Arrays.asList("Default"))).when(serviceAsta).getPartecipanti();
         asta.addPartecipante("Default");
-        verify(serviceAsta,times(2)).getPartecipanti();
-       // verify(serviceAsta).addPartecipante(any());
+        verify(serviceAsta, times(2)).getPartecipanti();
+        // verify(serviceAsta).addPartecipante(any());
     }
 
     @Test
     public void addPartecipanteSenzaIf() {
         //  when(serviceAsta.getPartecipanti()).thenReturn(new ArrayList<>(Arrays.asList("Default")));
-        doReturn(new ArrayList<>(Arrays.asList("Default","Ciao"))).when(serviceAsta).getPartecipanti();
+        doReturn(new ArrayList<>(Arrays.asList("Default", "Ciao"))).when(serviceAsta).getPartecipanti();
         asta.addPartecipante("Ferdinando");
-        verify(serviceAsta,times(2)).getPartecipanti();
+        verify(serviceAsta, times(2)).getPartecipanti();
+        // verify(serviceAsta).addPartecipante(any());
+    }
+
+    @Test
+    public void addPartecipanteSenzaIf3() {
+        //  when(serviceAsta.getPartecipanti()).thenReturn(new ArrayList<>(Arrays.asList("Default")));
+        doReturn(new ArrayList<>(Arrays.asList("Ferdinando"))).when(serviceAsta).getPartecipanti();
+        asta.addPartecipante("Ferdinando");
+        verify(serviceAsta, times(2)).getPartecipanti();
         // verify(serviceAsta).addPartecipante(any());
     }
 
@@ -111,22 +120,23 @@ public class AstaTest {
     @Test
     public void addPartecipanteSenzaIf2() {
         //  when(serviceAsta.getPartecipanti()).thenReturn(new ArrayList<>(Arrays.asList("Default")));
-        doReturn(new ArrayList<>(Arrays.asList("Topo","Ciao"))).when(serviceAsta).getPartecipanti();
+        doReturn(new ArrayList<>(Arrays.asList("Topo", "Ciao"))).when(serviceAsta).getPartecipanti();
         asta.addPartecipante("Ferdinando");
         asta.addPartecipante("Ciao");
-        verify(serviceAsta,times(3)).getPartecipanti();
+        verify(serviceAsta, times(3)).getPartecipanti();
         // verify(serviceAsta).addPartecipante(any());
     }
+
     @Test
-    public void visualizzaPartecipantiSessioneCorrente(){
+    public void visualizzaPartecipantiSessioneCorrente() {
         when(serviceAsta.getPartecipanti()).thenReturn(new ArrayList<>(Arrays.asList("Default")));
         asta.visualizzaPartecipantiSessioneCorrente();
-        verify(serviceAsta,times(2)).getPartecipanti();
+        verify(serviceAsta, times(2)).getPartecipanti();
 
     }
 
     @Test
-    public void fineAstaForzata(){
+    public void fineAstaForzata() {
         asta.fineAstaForzata();
         verify(serviceAsta).fine();
         verify(serviceAsta).getValoreSessioneAsta();
@@ -134,19 +144,19 @@ public class AstaTest {
         verify(serviceAsta).verificaFineAsta();
 
     }
+
     @Test
-    public void getValoreCorrente(){
+    public void getValoreCorrente() {
         asta.getValoreCorrente();
         verify(serviceAsta).getValoreSessioneAsta();
     }
 
     @Test
-    public void setPartecipanti(){
-        List<String> tmp = new ArrayList<>(Arrays.asList("Ciao","Pippo"));
+    public void setPartecipanti() {
+        List<String> tmp = new ArrayList<>(Arrays.asList("Ciao", "Pippo"));
         asta.setPartecipanti(tmp);
         verify(serviceAsta).setPartecipanti(any());
     }
-
 
 
 }

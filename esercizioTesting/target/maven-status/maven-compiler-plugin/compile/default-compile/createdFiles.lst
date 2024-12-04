@@ -1,0 +1,10 @@
+it\reactive\esercizioTesting\exception\PartecipanteNonCensitoException.class
+it\reactive\esercizioTesting\businesslogic\IServiceAsta.class
+it\reactive\esercizioTesting\exception\TurnoNonValidoException.class
+it\reactive\esercizioTesting\businesslogic\ServiceAsta.class
+it\reactive\esercizioTesting\exception\AstaTerminataException.class
+it\reactive\esercizioTesting\oggetto\SessioneAsta.class
+it\reactive\esercizioTesting\entrypoint\Asta.class
+it\reactive\esercizioTesting\exception\AstaInCorsoException.class
+it\reactive\esercizioTesting\exception\ValoreNonAmmessoException.class
+it\reactive\esercizioTesting\exception\PartecipanteEsistenteException.class

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SessioneAsta.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">esercizioTesting</a> &gt; <a href="index.source.html" class="el_package">it.reactive.esercizioTesting.oggetto</a> &gt; <span class="el_source">SessioneAsta.java</span></div><h1>SessioneAsta.java</h1><pre class="source lang-java linenums">package it.reactive.esercizioTesting.oggetto;
+
+import java.util.List;
+
+public class SessioneAsta {
+	private int valore;
+	private String vincitore;
+	private String oggettoBandito;
+	private List&lt;String&gt; partecipanti;
+	private List&lt;String&gt; partecipantiPassati;
+	private int progressivoTurnoCorrente;
+	private boolean inCorso;
+	
+	public SessioneAsta(List&lt;String&gt; partecipanti) {
+<span class="fc" id="L15">		super();</span>
+<span class="fc" id="L16">		setProgressivoTurnoCorrente(0);</span>
+<span class="fc" id="L17">		valore=1;</span>
+<span class="fc" id="L18">		vincitore=partecipanti.get(0);</span>
+<span class="fc" id="L19">		this.partecipanti=partecipanti;</span>
+<span class="fc" id="L20">	}</span>
+	public String getOggettoBandito() {
+<span class="nc" id="L22">		return oggettoBandito;</span>
+	}
+	public int getValore() {
+<span class="nc" id="L25">		return valore;</span>
+	}
+	public void setValore(int valore) {
+<span class="nc" id="L28">		this.valore = valore;</span>
+<span class="nc" id="L29">	}</span>
+	public String getVincitore() {
+<span class="nc" id="L31">		return vincitore;</span>
+	}
+	public void setVincitore(String vincitore) {
+<span class="nc" id="L34">		this.vincitore = vincitore;</span>
+<span class="nc" id="L35">	}</span>
+	public void setOggettoBandito(String oggettoBandito) {
+<span class="fc" id="L37">		this.oggettoBandito = oggettoBandito;</span>
+<span class="fc" id="L38">	}</span>
+	public List&lt;String&gt; getPartecipanti() {
+<span class="fc" id="L40">		return partecipanti;</span>
+	}
+	public void setPartecipanti(List&lt;String&gt; partecipanti) {
+<span class="nc" id="L43">		this.partecipanti = partecipanti;</span>
+<span class="nc" id="L44">	}</span>
+	public int getProgressivoTurnoCorrente() {
+<span class="fc" id="L46">		return progressivoTurnoCorrente;</span>
+	}
+	public boolean isInCorso() {
+<span class="nc" id="L49">		return inCorso;</span>
+	}
+	public void setInCorso(boolean inCorso) {
+<span class="fc" id="L52">		this.inCorso = inCorso;</span>
+<span class="fc" id="L53">	}</span>
+	public void setProgressivoTurnoCorrente(int progressivoTurnoCorrente) {
+<span class="fc" id="L55">		this.progressivoTurnoCorrente = progressivoTurnoCorrente;</span>
+<span class="fc" id="L56">	}</span>
+	public List&lt;String&gt; getPartecipantiPassati() {
+<span class="fc" id="L58">		return partecipantiPassati;</span>
+	}
+	public void setPartecipantiPassati(List&lt;String&gt; partecipantiPassati) {
+<span class="fc" id="L61">		this.partecipantiPassati = partecipantiPassati;</span>
+<span class="fc" id="L62">	}</span>
+	@Override
+	public String toString() {
+<span class="nc" id="L65">		return &quot;SessioneAsta [valore=&quot; + valore + &quot;, vincitore=&quot; + vincitore + &quot;, oggettoBandito=&quot; + oggettoBandito</span>
+				+ &quot;, partecipanti=&quot; + partecipanti + &quot;, partecipantiPassati=&quot; + partecipantiPassati
+				+ &quot;, progressivoTurnoCorrente=&quot; + progressivoTurnoCorrente + &quot;, inCorso=&quot; + inCorso + &quot;]&quot;;
+	}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

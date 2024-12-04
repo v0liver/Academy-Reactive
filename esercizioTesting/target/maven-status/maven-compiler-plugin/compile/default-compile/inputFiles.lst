@@ -1,0 +1,10 @@
+C:\Users\V.Oliveri-cons\Documents\rootGit\gitAcademy\esercizioTesting\src\main\java\it\reactive\esercizioTesting\businesslogic\IServiceAsta.java
+C:\Users\V.Oliveri-cons\Documents\rootGit\gitAcademy\esercizioTesting\src\main\java\it\reactive\esercizioTesting\businesslogic\ServiceAsta.java
+C:\Users\V.Oliveri-cons\Documents\rootGit\gitAcademy\esercizioTesting\src\main\java\it\reactive\esercizioTesting\entrypoint\Asta.java
+C:\Users\V.Oliveri-cons\Documents\rootGit\gitAcademy\esercizioTesting\src\main\java\it\reactive\esercizioTesting\exception\AstaInCorsoException.java
+C:\Users\V.Oliveri-cons\Documents\rootGit\gitAcademy\esercizioTesting\src\main\java\it\reactive\esercizioTesting\exception\AstaTerminataException.java
+C:\Users\V.Oliveri-cons\Documents\rootGit\gitAcademy\esercizioTesting\src\main\java\it\reactive\esercizioTesting\exception\PartecipanteEsistenteException.java
+C:\Users\V.Oliveri-cons\Documents\rootGit\gitAcademy\esercizioTesting\src\main\java\it\reactive\esercizioTesting\exception\PartecipanteNonCensitoException.java
+C:\Users\V.Oliveri-cons\Documents\rootGit\gitAcademy\esercizioTesting\src\main\java\it\reactive\esercizioTesting\exception\TurnoNonValidoException.java
+C:\Users\V.Oliveri-cons\Documents\rootGit\gitAcademy\esercizioTesting\src\main\java\it\reactive\esercizioTesting\exception\ValoreNonAmmessoException.java
+C:\Users\V.Oliveri-cons\Documents\rootGit\gitAcademy\esercizioTesting\src\main\java\it\reactive\esercizioTesting\oggetto\SessioneAsta.java
