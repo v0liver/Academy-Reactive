@@ -81,11 +81,13 @@ public class ServiceAstaTest {
     }
 
     @Test
-    public void rilancia() {
+    public void rilanciaConPartecipantePassato() {
         serviceAsta.rilancia("Vito", -10);
         serviceAsta.rilancia("Giuseppe", 20);
         serviceAsta.rilancia("Laura", 40);
         serviceAsta.rilancia("Giuseppe", 50);
+
+        //non posso fare assert perchè non ho l'accesso
 
 
     }
