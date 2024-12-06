@@ -63,7 +63,7 @@ public class SquadraController {
             @ApiResponse(code = 500, message = "Errore server")
     })
     @PutMapping("/aggiungiGiocatore/{idSquadra}")
-    public ResponseEntity<List<Squadra>> aggiungiGiocatore(@PathVariable Integer idSquadra, Giocatore giocatore) {
+    public ResponseEntity<Squadra> aggiungiGiocatore(@PathVariable Integer idSquadra, Giocatore giocatore) {
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
