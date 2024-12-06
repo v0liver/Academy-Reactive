@@ -44,14 +44,14 @@ public class SquadraController {
         return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 
-    @ApiOperation(value = "Ricerca squadre", response = Squadra.class)
+    @ApiOperation(value = "Ricerca squadre", response = Squadra.class, responseContainer = "List")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Squadra cercate", response = Squadra.class, responseContainer = "List"),
+            @ApiResponse(code = 200, message = "Squadra cercate", response = Squadra.class),
             @ApiResponse(code = 400, message = "Dati inseriti non validi"),
             @ApiResponse(code = 500, message = "Errore server")
     })
     @GetMapping("/ricercaSquadre/{completo}")
-    public ResponseEntity<Squadra> ricercaSquadra(@PathVariable boolean completo) {
+    public ResponseEntity<List<Squadra>> ricercaSquadra(@PathVariable @ApiParam("Parametro che decide se restituire delle squadre vuote o pien") boolean completo) {
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
