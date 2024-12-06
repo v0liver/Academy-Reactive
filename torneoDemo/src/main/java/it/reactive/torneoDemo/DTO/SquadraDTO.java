@@ -4,19 +4,20 @@ import it.reactive.torneoDemo.resurce.Giocatore;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 public class SquadraDTO {
     @NotNull
-    @Min(value =  3, message = "Caratteri minimi 3")
+    @Size(min = 3, message = "Caratteri minimi 3")
     String nome;
     String coloriSociali;
 
-    public @NotNull @Min(value = 3, message = "Caratteri minimi 3") String getNome() {
+    public @NotNull @Size(min = 3, message = "Caratteri minimi 3") String getNome() {
         return nome;
     }
 
-    public void setNome(@NotNull @Min(value = 3, message = "Caratteri minimi 3") String nome) {
+    public void setNome(@NotNull @Size(min = 3, message = "Caratteri minimi 3") String nome) {
         this.nome = nome;
     }
 
