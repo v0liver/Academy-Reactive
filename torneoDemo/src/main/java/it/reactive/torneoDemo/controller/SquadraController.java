@@ -23,47 +23,47 @@ public class SquadraController {
 
     @ApiOperation(value = "Aggiungi una squadra", response = Squadra.class)
     @ApiResponses({
-            @ApiResponse(code = 201, message = "Squadra aggiunta",response = Squadra.class),
-            @ApiResponse(code = 400,message = "Dati inseriti non validi"),
-            @ApiResponse(code = 500,message = "Errore server")
+            @ApiResponse(code = 201, message = "Squadra aggiunta", response = Squadra.class),
+            @ApiResponse(code = 400, message = "Dati inseriti non validi"),
+            @ApiResponse(code = 500, message = "Errore server")
     })
     @PostMapping("/salvaSquadra")
-    public ResponseEntity<Squadra> salvaSquadra(@RequestBody SquadraDTO squadraDTO){
-       return ResponseEntity.status(HttpStatus.CREATED).body(null);
+    public ResponseEntity<Squadra> salvaSquadra(@RequestBody SquadraDTO squadraDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 
 
     @ApiOperation(value = "Aggiungi una squadra e una lista giocatori", response = Squadra.class)
     @ApiResponses({
-            @ApiResponse(code = 201, message = "Squadra aggiunta con lista giocatori",response = Squadra.class),
-            @ApiResponse(code = 400,message = "Dati inseriti non validi"),
-            @ApiResponse(code = 500,message = "Errore server")
+            @ApiResponse(code = 201, message = "Squadra aggiunta con lista giocatori", response = Squadra.class),
+            @ApiResponse(code = 400, message = "Dati inseriti non validi"),
+            @ApiResponse(code = 500, message = "Errore server")
     })
     @PostMapping("/salvaSquadraGiocatori")
-    public ResponseEntity<Squadra> salvaSquadraGiocatori(@RequestBody SquadraGiocatoriDTO squadraGiocatoriDTO){
-       return ResponseEntity.status(HttpStatus.CREATED).body(null);
+    public ResponseEntity<Squadra> salvaSquadraGiocatori(@RequestBody SquadraGiocatoriDTO squadraGiocatoriDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 
     @ApiOperation(value = "Ricerca squadre", response = Squadra.class)
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Squadra cercate",response = Squadra.class),
-            @ApiResponse(code = 400,message = "Dati inseriti non validi"),
-            @ApiResponse(code = 500,message = "Errore server")
+            @ApiResponse(code = 200, message = "Squadra cercate", response = Squadra.class, responseContainer = "List"),
+            @ApiResponse(code = 400, message = "Dati inseriti non validi"),
+            @ApiResponse(code = 500, message = "Errore server")
     })
     @GetMapping("/ricercaSquadre/{completo}")
-    public ResponseEntity<List<Squadra>> ricercaSquadra(@PathVariable boolean completo){
+    public ResponseEntity<Squadra> ricercaSquadra(@PathVariable boolean completo) {
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
 
     @ApiOperation(value = "Ricerca squadre", response = Squadra.class)
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Squadra cercate",response = Squadra.class),
-            @ApiResponse(code = 400,message = "Dati inseriti non validi"),
-            @ApiResponse(code = 500,message = "Errore server")
+            @ApiResponse(code = 200, message = "Squadra cercate", response = Squadra.class),
+            @ApiResponse(code = 400, message = "Dati inseriti non validi"),
+            @ApiResponse(code = 500, message = "Errore server")
     })
     @PutMapping("/aggiungiGiocatore/{idSquadra}")
-    public ResponseEntity<List<Squadra>> aggiungiGiocatore(@PathVariable Integer idSquadra,Giocatore giocatore){
+    public ResponseEntity<List<Squadra>> aggiungiGiocatore(@PathVariable Integer idSquadra, Giocatore giocatore) {
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
