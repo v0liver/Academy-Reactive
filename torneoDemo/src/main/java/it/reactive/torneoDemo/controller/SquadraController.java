@@ -51,7 +51,7 @@ public class SquadraController {
             @ApiResponse(code = 500, message = "Errore server")
     })
     @GetMapping("/ricercaSquadre/{completo}")
-    public ResponseEntity<List<Squadra>> ricercaSquadra(@PathVariable @ApiParam("Parametro che decide se restituire delle squadre vuote o pien") boolean completo) {
+    public ResponseEntity<List<Squadra>> ricercaSquadra(@PathVariable @ApiParam("Parametro che decide se restituire delle Squadre vuote o piene") boolean completo) {
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
