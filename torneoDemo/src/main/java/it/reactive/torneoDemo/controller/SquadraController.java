@@ -4,15 +4,14 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import it.reactive.torneoDemo.DTO.GiocatoreDTO;
 import it.reactive.torneoDemo.DTO.SquadraDTO;
 import it.reactive.torneoDemo.DTO.SquadraGiocatoriDTO;
+import it.reactive.torneoDemo.DTO.TifoseriaDTO;
 import it.reactive.torneoDemo.resurce.Giocatore;
 import it.reactive.torneoDemo.resurce.Squadra;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -64,6 +63,32 @@ public class SquadraController {
     })
     @PutMapping("/aggiungiGiocatore/{idSquadra}")
     public ResponseEntity<Squadra> aggiungiGiocatore(@PathVariable Integer idSquadra, Giocatore giocatore) {
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+
+    @ApiOperation(value = "Aggiungi o Aggiorna tifoseria", response = Squadra.class)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Tifoseria creata/aggiornata", response = Squadra.class),
+            @ApiResponse(code = 400, message = "Dati inseriti non validi"),
+            @ApiResponse(code = 500, message = "Errore server")
+    })
+    @PutMapping("/aggiungiTifoseria/{idSquadra}")
+    public ResponseEntity<Squadra> aggiungiTifoseria(@PathVariable Integer idSquadra,@RequestBody TifoseriaDTO tifoseriaDTO) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    @ApiOperation(value = "Elimino squadra con relativi giocatori", response = Squadra.class, responseContainer =
+            "List")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Squadra eliminata con successo", response = Squadra.class),
+            @ApiResponse(code = 400, message = "Dati inseriti non validi"),
+            @ApiResponse(code = 500, message = "Errore server")
+    })
+    @DeleteMapping("/eliminaSquadra/{idSquadra}")
+    public ResponseEntity<List<Squadra>> eliminaSquadra(@PathVariable Integer idSquadra) {
+
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 

@@ -1,11 +1,8 @@
 package it.reactive.torneoDemo.DTO;
 
-import it.reactive.torneoDemo.resurce.Giocatore;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Set;
 
 public class SquadraDTO {
     @NotNull
