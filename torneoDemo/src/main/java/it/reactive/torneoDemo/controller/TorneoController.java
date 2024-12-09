@@ -3,62 +3,65 @@ package it.reactive.torneoDemo.controller;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import it.reactive.torneoDemo.DTO.TorneoDTO;
-import it.reactive.torneoDemo.resurce.Torneo;
+import it.reactive.torneoDemo.DTO.torneo.TorneoDTO;
+import it.reactive.torneoDemo.resource.TorneoResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "torneo", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "tornei", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class TorneoController {
-    @ApiOperation(value = "Crea un torneo", response = Torneo.class)
-    @ApiResponses({
-            @ApiResponse(code = 201, message = "torneo aggiunto", response = Torneo.class),
+
+
+    @ApiOperation(value = "Creo un nuovo torneo", response = TorneoResponse.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Torneo creato con sucesso"),
             @ApiResponse(code = 400, message = "Dati inseriti non validi"),
-            @ApiResponse(code = 500, message = "Errore server")
+            @ApiResponse(code = 500, message = "Errore del server")
     })
-    @PostMapping("/aggiungiTorneo")
-    public ResponseEntity<Torneo> aggiungiTorneo(@RequestBody TorneoDTO torneoDTO) {
+    @PostMapping
+    public ResponseEntity<TorneoResponse> aggiungiTorneo(@RequestBody @Valid TorneoDTO torneoDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 
-    @ApiOperation(value = "censisci squadra al torneo", response = Torneo.class)
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Squadra aggiunta al torneo", response = Torneo.class),
+
+    @ApiOperation(value = "Censisco una squadra al torneo", response = TorneoResponse.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Sqadra aggiunta al torneo con sucesso"),
             @ApiResponse(code = 400, message = "Dati inseriti non validi"),
-            @ApiResponse(code = 500, message = "Errore server")
+            @ApiResponse(code = 500, message = "Errore del server")
     })
-    @PutMapping("/censisciSquadra/{idSquadra}/{idTorneo}")
-    public ResponseEntity<Torneo> censisciSquadra(@PathVariable Integer idSquadra,@PathVariable Integer idTorneo) {
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+    @PutMapping("/addSquadraToTorneo/{idTorneo}/{idSquadra}")
+    public ResponseEntity<TorneoResponse> censitaSquadraAlTorneo(@PathVariable Integer idTorneo, @PathVariable Integer idSquadra){
+        return ResponseEntity.ok(null);
     }
 
-    @ApiOperation(value = "Ricerca torneo", response = Torneo.class, responseContainer = "List")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Tornei e squadre recuperate", response = Torneo.class),
+
+    @ApiOperation(value = "Ritorna tutti i tornei con tutte le squadre", response = TorneoResponse.class, responseContainer = "List")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Tornei e squadre recuperato con sucesso"),
             @ApiResponse(code = 400, message = "Dati inseriti non validi"),
-            @ApiResponse(code = 500, message = "Errore server")
+            @ApiResponse(code = 500, message = "Errore del server")
     })
-    @GetMapping("/ricercaTorneo")
-    public ResponseEntity<List<Torneo>> ricercaTorneo() {
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+    @GetMapping()
+    public ResponseEntity<List<TorneoResponse>> getTorneoEndSquadre(){
+        return ResponseEntity.ok(null);
     }
 
-    @ApiOperation(value = "Elimino squadra e giocatori", response = Torneo.class, responseContainer =
-            "List")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Torneo e squadre eliminate", response = Torneo.class),
+    @ApiOperation(value = "Elimino il torneo con relative squadre assciare se non fanno parte di una altro torneo con relativi giocatori", response = TorneoResponse.class, responseContainer = "List")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Tornei,squadre e giocatori eliminati con sucesso"),
             @ApiResponse(code = 400, message = "Dati inseriti non validi"),
-            @ApiResponse(code = 500, message = "Errore server")
+            @ApiResponse(code = 500, message = "Errore del server")
     })
-    @DeleteMapping("/eliminaTorneo/{idTorneo}")
-    public ResponseEntity<List<Torneo>> eliminaTorneo(@PathVariable Integer idTorneo) {
-
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+    @DeleteMapping("/{idTorneo}")
+    public ResponseEntity<List<TorneoResponse>> eliminaTorneoConSquadreAndGiocatori(@PathVariable Integer idTorneo){
+        return ResponseEntity.ok(null);
     }
 
 }
