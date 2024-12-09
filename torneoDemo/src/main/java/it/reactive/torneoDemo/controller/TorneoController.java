@@ -37,7 +37,7 @@ public class TorneoController {
             @ApiResponse(code = 500, message = "Errore del server")
     })
     @PutMapping("/addSquadraToTorneo/{idTorneo}/{idSquadra}")
-    public ResponseEntity<TorneoResponse> censitaSquadraAlTorneo(@PathVariable Integer idTorneo, @PathVariable Integer idSquadra){
+    public ResponseEntity<TorneoResponse> censitaSquadraAlTorneo(@PathVariable Integer idTorneo, @PathVariable Integer idSquadra) {
         return ResponseEntity.ok(null);
     }
 
@@ -49,7 +49,7 @@ public class TorneoController {
             @ApiResponse(code = 500, message = "Errore del server")
     })
     @GetMapping()
-    public ResponseEntity<List<TorneoResponse>> getTorneoEndSquadre(){
+    public ResponseEntity<List<TorneoResponse>> getTorneoEndSquadre() {
         return ResponseEntity.ok(null);
     }
 
@@ -60,7 +60,7 @@ public class TorneoController {
             @ApiResponse(code = 500, message = "Errore del server")
     })
     @DeleteMapping("/{idTorneo}")
-    public ResponseEntity<List<TorneoResponse>> eliminaTorneoConSquadreAndGiocatori(@PathVariable Integer idTorneo){
+    public ResponseEntity<List<TorneoResponse>> eliminaTorneoConSquadreAndGiocatori(@PathVariable Integer idTorneo) {
         return ResponseEntity.ok(null);
     }
 

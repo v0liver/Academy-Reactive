@@ -14,7 +14,8 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("it.reactive.torneoDemo")) //Path che va modificato in base al path da tracciare con swagger
-                .build();    }
+                .build();
+    }
 
     @Bean
     public InternalResourceViewResolver defaultViewResolver() {

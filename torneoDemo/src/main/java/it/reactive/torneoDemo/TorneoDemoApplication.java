@@ -8,8 +8,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 public class TorneoDemoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TorneoDemoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(TorneoDemoApplication.class, args);
+    }
 
 }

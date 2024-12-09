@@ -13,10 +13,11 @@ public class GiocatoreResponse {
         this.idGiocatore = idGiocatore;
         this.nomeCognome = nomeCognome;
         this.numeroAmmonizioni = numeroAmmonizioni;
-        this.trasferimenti= trasferimenti;
+        this.trasferimenti = trasferimenti;
     }
 
-    public GiocatoreResponse() {}
+    public GiocatoreResponse() {
+    }
 
     public Integer getIdGiocatore() {
         return idGiocatore;
