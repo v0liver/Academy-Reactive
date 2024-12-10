@@ -7,16 +7,12 @@ public class CustomException extends RuntimeException {
     private String messaggio;
 
     public CustomException(String codErr, String messaggio) {
-        super(messaggio);
+        this.messaggio=messaggio;
         this.codErr = codErr;
     }
 
     public String getCodErr() {
         return codErr;
-    }
-
-    public void setCodErr(String codErr) {
-        this.codErr = codErr;
     }
 
     public String getMessaggio() {
@@ -26,4 +22,9 @@ public class CustomException extends RuntimeException {
     public void setMessaggio(String messaggio) {
         this.messaggio = messaggio;
     }
+
+    public void setCodErr(String codErr) {
+        this.codErr = codErr;
+    }
+
 }

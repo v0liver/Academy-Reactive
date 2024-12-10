@@ -9,6 +9,7 @@ import it.reactive.torneoDemo.DTO.squadra.SquadraDTO;
 import it.reactive.torneoDemo.DTO.squadra.SquadraGiocatoreDTO;
 import it.reactive.torneoDemo.DTO.tifoseria.TifoseriaDTO;
 import it.reactive.torneoDemo.eccezioni.CustomException;
+import it.reactive.torneoDemo.resource.EccezioneResponse;
 import it.reactive.torneoDemo.resource.SquadraResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -40,7 +41,11 @@ public class SquadraController {
             @ApiResponse(code = 201, message = "Squadra e giocatori creata con successo", response = SquadraResponse.class),
             @ApiResponse(code = 400, message = "Dati inseriti non validi"),
             @ApiResponse(code = 500, message = "Errore del server"),
-            @ApiResponse(code = 550, message = "La squadra gia censita", response = CustomException.class)
+            @ApiResponse(code = 550, message = "\t\n" +
+                    "Il servizio va in errore con i cod:\n" +
+                    "\n" +
+                    "• C1 in caso di squadra già censita\n" +
+                    "• C6 in caso di errore di validazione", response = EccezioneResponse.class)
     })
     @PostMapping("/squadregiocatori")
     public ResponseEntity<SquadraResponse> salvaSquadraSquadraGiocatori(@RequestBody @Valid SquadraGiocatoreDTO squadraGiocatoreDTO) {

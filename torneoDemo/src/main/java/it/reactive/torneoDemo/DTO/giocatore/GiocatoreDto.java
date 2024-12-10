@@ -18,4 +18,7 @@ public class GiocatoreDto {
     public void setNomeCognome(String nome) {
         this.nome = nome;
     }
+
+    public GiocatoreDto() {
+    }
 }
