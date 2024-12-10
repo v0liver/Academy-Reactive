@@ -8,7 +8,7 @@ import it.reactive.torneoDemo.DTO.giocatore.GiocatoreDto;
 import it.reactive.torneoDemo.DTO.squadra.SquadraDTO;
 import it.reactive.torneoDemo.DTO.squadra.SquadraGiocatoreDTO;
 import it.reactive.torneoDemo.DTO.tifoseria.TifoseriaDTO;
-import it.reactive.torneoDemo.eccezioni.CustomException;
+import it.reactive.torneoDemo.exception.CustomException;
 import it.reactive.torneoDemo.resource.EccezioneResponse;
 import it.reactive.torneoDemo.resource.SquadraResponse;
 import org.springframework.http.HttpStatus;

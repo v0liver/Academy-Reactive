@@ -1,4 +1,4 @@
-package it.reactive.torneoDemo.eccezioni;
+package it.reactive.torneoDemo.exception;
 
 import it.reactive.torneoDemo.resource.EccezioneResponse;
 import org.springframework.http.HttpHeaders;

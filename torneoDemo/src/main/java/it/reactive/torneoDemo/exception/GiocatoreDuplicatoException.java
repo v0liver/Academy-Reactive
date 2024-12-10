@@ -1,4 +1,4 @@
-package it.reactive.torneoDemo.eccezioni;
+package it.reactive.torneoDemo.exception;
 
 public class GiocatoreDuplicatoException extends CustomException {
 

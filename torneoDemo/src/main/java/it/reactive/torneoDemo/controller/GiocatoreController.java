@@ -3,7 +3,6 @@ package it.reactive.torneoDemo.controller;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import it.reactive.torneoDemo.eccezioni.GiocatoreDuplicatoException;
 import it.reactive.torneoDemo.resource.GiocatoreResponse;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
