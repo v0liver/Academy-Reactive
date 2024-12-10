@@ -95,6 +95,5 @@ public class SquadraController {
         return ResponseEntity.noContent().build();
     }
 
-    //TODO vedere il tipo di ritorno
 
 }
