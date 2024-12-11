@@ -3,7 +3,6 @@ package it.reactive.torneoDemo.DTO.squadra;
 import it.reactive.torneoDemo.DTO.giocatore.GiocatoreDto;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -13,7 +12,7 @@ public class SquadraGiocatoreDTO {
     @Size(min = 3, max = 20)
     private String nome;
     private String coloreSociale;
-    private List<GiocatoreDto> gicatori;
+    private List<GiocatoreDto> giocatori;
 
     public String getNome() {
         return nome;
@@ -31,11 +30,11 @@ public class SquadraGiocatoreDTO {
         this.coloreSociale = coloreSociale;
     }
 
-    public List<GiocatoreDto> getGicatori() {
-        return gicatori;
+    public List<GiocatoreDto> getGiocatori() {
+        return giocatori;
     }
 
-    public void setGicatori(List<GiocatoreDto> gicatori) {
-        this.gicatori = gicatori;
+    public void setGiocatori(List<GiocatoreDto> giocatori) {
+        this.giocatori = giocatori;
     }
 }
