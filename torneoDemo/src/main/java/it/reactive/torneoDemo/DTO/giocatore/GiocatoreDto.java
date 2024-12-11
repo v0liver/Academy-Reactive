@@ -5,18 +5,16 @@ import javax.validation.constraints.NotBlank;
 
 public class GiocatoreDto {
 
-    @NotBlank(message = "Il nome non puo essere null")
-    private String nome;
 
     @NotBlank(message = "Il nome non puo essere null")
-    private String cognome;
+    private String nomeCognome;
 
-    public String getNomeCognome() {
-        return nome;
+    public @NotBlank(message = "Il nome non puo essere null") String getNomeCognome() {
+        return nomeCognome;
     }
 
-    public void setNomeCognome(String nome) {
-        this.nome = nome;
+    public void setNomeCognome(@NotBlank(message = "Il nome non puo essere null") String nomeCognome) {
+        this.nomeCognome = nomeCognome;
     }
 
     public GiocatoreDto() {

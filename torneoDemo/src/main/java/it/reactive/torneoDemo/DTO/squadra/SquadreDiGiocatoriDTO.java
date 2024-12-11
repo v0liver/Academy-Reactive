@@ -8,16 +8,16 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
-public class SquadraGiocatoreDTO {
+public class SquadreDiGiocatoriDTO {
 
     @NotBlank
-    @Size(min = 3, max = 20)
+    @Size(min = 3, max = 20, message = "Il nome della squadra deve essere almeno di 3 caratterie e massimo di 20")
     private String nome;
     @NotBlank
     private String coloriSociali;
     @NotNull
     @Valid
-    private List<GiocatoreDto> giocatori;
+    private List<GiocatoreDto> listaGiocatori;
 
     public String getNome() {
         return nome;
@@ -35,11 +35,11 @@ public class SquadraGiocatoreDTO {
         this.coloriSociali = coloriSociali;
     }
 
-    public List<GiocatoreDto> getGiocatori() {
-        return giocatori;
+    public List<GiocatoreDto> getListaGiocatori() {
+        return listaGiocatori;
     }
 
-    public void setGiocatori(List<GiocatoreDto> giocatori) {
-        this.giocatori = giocatori;
+    public void setListaGiocatori(List<GiocatoreDto> listaGiocatori) {
+        this.listaGiocatori = listaGiocatori;
     }
 }

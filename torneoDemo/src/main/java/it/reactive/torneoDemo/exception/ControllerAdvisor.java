@@ -33,10 +33,32 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<Object> constraintViolationException(CustomException e){
+    public ResponseEntity<Object> constraintViolationException(ConstraintViolationException e){
+        EccezioneResponse ex = new EccezioneResponse();
+        ex.setCod("C6");
+        ex.setDes("Errore di validazione");
+        //ex.setError(e.getMessage());
+        return ResponseEntity.status(550).body(ex);
 
-        return ResponseEntity.noContent().build();
     }
+
+//    @ExceptionHandler(MethodArgumentNotValidException.class)
+//    public ResponseEntity<Object> MethodArgumentNotValidException(MethodArgumentNotValidException ex){
+//
+//        List<String> errors = new ArrayList<String>();
+//        for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+//            errors.add(error.getField() + ": " + error.getDefaultMessage());
+//        }
+//        for (ObjectError error : ex.getBindingResult().getGlobalErrors()) {
+//            errors.add(error.getObjectName() + ": " + error.getDefaultMessage());
+//        }
+//        Map<String, Object> body = new LinkedHashMap<>();
+//        body.put("message", ex.getMessage());
+//        body.put("errors", errors);
+//        body.put("COD","C6");
+//
+//        return ResponseEntity.status(550).body(body);
+//    }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -48,10 +70,15 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
             errors.add(error.getObjectName() + ": " + error.getDefaultMessage());
         }
         Map<String, Object> body = new LinkedHashMap<>();
-        body.put("message", ex.getMessage());
+        body.put("des", ex.getMessage());
         body.put("errors", errors);
-        body.put("codErr","C6");
+        body.put("cod","C6");
 
         return ResponseEntity.status(550).body(body);
+//        EccezioneResponse e = new EccezioneResponse();
+//        e.setCod("C6");
+//        e.setDes("Errore di validazione");
+//        //ex.setError(e.getMessage());
+//        return ResponseEntity.status(550).body(e);
     }
 }

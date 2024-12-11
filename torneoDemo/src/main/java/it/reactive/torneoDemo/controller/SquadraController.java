@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import it.reactive.torneoDemo.DTO.giocatore.GiocatoreDto;
 import it.reactive.torneoDemo.DTO.squadra.SquadraDTO;
-import it.reactive.torneoDemo.DTO.squadra.SquadraGiocatoreDTO;
+import it.reactive.torneoDemo.DTO.squadra.SquadreDiGiocatoriDTO;
 import it.reactive.torneoDemo.DTO.tifoseria.TifoseriaDTO;
 import it.reactive.torneoDemo.exception.CustomException;
 import it.reactive.torneoDemo.resource.EccezioneResponse;
@@ -14,6 +14,7 @@ import it.reactive.torneoDemo.resource.SquadraResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,6 +24,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "squadre", produces = {MediaType.APPLICATION_JSON_VALUE})
+@Validated
 public class SquadraController {
 
     @ApiOperation(value = "Creao una nuova squadra", response = SquadraResponse.class)
@@ -42,15 +44,15 @@ public class SquadraController {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Squadra e giocatori creata con successo", response = SquadraResponse.class),
             @ApiResponse(code = 400, message = "Dati inseriti non validi"),
-            @ApiResponse(code = 500, message = "Errore del server"),
+            //@ApiResponse(code = 500, message = "Errore del server"),
             @ApiResponse(code = 550, message = "\t\n" +
                     "Il servizio va in errore con i cod:\n" +
                     "\n" +
                     "• C1 in caso di squadra già censita\n" +
                     "• C6 in caso di errore di validazione", response = EccezioneResponse.class)
     })
-    @PostMapping("/squadregiocatori")
-    public ResponseEntity<SquadraResponse> salvaSquadraSquadraGiocatori(@RequestBody @Valid SquadraGiocatoreDTO squadraGiocatoreDTO) {
+    @PostMapping("/squadreGiocatori")
+    public ResponseEntity<SquadraResponse> salvaSquadraSquadraGiocatori(@RequestBody @Valid SquadreDiGiocatoriDTO squadreDiGiocatoriDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 
@@ -61,7 +63,7 @@ public class SquadraController {
             @ApiResponse(code = 400, message = "Dati inseriti non validi"),
             @ApiResponse(code = 500, message = "Errore del server")
     })
-    @GetMapping("/ricercaSquadre/completo")
+    @GetMapping
     public ResponseEntity<List<SquadraResponse>> ricercaSquadra(@RequestParam @ApiParam("Parametro che mi inizializza una lista di giocatori vuota o meno") boolean completo) {
         return ResponseEntity.ok(null);
     }
@@ -72,7 +74,7 @@ public class SquadraController {
             @ApiResponse(code = 400, message = "Dati inseriti non validi"),
             @ApiResponse(code = 500, message = "errore di server")})
     @PutMapping("/addGiocatore/{id}")
-    public ResponseEntity<SquadraResponse> aggiungiGiocatore(@PathVariable @ApiParam(value = "id squadra", required = true) Integer id, @Valid @RequestBody @ApiParam(value = "giocatoreDTO", required = true) GiocatoreDto giocatoreDTO) {
+    public ResponseEntity<SquadraResponse> aggiungiGiocatore(@PathVariable @ApiParam(value = "id squadra", required = true) @Min(0) @Max(10000) Integer id, @Valid @RequestBody @ApiParam(value = "giocatoreDTO", required = true) GiocatoreDto giocatoreDTO) {
         return ResponseEntity.ok(null);
     }
 
@@ -81,9 +83,9 @@ public class SquadraController {
             @ApiResponse(code = 200, message = "Tifoseria aggiornata o creata con sucesso", response = SquadraResponse.class),
             @ApiResponse(code = 400, message = "Dati inseriti non validi"),
             @ApiResponse(code = 500, message = "errore di server")})
-    @PutMapping("/addTifoseria/{id}")
+    @PutMapping("/addTifoseria/{idSquadra}")
     public ResponseEntity<SquadraResponse> aggiungiTifoseria(@PathVariable @ApiParam(value = "id squadra", required =
-            true) Integer id, @RequestBody @ApiParam(value = "tifoseria") TifoseriaDTO tifoseriaDTO) {
+            true) @Min(0) @Max(10000) Integer idSquadra, @RequestBody @ApiParam(value = "tifoseria") @Valid TifoseriaDTO tifoseriaDTO) {
         return ResponseEntity.ok(null);
     }
 
@@ -93,7 +95,7 @@ public class SquadraController {
             @ApiResponse(code = 200, message = "Squadra eliminata con sucesso", response = SquadraResponse.class, responseContainer = "List"),
             @ApiResponse(code = 400, message = "Dati inseriti non validi"),
             @ApiResponse(code = 500, message = "errore di server")})
-    @DeleteMapping("/eliminaSquadra/{idSquadra}")
+    @DeleteMapping("/{idSquadra}")
     public ResponseEntity<Void> rimuoviSquadra(@PathVariable @Min(0) @Max(10000) Integer idSquadra) {
         return ResponseEntity.noContent().build();
     }

@@ -6,15 +6,12 @@ import javax.validation.constraints.Size;
 public class SquadraDTO {
 
     @NotBlank
-    @Size(min = 3, max = 20, message = "Il nome della squadra deve essere almeno di 3 caratterie massimo di 20")
+    @Size(min = 3, max = 20, message = "Il nome della squadra deve essere almeno di 3 caratterie e massimo di 20")
     private String nome;
-    private String coloreSociale;
+    @NotBlank
+    private String coloriSociali;
 
 
-    public SquadraDTO() {
-        this.nome = nome;
-        this.coloreSociale = coloreSociale;
-    }
 
     public String getNome() {
         return nome;
@@ -24,11 +21,11 @@ public class SquadraDTO {
         this.nome = nome;
     }
 
-    public String getColoreSociale() {
-        return coloreSociale;
+    public String getColoriSociali() {
+        return coloriSociali;
     }
 
-    public void setColoreSociale(String coloreSociale) {
-        this.coloreSociale = coloreSociale;
+    public void setColoriSociali(String coloriSociali) {
+        this.coloriSociali = coloriSociali;
     }
 }

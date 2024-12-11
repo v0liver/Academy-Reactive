@@ -1,18 +1,17 @@
 package it.reactive.torneoDemo.DTO.tifoseria;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 public class TifoseriaDTO {
 
     @NotBlank
-    private String nome;
+    private String nomeTifoseria;
 
-    public @NotNull String getNome() {
-        return nome;
+    public  String getNomeTifoseria() {
+        return nomeTifoseria;
     }
 
-    public void setNome(@NotNull String nome) {
-        this.nome = nome;
+    public void setNomeTifoseria(String nomeTifoseria) {
+        this.nomeTifoseria = nomeTifoseria;
     }
 }
