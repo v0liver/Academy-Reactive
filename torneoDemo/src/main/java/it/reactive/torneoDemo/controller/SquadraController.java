@@ -32,7 +32,7 @@ public class SquadraController {
             @ApiResponse(code = 201, message = "Squadra creata con successo"),
             @ApiResponse(code = 400, message = "Dati inseriti non validi"),
             @ApiResponse(code = 500, message = "Errore del server"),
-            @ApiResponse(code = 550, message = "Squadra duplicata", response = CustomException.class)
+            @ApiResponse(code = 550, message = "Squadra duplicata", response = EccezioneResponse.class)
     })
     @PostMapping
     public ResponseEntity<SquadraResponse> salvaSquadra(@RequestBody @Valid SquadraDTO squadraDTO) {
