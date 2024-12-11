@@ -14,10 +14,10 @@ public class SquadraGiocatoreDTO {
     @Size(min = 3, max = 20)
     private String nome;
     @NotBlank
-    private String coloreSociale;
+    private String coloriSociali;
     @NotNull
     @Valid
-    private List<GiocatoreDto> listaGiocatori;
+    private List<GiocatoreDto> giocatori;
 
     public String getNome() {
         return nome;
@@ -27,19 +27,19 @@ public class SquadraGiocatoreDTO {
         this.nome = nome;
     }
 
-    public String getColoreSociale() {
-        return coloreSociale;
+    public String getColoriSociali() {
+        return coloriSociali;
     }
 
-    public void setColoreSociale(String coloreSociale) {
-        this.coloreSociale = coloreSociale;
+    public void setColoriSociali(String coloriSociali) {
+        this.coloriSociali = coloriSociali;
     }
 
-    public List<GiocatoreDto> getListaGiocatori() {
-        return listaGiocatori;
+    public List<GiocatoreDto> getGiocatori() {
+        return giocatori;
     }
 
-    public void setListaGiocatori(List<GiocatoreDto> listaGiocatori) {
-        this.listaGiocatori = listaGiocatori;
+    public void setGiocatori(List<GiocatoreDto> giocatori) {
+        this.giocatori = giocatori;
     }
 }
