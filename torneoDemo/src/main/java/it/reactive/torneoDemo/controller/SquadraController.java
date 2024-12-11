@@ -17,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 @RestController
@@ -80,7 +82,8 @@ public class SquadraController {
             @ApiResponse(code = 400, message = "Dati inseriti non validi"),
             @ApiResponse(code = 500, message = "errore di server")})
     @PutMapping("/addTifoseria/{id}")
-    public ResponseEntity<SquadraResponse> aggiungiTifoseria(@PathVariable @ApiParam(value = "id squadra", required = true) Long id, @RequestBody @ApiParam(value = "tifoseria") TifoseriaDTO tifoseriaDTO) {
+    public ResponseEntity<SquadraResponse> aggiungiTifoseria(@PathVariable @ApiParam(value = "id squadra", required =
+            true) Integer id, @RequestBody @ApiParam(value = "tifoseria") TifoseriaDTO tifoseriaDTO) {
         return ResponseEntity.ok(null);
     }
 
@@ -91,7 +94,7 @@ public class SquadraController {
             @ApiResponse(code = 400, message = "Dati inseriti non validi"),
             @ApiResponse(code = 500, message = "errore di server")})
     @DeleteMapping("/eliminaSquadra/{idSquadra}")
-    public ResponseEntity<Void> rimuoviSquadra(@PathVariable Integer idSquadra) {
+    public ResponseEntity<Void> rimuoviSquadra(@PathVariable @Min(0) @Max(10000) Integer idSquadra) {
         return ResponseEntity.noContent().build();
     }
 

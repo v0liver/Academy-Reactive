@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 @RestController
@@ -60,7 +62,7 @@ public class TorneoController {
             @ApiResponse(code = 500, message = "Errore del server")
     })
     @DeleteMapping("/{idTorneo}")
-    public ResponseEntity<List<TorneoResponse>> eliminaTorneoConSquadreAndGiocatori(@PathVariable Integer idTorneo) {
+    public ResponseEntity<List<TorneoResponse>> eliminaTorneoConSquadreAndGiocatori(@PathVariable @Min(0) @Max(10000) Integer idTorneo) {
         return ResponseEntity.ok(null);
     }
 
