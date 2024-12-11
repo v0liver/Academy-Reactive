@@ -33,7 +33,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<Object> constraintViolationException(ConstraintViolationException e){
+    public ResponseEntity<Object> constraintViolationException(ConstraintViolationException e) {
         EccezioneResponse ex = new EccezioneResponse();
         ex.setCod("C6");
         ex.setDes("Errore di validazione");
@@ -72,7 +72,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("des", ex.getMessage());
         body.put("errors", errors);
-        body.put("cod","C6");
+        body.put("cod", "C6");
 
         return ResponseEntity.status(550).body(body);
 //        EccezioneResponse e = new EccezioneResponse();

@@ -12,7 +12,6 @@ public class SquadraDTO {
     private String coloriSociali;
 
 
-
     public String getNome() {
         return nome;
     }

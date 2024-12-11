@@ -7,7 +7,7 @@ public class TifoseriaDTO {
     @NotBlank
     private String nomeTifoseria;
 
-    public  String getNomeTifoseria() {
+    public String getNomeTifoseria() {
         return nomeTifoseria;
     }
 
