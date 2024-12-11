@@ -1,7 +1,5 @@
 package it.reactive.torneoDemo.resource;
 
-import java.util.List;
-
 public class EccezioneResponse {
 
     private String cod;

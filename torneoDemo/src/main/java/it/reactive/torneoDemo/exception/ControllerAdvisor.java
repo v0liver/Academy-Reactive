@@ -14,9 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
@@ -69,16 +67,9 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         for (ObjectError error : ex.getBindingResult().getGlobalErrors()) {
             errors.add(error.getObjectName() + ": " + error.getDefaultMessage());
         }
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("des", ex.getMessage());
-        body.put("errors", errors);
-        body.put("cod", "C6");
-
-        return ResponseEntity.status(550).body(body);
-//        EccezioneResponse e = new EccezioneResponse();
-//        e.setCod("C6");
-//        e.setDes("Errore di validazione");
-//        //ex.setError(e.getMessage());
-//        return ResponseEntity.status(550).body(e);
+        EccezioneResponse e = new EccezioneResponse();
+        e.setCod("C6");
+        e.setDes(errors.toString());
+        return ResponseEntity.status(550).body(e);
     }
 }
