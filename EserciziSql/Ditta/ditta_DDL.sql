@@ -1,7 +1,7 @@
-drop table if exists fornitori;
-drop table if exists clienti;
 drop table if exists fatture;
+drop table if exists clienti;
 drop table if exists prodotti;
+drop table if exists fornitori;
 
 CREATE TABLE clienti(
 	numeroCliente integer PRIMARY KEY,
