@@ -1,18 +1,15 @@
 package it.reactive.torneoDemo.model;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.Set;
 
 
 public class SquadraModel {
     private Integer idSquadra;
-    @NotBlank
-    @Size(min = 3, max = 20, message = "Il nome della squadra deve essere almeno di 3 caratterie e massimo di 20")
     private String nome;
-    @NotBlank
     private String coloriSociali;
     private Set<GiocatoreModel> giocatori;
+    private TifoseriaModel tifoseria;
+    private Set<TorneoModel> tornei;
 
     public TifoseriaModel getTifoseria() {
         return tifoseria;
@@ -22,7 +19,6 @@ public class SquadraModel {
         this.tifoseria = tifoseria;
     }
 
-    private TifoseriaModel tifoseria;
 
     public Integer getIdSquadra() {
         return idSquadra;
@@ -57,14 +53,12 @@ public class SquadraModel {
     }
 
 
-
-    public Set<Torneo> getTornei() {
+    public Set<TorneoModel> getTornei() {
         return tornei;
     }
 
-    public void setTornei(Set<Torneo> tornei) {
+    public void setTornei(Set<TorneoModel> tornei) {
         this.tornei = tornei;
     }
 
-    Set<Torneo> tornei;
 }

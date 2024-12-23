@@ -1,826 +1,826 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "description": "Api Documentation",
-        "version": "1.0",
-        "title": "Api Documentation",
-        "termsOfService": "urn:tos",
-        "contact": {},
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0"
-        }
-    },
-    "host": "localhost:8080",
-    "basePath": "/",
-    "tags": [
-        {
-            "name": "giocatore-controller",
-            "description": "Giocatore Controller"
-        },
-        {
-            "name": "squadra-controller",
-            "description": "Squadra Controller"
-        },
-        {
-            "name": "torneo-controller",
-            "description": "Torneo Controller"
-        }
-    ],
-    "paths": {
-        "/giocatori/updateAmmonizioni/{idGiocatore}": {
-            "put": {
-                "tags": [
-                    "giocatore-controller"
-                ],
-                "summary": "Aggiorna ammonizione per un determinato giocatore",
-                "operationId": "aggiornaAmmonizioneUsingPUT",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "idGiocatore",
-                        "in": "path",
-                        "description": "idGiocatore",
-                        "required": true,
-                        "type": "integer",
-                        "maximum": 10000,
-                        "exclusiveMaximum": false,
-                        "minimum": 0,
-                        "exclusiveMinimum": false,
-                        "format": "int32"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Aggiorna ammonizioe",
-                        "schema": {
-                            "$ref": "#/definitions/GiocatoreResponse"
-                        }
-                    },
-                    "201": {
-                        "description": "Created"
-                    },
-                    "400": {
-                        "description": "Dati inseriti non validi"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    },
-                    "500": {
-                        "description": "Errore di server"
-                    }
-                }
-            }
-        },
-        "/squadre": {
-            "get": {
-                "tags": [
-                    "squadra-controller"
-                ],
-                "summary": "Ricerca squadra con lista giocatori",
-                "operationId": "ricercaSquadraUsingGET",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "completo",
-                        "in": "query",
-                        "description": "Parametro che mi inizializza una lista di giocatori vuota o meno",
-                        "required": true,
-                        "type": "boolean"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Ricerca avvenuta con sucesso",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/SquadraResponse"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Dati inseriti non validi"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    },
-                    "500": {
-                        "description": "Errore del server"
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "squadra-controller"
-                ],
-                "summary": "Creao una nuova squadra",
-                "operationId": "salvaSquadraUsingPOST",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "squadraDTO",
-                        "description": "squadraDTO",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/SquadraDTO"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/SquadraResponse"
-                        }
-                    },
-                    "201": {
-                        "description": "Squadra creata con successo",
-                        "schema": {
-                            "$ref": "#/definitions/SquadraResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Dati inseriti non validi"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    },
-                    "500": {
-                        "description": "Errore del server"
-                    },
-                    "550": {
-                        "description": "Squadra duplicata",
-                        "schema": {
-                            "$ref": "#/definitions/EccezioneResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/squadre/addGiocatore/{id}": {
-            "put": {
-                "tags": [
-                    "squadra-controller"
-                ],
-                "summary": "Aggiungo una giocatore ad una determinata squadra",
-                "operationId": "aggiungiGiocatoreUsingPUT",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "giocatoreDTO",
-                        "description": "giocatoreDTO",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/GiocatoreDto"
-                        }
-                    },
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "id squadra",
-                        "required": true,
-                        "type": "integer",
-                        "maximum": 10000,
-                        "exclusiveMaximum": false,
-                        "minimum": 0,
-                        "exclusiveMinimum": false,
-                        "format": "int32"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Squadre cercate",
-                        "schema": {
-                            "$ref": "#/definitions/SquadraResponse"
-                        }
-                    },
-                    "201": {
-                        "description": "Created"
-                    },
-                    "400": {
-                        "description": "Dati inseriti non validi"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    },
-                    "500": {
-                        "description": "errore di server"
-                    }
-                }
-            }
-        },
-        "/squadre/addTifoseria/{idSquadra}": {
-            "put": {
-                "tags": [
-                    "squadra-controller"
-                ],
-                "summary": "Aggiorno una tifoseria se no ne creo una",
-                "operationId": "aggiungiTifoseriaUsingPUT",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "idSquadra",
-                        "in": "path",
-                        "description": "id squadra",
-                        "required": true,
-                        "type": "integer",
-                        "maximum": 10000,
-                        "exclusiveMaximum": false,
-                        "minimum": 0,
-                        "exclusiveMinimum": false,
-                        "format": "int32"
-                    },
-                    {
-                        "in": "body",
-                        "name": "tifoseriaDTO",
-                        "description": "tifoseria",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/TifoseriaDTO"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Tifoseria aggiornata o creata con sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/SquadraResponse"
-                        }
-                    },
-                    "201": {
-                        "description": "Created"
-                    },
-                    "400": {
-                        "description": "Dati inseriti non validi"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    },
-                    "500": {
-                        "description": "errore di server"
-                    }
-                }
-            }
-        },
-        "/squadre/squadreGiocatori": {
-            "post": {
-                "tags": [
-                    "squadra-controller"
-                ],
-                "summary": "Creao una nuova squadra con la lista di giocatore",
-                "operationId": "salvaSquadraSquadraGiocatoriUsingPOST",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "squadreDiGiocatoriDTO",
-                        "description": "squadreDiGiocatoriDTO",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/SquadreDiGiocatoriDTO"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/SquadraResponse"
-                        }
-                    },
-                    "201": {
-                        "description": "Squadra e giocatori creata con successo",
-                        "schema": {
-                            "$ref": "#/definitions/SquadraResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Dati inseriti non validi"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    },
-                    "550": {
-                        "description": "\t\nIl servizio va in errore con i cod:\n\n• C1 in caso di squadra già censita\n• C6 in caso di errore di validazione",
-                        "schema": {
-                            "$ref": "#/definitions/EccezioneResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/squadre/{idSquadra}": {
-            "delete": {
-                "tags": [
-                    "squadra-controller"
-                ],
-                "summary": "Elimino squadra con relativi giocatori",
-                "operationId": "rimuoviSquadraUsingDELETE",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "idSquadra",
-                        "in": "path",
-                        "description": "idSquadra",
-                        "required": true,
-                        "type": "integer",
-                        "maximum": 10000,
-                        "exclusiveMaximum": false,
-                        "minimum": 0,
-                        "exclusiveMinimum": false,
-                        "format": "int32"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Squadra eliminata con sucesso",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/SquadraResponse"
-                            }
-                        }
-                    },
-                    "204": {
-                        "description": "No Content"
-                    },
-                    "400": {
-                        "description": "Dati inseriti non validi"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "500": {
-                        "description": "errore di server"
-                    }
-                }
-            }
-        },
-        "/tornei": {
-            "get": {
-                "tags": [
-                    "torneo-controller"
-                ],
-                "summary": "Ritorna tutti i tornei con tutte le squadre",
-                "operationId": "getTorneoEndSquadreUsingGET",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Tornei e squadre recuperato con sucesso",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/TorneoResponse"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Dati inseriti non validi"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    },
-                    "500": {
-                        "description": "Errore del server"
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "torneo-controller"
-                ],
-                "summary": "Creo un nuovo torneo",
-                "operationId": "aggiungiTorneoUsingPOST",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "torneoDTO",
-                        "description": "torneoDTO",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/TorneoDTO"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/TorneoResponse"
-                        }
-                    },
-                    "201": {
-                        "description": "Torneo creato con sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/TorneoResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Dati inseriti non validi"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    },
-                    "500": {
-                        "description": "Errore del server"
-                    }
-                }
-            }
-        },
-        "/tornei/addSquadraToTorneo/{idTorneo}/{idSquadra}": {
-            "put": {
-                "tags": [
-                    "torneo-controller"
-                ],
-                "summary": "Censisco una squadra al torneo",
-                "operationId": "censitaSquadraAlTorneoUsingPUT",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "idSquadra",
-                        "in": "path",
-                        "description": "idSquadra",
-                        "required": true,
-                        "type": "integer",
-                        "maximum": 10000,
-                        "exclusiveMaximum": false,
-                        "minimum": 0,
-                        "exclusiveMinimum": false,
-                        "format": "int32"
-                    },
-                    {
-                        "name": "idTorneo",
-                        "in": "path",
-                        "description": "idTorneo",
-                        "required": true,
-                        "type": "integer",
-                        "maximum": 10000,
-                        "exclusiveMaximum": false,
-                        "minimum": 0,
-                        "exclusiveMinimum": false,
-                        "format": "int32"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/TorneoResponse"
-                        }
-                    },
-                    "201": {
-                        "description": "Sqadra aggiunta al torneo con sucesso",
-                        "schema": {
-                            "$ref": "#/definitions/TorneoResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Dati inseriti non validi"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    },
-                    "500": {
-                        "description": "Errore del server"
-                    }
-                }
-            }
-        },
-        "/tornei/{idTorneo}": {
-            "delete": {
-                "tags": [
-                    "torneo-controller"
-                ],
-                "summary": "Elimino il torneo con relative squadre assciare se non fanno parte di una altro torneo con relativi giocatori",
-                "operationId": "eliminaTorneoConSquadreAndGiocatoriUsingDELETE",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "idTorneo",
-                        "in": "path",
-                        "description": "idTorneo",
-                        "required": true,
-                        "type": "integer",
-                        "maximum": 10000,
-                        "exclusiveMaximum": false,
-                        "minimum": 0,
-                        "exclusiveMinimum": false,
-                        "format": "int32"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Tornei,squadre e giocatori eliminati con sucesso",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/TorneoResponse"
-                            }
-                        }
-                    },
-                    "204": {
-                        "description": "No Content"
-                    },
-                    "400": {
-                        "description": "Dati inseriti non validi"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "500": {
-                        "description": "Errore del server"
-                    }
-                }
-            }
-        }
-    },
-    "definitions": {
-        "EccezioneResponse": {
-            "type": "object",
-            "properties": {
-                "cod": {
-                    "type": "string"
-                },
-                "des": {
-                    "type": "string"
-                }
-            },
-            "title": "EccezioneResponse"
-        },
-        "GiocatoreDto": {
-            "type": "object",
-            "required": [
-                "nomeCognome"
-            ],
-            "properties": {
-                "nomeCognome": {
-                    "type": "string"
-                }
-            },
-            "title": "GiocatoreDto"
-        },
-        "GiocatoreResponse": {
-            "type": "object",
-            "properties": {
-                "idGiocatore": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "nomeCognome": {
-                    "type": "string"
-                },
-                "numeroAmmonizioni": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "trasferimenti": {
-                    "type": "array",
-                    "uniqueItems": true,
-                    "items": {
-                        "$ref": "#/definitions/Trasferimenti"
-                    }
-                }
-            },
-            "title": "GiocatoreResponse"
-        },
-        "SquadraDTO": {
-            "type": "object",
-            "required": [
-                "coloriSociali",
-                "nome"
-            ],
-            "properties": {
-                "coloriSociali": {
-                    "type": "string"
-                },
-                "nome": {
-                    "type": "string",
-                    "minLength": 3,
-                    "maxLength": 20
-                }
-            },
-            "title": "SquadraDTO"
-        },
-        "SquadraResponse": {
-            "type": "object",
-            "properties": {
-                "coloriSociali": {
-                    "type": "string"
-                },
-                "giocatori": {
-                    "type": "array",
-                    "uniqueItems": true,
-                    "items": {
-                        "$ref": "#/definitions/GiocatoreResponse"
-                    }
-                },
-                "idSquadra": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "nome": {
-                    "type": "string"
-                },
-                "tifoseria": {
-                    "$ref": "#/definitions/TifoseriaResponse"
-                }
-            },
-            "title": "SquadraResponse"
-        },
-        "SquadreDiGiocatoriDTO": {
-            "type": "object",
-            "required": [
-                "coloriSociali",
-                "listaGiocatori",
-                "nome"
-            ],
-            "properties": {
-                "coloriSociali": {
-                    "type": "string"
-                },
-                "listaGiocatori": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/GiocatoreDto"
-                    }
-                },
-                "nome": {
-                    "type": "string",
-                    "minLength": 3,
-                    "maxLength": 20
-                }
-            },
-            "title": "SquadreDiGiocatoriDTO"
-        },
-        "TifoseriaDTO": {
-            "type": "object",
-            "required": [
-                "nomeTifoseria"
-            ],
-            "properties": {
-                "nomeTifoseria": {
-                    "type": "string"
-                }
-            },
-            "title": "TifoseriaDTO"
-        },
-        "TifoseriaResponse": {
-            "type": "object",
-            "properties": {
-                "idTifoseria": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "nomeTifoseria": {
-                    "type": "string"
-                }
-            },
-            "title": "TifoseriaResponse"
-        },
-        "TorneoDTO": {
-            "type": "object",
-            "required": [
-                "nomeTorneo"
-            ],
-            "properties": {
-                "nomeTorneo": {
-                    "type": "string",
-                    "minLength": 3,
-                    "maxLength": 2147483647
-                }
-            },
-            "title": "TorneoDTO"
-        },
-        "TorneoResponse": {
-            "type": "object",
-            "properties": {
-                "idTorneo": {
-                    "type": "integer",
-                    "format": "int32"
-                },
-                "nomeTorneo": {
-                    "type": "string"
-                },
-                "squadre": {
-                    "type": "array",
-                    "uniqueItems": true,
-                    "items": {
-                        "$ref": "#/definitions/SquadraResponse"
-                    }
-                }
-            },
-            "title": "TorneoResponse"
-        },
-        "Trasferimenti": {
-            "type": "object",
-            "title": "Trasferimenti"
-        }
+  "swagger": "2.0",
+  "info": {
+    "description": "Api Documentation",
+    "version": "1.0",
+    "title": "Api Documentation",
+    "termsOfService": "urn:tos",
+    "contact": {},
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
     }
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "giocatore-controller",
+      "description": "Giocatore Controller"
+    },
+    {
+      "name": "squadra-controller",
+      "description": "Squadra Controller"
+    },
+    {
+      "name": "torneo-controller",
+      "description": "Torneo Controller"
+    }
+  ],
+  "paths": {
+    "/giocatori/updateAmmonizioni/{idGiocatore}": {
+      "put": {
+        "tags": [
+          "giocatore-controller"
+        ],
+        "summary": "Aggiorna ammonizione per un determinato giocatore",
+        "operationId": "aggiornaAmmonizioneUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "idGiocatore",
+            "in": "path",
+            "description": "idGiocatore",
+            "required": true,
+            "type": "integer",
+            "maximum": 10000,
+            "exclusiveMaximum": false,
+            "minimum": 0,
+            "exclusiveMinimum": false,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Aggiorna ammonizioe",
+            "schema": {
+              "$ref": "#/definitions/GiocatoreResponse"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Dati inseriti non validi"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Errore di server"
+          }
+        }
+      }
+    },
+    "/squadre": {
+      "get": {
+        "tags": [
+          "squadra-controller"
+        ],
+        "summary": "Ricerca squadra con lista giocatori",
+        "operationId": "ricercaSquadraUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "completo",
+            "in": "query",
+            "description": "Parametro che mi inizializza una lista di giocatori vuota o meno",
+            "required": true,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ricerca avvenuta con sucesso",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SquadraResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Dati inseriti non validi"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Errore del server"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "squadra-controller"
+        ],
+        "summary": "Creao una nuova squadra",
+        "operationId": "salvaSquadraUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "squadraDTO",
+            "description": "squadraDTO",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SquadraDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SquadraResponse"
+            }
+          },
+          "201": {
+            "description": "Squadra creata con successo",
+            "schema": {
+              "$ref": "#/definitions/SquadraResponse"
+            }
+          },
+          "400": {
+            "description": "Dati inseriti non validi"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Errore del server"
+          },
+          "550": {
+            "description": "Squadra duplicata",
+            "schema": {
+              "$ref": "#/definitions/EccezioneResponse"
+            }
+          }
+        }
+      }
+    },
+    "/squadre/addGiocatore/{id}": {
+      "put": {
+        "tags": [
+          "squadra-controller"
+        ],
+        "summary": "Aggiungo una giocatore ad una determinata squadra",
+        "operationId": "aggiungiGiocatoreUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "giocatoreDTO",
+            "description": "giocatoreDTO",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GiocatoreDto"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id squadra",
+            "required": true,
+            "type": "integer",
+            "maximum": 10000,
+            "exclusiveMaximum": false,
+            "minimum": 0,
+            "exclusiveMinimum": false,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Squadre cercate",
+            "schema": {
+              "$ref": "#/definitions/SquadraResponse"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Dati inseriti non validi"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "errore di server"
+          }
+        }
+      }
+    },
+    "/squadre/addTifoseria/{idSquadra}": {
+      "put": {
+        "tags": [
+          "squadra-controller"
+        ],
+        "summary": "Aggiorno una tifoseria se no ne creo una",
+        "operationId": "aggiungiTifoseriaUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "idSquadra",
+            "in": "path",
+            "description": "id squadra",
+            "required": true,
+            "type": "integer",
+            "maximum": 10000,
+            "exclusiveMaximum": false,
+            "minimum": 0,
+            "exclusiveMinimum": false,
+            "format": "int32"
+          },
+          {
+            "in": "body",
+            "name": "tifoseriaDTO",
+            "description": "tifoseria",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TifoseriaDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tifoseria aggiornata o creata con sucesso",
+            "schema": {
+              "$ref": "#/definitions/SquadraResponse"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Dati inseriti non validi"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "errore di server"
+          }
+        }
+      }
+    },
+    "/squadre/squadreGiocatori": {
+      "post": {
+        "tags": [
+          "squadra-controller"
+        ],
+        "summary": "Creao una nuova squadra con la lista di giocatore",
+        "operationId": "salvaSquadraSquadraGiocatoriUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "squadreDiGiocatoriDTO",
+            "description": "squadreDiGiocatoriDTO",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SquadreDiGiocatoriDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SquadraResponse"
+            }
+          },
+          "201": {
+            "description": "Squadra e giocatori creata con successo",
+            "schema": {
+              "$ref": "#/definitions/SquadraResponse"
+            }
+          },
+          "400": {
+            "description": "Dati inseriti non validi"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "550": {
+            "description": "\t\nIl servizio va in errore con i cod:\n\n• C1 in caso di squadra già censita\n• C6 in caso di errore di validazione",
+            "schema": {
+              "$ref": "#/definitions/EccezioneResponse"
+            }
+          }
+        }
+      }
+    },
+    "/squadre/{idSquadra}": {
+      "delete": {
+        "tags": [
+          "squadra-controller"
+        ],
+        "summary": "Elimino squadra con relativi giocatori",
+        "operationId": "rimuoviSquadraUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "idSquadra",
+            "in": "path",
+            "description": "idSquadra",
+            "required": true,
+            "type": "integer",
+            "maximum": 10000,
+            "exclusiveMaximum": false,
+            "minimum": 0,
+            "exclusiveMinimum": false,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Squadra eliminata con sucesso",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SquadraResponse"
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Dati inseriti non validi"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "errore di server"
+          }
+        }
+      }
+    },
+    "/tornei": {
+      "get": {
+        "tags": [
+          "torneo-controller"
+        ],
+        "summary": "Ritorna tutti i tornei con tutte le squadre",
+        "operationId": "getTorneoEndSquadreUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Tornei e squadre recuperato con sucesso",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TorneoResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Dati inseriti non validi"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Errore del server"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "torneo-controller"
+        ],
+        "summary": "Creo un nuovo torneo",
+        "operationId": "aggiungiTorneoUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "torneoDTO",
+            "description": "torneoDTO",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TorneoDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TorneoResponse"
+            }
+          },
+          "201": {
+            "description": "Torneo creato con sucesso",
+            "schema": {
+              "$ref": "#/definitions/TorneoResponse"
+            }
+          },
+          "400": {
+            "description": "Dati inseriti non validi"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Errore del server"
+          }
+        }
+      }
+    },
+    "/tornei/addSquadraToTorneo/{idTorneo}/{idSquadra}": {
+      "put": {
+        "tags": [
+          "torneo-controller"
+        ],
+        "summary": "Censisco una squadra al torneo",
+        "operationId": "censitaSquadraAlTorneoUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "idSquadra",
+            "in": "path",
+            "description": "idSquadra",
+            "required": true,
+            "type": "integer",
+            "maximum": 10000,
+            "exclusiveMaximum": false,
+            "minimum": 0,
+            "exclusiveMinimum": false,
+            "format": "int32"
+          },
+          {
+            "name": "idTorneo",
+            "in": "path",
+            "description": "idTorneo",
+            "required": true,
+            "type": "integer",
+            "maximum": 10000,
+            "exclusiveMaximum": false,
+            "minimum": 0,
+            "exclusiveMinimum": false,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/TorneoResponse"
+            }
+          },
+          "201": {
+            "description": "Sqadra aggiunta al torneo con sucesso",
+            "schema": {
+              "$ref": "#/definitions/TorneoResponse"
+            }
+          },
+          "400": {
+            "description": "Dati inseriti non validi"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Errore del server"
+          }
+        }
+      }
+    },
+    "/tornei/{idTorneo}": {
+      "delete": {
+        "tags": [
+          "torneo-controller"
+        ],
+        "summary": "Elimino il torneo con relative squadre assciare se non fanno parte di una altro torneo con relativi giocatori",
+        "operationId": "eliminaTorneoConSquadreAndGiocatoriUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "idTorneo",
+            "in": "path",
+            "description": "idTorneo",
+            "required": true,
+            "type": "integer",
+            "maximum": 10000,
+            "exclusiveMaximum": false,
+            "minimum": 0,
+            "exclusiveMinimum": false,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tornei,squadre e giocatori eliminati con sucesso",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TorneoResponse"
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Dati inseriti non validi"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Errore del server"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "EccezioneResponse": {
+      "type": "object",
+      "properties": {
+        "cod": {
+          "type": "string"
+        },
+        "des": {
+          "type": "string"
+        }
+      },
+      "title": "EccezioneResponse"
+    },
+    "GiocatoreDto": {
+      "type": "object",
+      "required": [
+        "nomeCognome"
+      ],
+      "properties": {
+        "nomeCognome": {
+          "type": "string"
+        }
+      },
+      "title": "GiocatoreDto"
+    },
+    "GiocatoreResponse": {
+      "type": "object",
+      "properties": {
+        "idGiocatore": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "nomeCognome": {
+          "type": "string"
+        },
+        "numeroAmmonizioni": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "trasferimenti": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/Trasferimenti"
+          }
+        }
+      },
+      "title": "GiocatoreResponse"
+    },
+    "SquadraDTO": {
+      "type": "object",
+      "required": [
+        "coloriSociali",
+        "nome"
+      ],
+      "properties": {
+        "coloriSociali": {
+          "type": "string"
+        },
+        "nome": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 20
+        }
+      },
+      "title": "SquadraDTO"
+    },
+    "SquadraResponse": {
+      "type": "object",
+      "properties": {
+        "coloriSociali": {
+          "type": "string"
+        },
+        "giocatori": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/GiocatoreResponse"
+          }
+        },
+        "idSquadra": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "nome": {
+          "type": "string"
+        },
+        "tifoseria": {
+          "$ref": "#/definitions/TifoseriaResponse"
+        }
+      },
+      "title": "SquadraResponse"
+    },
+    "SquadreDiGiocatoriDTO": {
+      "type": "object",
+      "required": [
+        "coloriSociali",
+        "listaGiocatori",
+        "nome"
+      ],
+      "properties": {
+        "coloriSociali": {
+          "type": "string"
+        },
+        "listaGiocatori": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GiocatoreDto"
+          }
+        },
+        "nome": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 20
+        }
+      },
+      "title": "SquadreDiGiocatoriDTO"
+    },
+    "TifoseriaDTO": {
+      "type": "object",
+      "required": [
+        "nomeTifoseria"
+      ],
+      "properties": {
+        "nomeTifoseria": {
+          "type": "string"
+        }
+      },
+      "title": "TifoseriaDTO"
+    },
+    "TifoseriaResponse": {
+      "type": "object",
+      "properties": {
+        "idTifoseria": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "nomeTifoseria": {
+          "type": "string"
+        }
+      },
+      "title": "TifoseriaResponse"
+    },
+    "TorneoDTO": {
+      "type": "object",
+      "required": [
+        "nomeTorneo"
+      ],
+      "properties": {
+        "nomeTorneo": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 2147483647
+        }
+      },
+      "title": "TorneoDTO"
+    },
+    "TorneoResponse": {
+      "type": "object",
+      "properties": {
+        "idTorneo": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "nomeTorneo": {
+          "type": "string"
+        },
+        "squadre": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/definitions/SquadraResponse"
+          }
+        }
+      },
+      "title": "TorneoResponse"
+    },
+    "Trasferimenti": {
+      "type": "object",
+      "title": "Trasferimenti"
+    }
+  }
 }

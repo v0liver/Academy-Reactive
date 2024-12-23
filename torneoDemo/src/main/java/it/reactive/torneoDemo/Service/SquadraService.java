@@ -17,6 +17,6 @@ public class SquadraService {
 
         SquadraModel squadraModel = squadraDao.salvaSquadra(squadraDTO);
 
-        return SquadraMapper.fromModelToResponse(squadraModel);
+        return SquadraMapper.fromModelToResource(squadraModel);
     }
 }
