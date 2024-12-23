@@ -2,15 +2,15 @@ package it.reactive.torneoDemo.resource;
 
 import java.util.Set;
 
-public class SquadraResponse {
+public class SquadraResource {
     private Integer idSquadra;
     private String nome;
     private String coloriSociali;
-    private Set<GiocatoreResponse> giocatori;
-    private TifoseriaResponse tifoseria;
+    private Set<GiocatoreResource> giocatori;
+    private TifoseriaResource tifoseria;
 
 
-    public SquadraResponse(Integer idSquadra, String nome, String coloriSociali, Set<GiocatoreResponse> giocatori, TifoseriaResponse tifoseria) {
+    public SquadraResource(Integer idSquadra, String nome, String coloriSociali, Set<GiocatoreResource> giocatori, TifoseriaResource tifoseria) {
         this.idSquadra = idSquadra;
         this.nome = nome;
         this.coloriSociali = coloriSociali;
@@ -18,7 +18,7 @@ public class SquadraResponse {
         this.tifoseria = tifoseria;
     }
 
-    public SquadraResponse() {
+    public SquadraResource() {
     }
 
     public Integer getIdSquadra() {
@@ -45,19 +45,19 @@ public class SquadraResponse {
         this.coloriSociali = coloriSociali;
     }
 
-    public Set<GiocatoreResponse> getGiocatori() {
+    public Set<GiocatoreResource> getGiocatori() {
         return giocatori;
     }
 
-    public void setGiocatori(Set<GiocatoreResponse> giocatori) {
+    public void setGiocatori(Set<GiocatoreResource> giocatori) {
         this.giocatori = giocatori;
     }
 
-    public TifoseriaResponse getTifoseria() {
+    public TifoseriaResource getTifoseria() {
         return tifoseria;
     }
 
-    public void setTifoseria(TifoseriaResponse tifoseria) {
+    public void setTifoseria(TifoseriaResource tifoseria) {
         this.tifoseria = tifoseria;
     }
 

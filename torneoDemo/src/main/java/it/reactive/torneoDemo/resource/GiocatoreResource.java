@@ -3,20 +3,20 @@ package it.reactive.torneoDemo.resource;
 import java.util.HashSet;
 import java.util.Set;
 
-public class GiocatoreResponse {
+public class GiocatoreResource {
     private Integer idGiocatore;
     private String nomeCognome;
     private Integer numeroAmmonizioni;
-    private Set<Trasferimenti> trasferimenti = new HashSet<>();
+    private Set<TrasferimentiResource> trasferimentiResource = new HashSet<>();
 
-    public GiocatoreResponse(Integer idGiocatore, String nomeCognome, Integer numeroAmmonizioni, Set<Trasferimenti> trasferimenti) {
+    public GiocatoreResource(Integer idGiocatore, String nomeCognome, Integer numeroAmmonizioni, Set<TrasferimentiResource> trasferimentiResource) {
         this.idGiocatore = idGiocatore;
         this.nomeCognome = nomeCognome;
         this.numeroAmmonizioni = numeroAmmonizioni;
-        this.trasferimenti = trasferimenti;
+        this.trasferimentiResource = trasferimentiResource;
     }
 
-    public GiocatoreResponse() {
+    public GiocatoreResource() {
     }
 
     public Integer getIdGiocatore() {
@@ -43,12 +43,12 @@ public class GiocatoreResponse {
         this.numeroAmmonizioni = numeroAmmonizioni;
     }
 
-    public Set<Trasferimenti> getTrasferimenti() {
-        return trasferimenti;
+    public Set<TrasferimentiResource> getTrasferimenti() {
+        return trasferimentiResource;
     }
 
-    public void setTrasferimenti(Set<Trasferimenti> trasferimenti) {
-        this.trasferimenti = trasferimenti;
+    public void setTrasferimenti(Set<TrasferimentiResource> trasferimentiResource) {
+        this.trasferimentiResource = trasferimentiResource;
     }
 }
 

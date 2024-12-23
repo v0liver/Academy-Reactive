@@ -1,25 +1,28 @@
 package it.reactive.torneoDemo.model;
 
-import it.reactive.torneoDemo.DTO.giocatore.GiocatoreDto;
-import it.reactive.torneoDemo.resource.GiocatoreResponse;
-import it.reactive.torneoDemo.resource.TifoseriaResponse;
-
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
 import java.util.Set;
 
-public class Squadra {
+
+public class SquadraModel {
     private Integer idSquadra;
     @NotBlank
     @Size(min = 3, max = 20, message = "Il nome della squadra deve essere almeno di 3 caratterie e massimo di 20")
     private String nome;
     @NotBlank
     private String coloriSociali;
-    private Set<GiocatoreResponse> giocatori;
-    private TifoseriaResponse tifoseria;
+    private Set<GiocatoreModel> giocatori;
+
+    public TifoseriaModel getTifoseria() {
+        return tifoseria;
+    }
+
+    public void setTifoseria(TifoseriaModel tifoseria) {
+        this.tifoseria = tifoseria;
+    }
+
+    private TifoseriaModel tifoseria;
 
     public Integer getIdSquadra() {
         return idSquadra;
@@ -45,21 +48,15 @@ public class Squadra {
         this.coloriSociali = coloriSociali;
     }
 
-    public Set<GiocatoreResponse> getGiocatori() {
+    public Set<GiocatoreModel> getGiocatori() {
         return giocatori;
     }
 
-    public void setGiocatori(Set<GiocatoreResponse> giocatori) {
+    public void setGiocatori(Set<GiocatoreModel> giocatori) {
         this.giocatori = giocatori;
     }
 
-    public TifoseriaResponse getTifoseria() {
-        return tifoseria;
-    }
 
-    public void setTifoseria(TifoseriaResponse tifoseria) {
-        this.tifoseria = tifoseria;
-    }
 
     public Set<Torneo> getTornei() {
         return tornei;

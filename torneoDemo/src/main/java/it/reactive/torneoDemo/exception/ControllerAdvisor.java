@@ -1,6 +1,6 @@
 package it.reactive.torneoDemo.exception;
 
-import it.reactive.torneoDemo.resource.EccezioneResponse;
+import it.reactive.torneoDemo.resource.EccezioneResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 //        Map<String, Object> body = new LinkedHashMap<>();
 //        body.put("Codice errore", e.getCodErr());
 //        body.put("Message", e.getMessage());
-        EccezioneResponse ex = new EccezioneResponse();
+        EccezioneResource ex = new EccezioneResource();
         ex.setCod(e.getCodErr());
         ex.setDes(e.getMessaggio());
         return ResponseEntity.status(550).body(ex);
@@ -32,7 +32,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Object> constraintViolationException(ConstraintViolationException e) {
-        EccezioneResponse ex = new EccezioneResponse();
+        EccezioneResource ex = new EccezioneResource();
         ex.setCod("C6");
         ex.setDes("Errore di validazione");
         //ex.setError(e.getMessage());
@@ -67,7 +67,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         for (ObjectError error : ex.getBindingResult().getGlobalErrors()) {
             errors.add(error.getObjectName() + ": " + error.getDefaultMessage());
         }
-        EccezioneResponse e = new EccezioneResponse();
+        EccezioneResource e = new EccezioneResource();
         e.setCod("C6");
         e.setDes(errors.toString());
         return ResponseEntity.status(550).body(e);

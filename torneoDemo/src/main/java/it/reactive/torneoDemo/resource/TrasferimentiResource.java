@@ -1,6 +1,6 @@
 package it.reactive.torneoDemo.resource;
 
-public class Trasferimenti {
+public class TrasferimentiResource {
 
     private Integer anno;
     private String squadra;

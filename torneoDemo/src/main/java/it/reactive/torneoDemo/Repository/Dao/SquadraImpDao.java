@@ -1,16 +1,15 @@
-package it.reactive.torneoDemo.DAO.SquadraDao;
+package it.reactive.torneoDemo.Repository.Dao;
 
 
 import it.reactive.torneoDemo.DTO.squadra.SquadraDTO;
-import it.reactive.torneoDemo.configuration.ConnectionConfiguration;
 import it.reactive.torneoDemo.exception.SquadraDuplicataException;
 import it.reactive.torneoDemo.model.SquadraModel;
-import it.reactive.torneoDemo.resource.SquadraResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
-import java.util.Map;
 
+@Repository
 public class SquadraImpDao implements SquadraDao {
     @Autowired
     Connection con;
@@ -19,7 +18,7 @@ public class SquadraImpDao implements SquadraDao {
     public SquadraModel salvaSquadra(SquadraDTO squadraDTO) {
         String nomeSquadra = squadraDTO.getNome();
         String coloriSociali = squadraDTO.getColoriSociali();
-        String query = "insert into squadra (nome,colori_sociali) values ("+nomeSquadra+","+coloriSociali+")";
+        String query = "insert into squadra (nome,colori_sociali) values ('"+nomeSquadra+"','"+coloriSociali+"')";
         try {
             Statement st = con.createStatement();
             int nRow = st.executeUpdate(query);

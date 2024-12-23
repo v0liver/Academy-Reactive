@@ -1,10 +1,10 @@
 package it.reactive.torneoDemo.resource;
 
-public class TifoseriaResponse {
+public class TifoseriaResource {
     private Integer idTifoseria;
     private String nomeTifoseria;
 
-    public TifoseriaResponse(Integer idTifoseria, String nomeTifoseria) {
+    public TifoseriaResource(Integer idTifoseria, String nomeTifoseria) {
         this.idTifoseria = idTifoseria;
         this.nomeTifoseria = nomeTifoseria;
     }

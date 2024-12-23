@@ -1,6 +1,6 @@
 package it.reactive.torneoDemo.resource;
 
-public class EccezioneResponse {
+public class EccezioneResource {
 
     private String cod;
     private String des;

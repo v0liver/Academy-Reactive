@@ -1,6 +1,7 @@
 package it.reactive.torneoDemo.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
@@ -17,16 +18,14 @@ public class ConnectionConfiguration {
     private String user;
     @Value("${spring.datasource.password}")
     private String password;
-    private Connection con;
 
-    @PostConstruct
-    public void init() throws Exception {
-        con = DriverManager.getConnection(url, user, password);
+    @Bean
+    public Connection init() throws Exception {
+        Connection con = DriverManager.getConnection(url, user, password);
         System.out.println(con);
         con.setAutoCommit(false);
-    }
-
-    public Connection getConnection() {
         return con;
     }
+
+
 }
