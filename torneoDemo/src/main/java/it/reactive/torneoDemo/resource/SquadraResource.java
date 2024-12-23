@@ -9,6 +9,7 @@ public class SquadraResponse {
     private Set<GiocatoreResponse> giocatori;
     private TifoseriaResponse tifoseria;
 
+
     public SquadraResponse(Integer idSquadra, String nome, String coloriSociali, Set<GiocatoreResponse> giocatori, TifoseriaResponse tifoseria) {
         this.idSquadra = idSquadra;
         this.nome = nome;
