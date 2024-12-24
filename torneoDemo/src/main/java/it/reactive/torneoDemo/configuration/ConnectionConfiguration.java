@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 @Configuration
-@Scope("prototype")
 public class ConnectionConfiguration {
     @Value("${spring.datasource.url}")
     private String url;
@@ -20,6 +19,7 @@ public class ConnectionConfiguration {
     private String password;
 
     @Bean
+    @Scope("prototype")
     public Connection init() throws Exception {
         Connection con = DriverManager.getConnection(url, user, password);
         System.out.println(con);
