@@ -7,6 +7,7 @@ import it.reactive.torneoDemo.resource.SquadraResource;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class SquadraMapper {
 
@@ -21,6 +22,7 @@ public class SquadraMapper {
            GiocatoreResource giocatoreResource = GiocatoreMapper.fromModelToResource(giocatoreModel);
             listaGiocatori.add(giocatoreResource);
         }
+       // listaGiocatori= squadraModel.getGiocatori().stream().map(giocatoreModel->GiocatoreMapper.fromModelToResource(giocatoreModel)).collect(Collectors.toSet());;
         squadraResource.setGiocatori(listaGiocatori);
         return squadraResource;
 
