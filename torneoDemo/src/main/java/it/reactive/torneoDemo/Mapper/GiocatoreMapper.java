@@ -1,10 +1,8 @@
-package it.reactive.torneoDemo.Repository.Mapper;
+package it.reactive.torneoDemo.Mapper;
 
+import it.reactive.torneoDemo.DTO.giocatore.GiocatoreDto;
 import it.reactive.torneoDemo.model.GiocatoreModel;
 import it.reactive.torneoDemo.resource.GiocatoreResource;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class GiocatoreMapper {
 
@@ -15,4 +13,12 @@ public class GiocatoreMapper {
         giocatoreResource.setNumeroAmmonizioni(giocatoriModel.getNumeroAmmonizioni());
         return giocatoreResource;
     }
+
+//    public static GiocatoreModel fromDtoToModel(GiocatoreDto giocatoreDto){
+//        GiocatoreModel giocatoreModel = new GiocatoreModel();
+//        giocatoreModel.setIdGiocatore(giocatoreDto.getIdGiocatore());
+//        giocatoreResource.setNomeCognome(giocatoriModel.getNomeCognome());
+//        giocatoreResource.setNumeroAmmonizioni(giocatoriModel.getNumeroAmmonizioni());
+//        return giocatoreResource;
+//    }
 }

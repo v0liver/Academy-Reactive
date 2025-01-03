@@ -1,4 +1,4 @@
-package it.reactive.torneoDemo.Repository.Mapper;
+package it.reactive.torneoDemo.Mapper;
 
 import it.reactive.torneoDemo.model.TifoseriaModel;
 import it.reactive.torneoDemo.resource.TifoseriaResource;

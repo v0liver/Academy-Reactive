@@ -57,7 +57,8 @@ public class SquadraController {
     })
     @PostMapping("/squadreGiocatori")
     public ResponseEntity<SquadraResource> salvaSquadraSquadraGiocatori(@RequestBody @Valid SquadreDiGiocatoriDTO squadreDiGiocatoriDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(null);
+        SquadraResource squadraResource = squadraService.salvaSquadraSquadraGiocatori(squadreDiGiocatoriDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(squadraResource);
     }
 
 
