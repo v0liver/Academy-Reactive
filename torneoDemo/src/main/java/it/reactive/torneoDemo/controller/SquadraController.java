@@ -70,7 +70,8 @@ public class SquadraController {
     })
     @GetMapping
     public ResponseEntity<List<SquadraResource>> ricercaSquadra(@RequestParam @ApiParam("Parametro che mi inizializza una lista di giocatori vuota o meno") boolean completo) {
-        return ResponseEntity.ok(null);
+        List<SquadraResource> squadraResources = squadraService.ricercaSquadra(completo);
+        return ResponseEntity.ok(squadraResources);
     }
 
     @ApiOperation(value = "Aggiungo una giocatore ad una determinata squadra", response = SquadraResource.class)

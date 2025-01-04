@@ -102,4 +102,63 @@ public class SquadraImpDaoStatement implements SquadraDao {
             }
         }
     }
+
+    @Override
+    public List<SquadraModel> ricercaSquadra(boolean completo) {
+        List<SquadraModel> listSquadraModel = new ArrayList<>();
+        if (!completo) {
+            try {
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery("select * from squadra sq");
+
+                while (rs.next()){
+                    int id_squadra = rs.getInt("id");
+                    String colorisociali = rs.getString("colori_sociali");
+                    String nome = rs.getString("nome");
+                    SquadraModel squadraModel = new SquadraModel();
+                    squadraModel.setNome(nome);
+                    squadraModel.setColoriSociali(colorisociali);
+                    squadraModel.setIdSquadra(id_squadra);
+                    listSquadraModel.add(squadraModel);
+                }
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }else {
+            try {
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery("select * from squadra sq");
+
+                while (rs.next()){
+                    int id_squadra = rs.getInt("id");
+                    String colorisociali = rs.getString("colori_sociali");
+                    String nome = rs.getString("nome");
+                    SquadraModel squadraModel = new SquadraModel();
+                    squadraModel.setNome(nome);
+                    squadraModel.setColoriSociali(colorisociali);
+                    squadraModel.setIdSquadra(id_squadra);
+                    
+                    Statement stGiocatori = con.createStatement();
+                    ResultSet rsGiocatori = stGiocatori.executeQuery("select g.id,g.nome_cognome from giocatore g join squadra sq on g.id_squadra=sq.id where g.id='"+id_squadra+"'");
+                    Set <GiocatoreModel> giocatoreModelSet = new HashSet<>();
+                    while (rsGiocatori.next()){
+                        GiocatoreModel giocatoreModel = new GiocatoreModel();
+                        int id_Giocatore = rsGiocatori.getInt("id");
+                        String nomeCognomeGiocatore = rsGiocatori.getString("nome_cognome");
+                        giocatoreModel.setIdGiocatore(id_Giocatore);
+                        giocatoreModel.setNomeCognome(nomeCognomeGiocatore);
+                        giocatoreModelSet.add(giocatoreModel);
+                    }
+                    squadraModel.setGiocatori(giocatoreModelSet);
+                    listSquadraModel.add(squadraModel);
+                }
+                return listSquadraModel;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        return listSquadraModel;
+    }
 }

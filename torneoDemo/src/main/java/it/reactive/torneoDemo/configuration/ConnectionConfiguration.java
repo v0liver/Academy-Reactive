@@ -23,7 +23,7 @@ public class ConnectionConfiguration {
     public Connection init() throws Exception {
         Connection con = DriverManager.getConnection(url, user, password);
         System.out.println(con);
-        con.setAutoCommit(false);
+        con.setAutoCommit(true);
         return con;
     }
 

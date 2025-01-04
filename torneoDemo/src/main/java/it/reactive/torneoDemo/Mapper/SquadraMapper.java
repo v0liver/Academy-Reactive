@@ -1,5 +1,6 @@
 package it.reactive.torneoDemo.Mapper;
 
+import com.fasterxml.jackson.databind.introspect.TypeResolutionContext;
 import it.reactive.torneoDemo.model.GiocatoreModel;
 import it.reactive.torneoDemo.model.SquadraModel;
 import it.reactive.torneoDemo.resource.GiocatoreResource;
@@ -19,14 +20,16 @@ public class SquadraMapper {
             squadraResource.setTifoseria(TifoseriaMapper.fromModelToResource(squadraModel.getTifoseria()));
         }
         Set<GiocatoreResource> listaGiocatori = new HashSet<>();
-        if (!squadraModel.getGiocatori().isEmpty()) {
+        if (squadraModel.getGiocatori()!=null) {
             for (GiocatoreModel giocatoreModel : squadraModel.getGiocatori()) {
                 GiocatoreResource giocatoreResource = GiocatoreMapper.fromModelToResource(giocatoreModel);
                 listaGiocatori.add(giocatoreResource);
             }
+
         }
-       //listaGiocatori= squadraModel.getGiocatori().stream().map(giocatoreModel->GiocatoreMapper.fromModelToResource(giocatoreModel)).collect(Collectors.toSet());;
         squadraResource.setGiocatori(listaGiocatori);
+       //listaGiocatori= squadraModel.getGiocatori().stream().map(giocatoreModel->GiocatoreMapper.fromModelToResource(giocatoreModel)).collect(Collectors.toSet());;
+
         return squadraResource;
 
     }
