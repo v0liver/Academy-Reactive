@@ -71,25 +71,23 @@ public class SquadraImpDaoStatement implements SquadraDao {
                 squadraModel.setColoriSociali(coloriSociali);
                 Set<GiocatoreModel> giocatoreModelSet = new HashSet<>();
                 for (GiocatoreDto giocatoreDto : squadreDiGiocatoriDTO.getListaGiocatori()) {
-                    String query2 = "insert into giocatore (nome_cognome,id_squadra) values ('" + giocatoreDto.getNomeCognome() + "','" + idSquadra + "')";
-                     st = con.createStatement();
-                     nRow = st.executeUpdate(query2);
-                     if (nRow==squadreDiGiocatoriDTO.getListaGiocatori().size()){
-                         rs = st.executeQuery("select g.id id_giocatore,g.nome_cognome,numero_ammonizioni from giocatore g join squadra sq on g.id_squadra=sq.id where g.id_squadra='" + idSquadra + "'");
-                         while (rs.next()){
-                             int id_giocatore = rs.getInt("id_giocatore");
-                             String nome_cognome = rs.getString("nome_cognome");
-                             int numero_ammonizioni = rs.getInt("numero_ammonizioni");
-                             GiocatoreModel giocatoreModel = new GiocatoreModel();
-                             giocatoreModel.setIdGiocatore(id_giocatore);
-                             giocatoreModel.setNomeCognome(nome_cognome);
-                             //giocatoreModel.setSquadraModel(squadraModel);
+                    ResultSet resultSetGiocatoreDuplicato = st.executeQuery("select * from giocatore where nome_cognome ='" + giocatoreDto.getNomeCognome() + "'");
+                    if (!resultSetGiocatoreDuplicato.next()) {
+                        String query2 = "insert into giocatore (nome_cognome,id_squadra) values ('" + giocatoreDto.getNomeCognome() + "','" + idSquadra + "')";
+                        nRow = st.executeUpdate(query2);
+                    }else throw new GiocatoreDuplicatoException();
+                }
+                rs = st.executeQuery("select g.id id_giocatore,g.nome_cognome,numero_ammonizioni from giocatore g join squadra sq on g.id_squadra=sq.id where g.id_squadra='" + idSquadra + "'");
+                while (rs.next()) {
+                    int id_giocatore = rs.getInt("id_giocatore");
+                    String nome_cognome = rs.getString("nome_cognome");
+                    int numero_ammonizioni = rs.getInt("numero_ammonizioni");
+                    GiocatoreModel giocatoreModel = new GiocatoreModel();
+                    giocatoreModel.setIdGiocatore(id_giocatore);
+                    giocatoreModel.setNomeCognome(nome_cognome);
+                    //giocatoreModel.setSquadraModel(squadraModel);
 
-                            giocatoreModelSet.add(giocatoreModel);
-                         }
-                     }else {
-                         throw new GiocatoreDuplicatoException();
-                     }
+                    giocatoreModelSet.add(giocatoreModel);
                 }
                 squadraModel.setGiocatori(giocatoreModelSet);
                 return squadraModel;
@@ -97,7 +95,11 @@ public class SquadraImpDaoStatement implements SquadraDao {
                 throw new SquadraDuplicataException();
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            if (e.getSQLState().equals("23505")){// 23505 è lo stato SQL standard per violazione di chiave univoca su Postgres (23000 sugli altri sistemi di database)
+                throw new SquadraDuplicataException();
+            }else {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
