@@ -1,6 +1,8 @@
 package it.reactive.torneoDemo.Service;
 
+import it.reactive.torneoDemo.DTO.giocatore.GiocatoreDto;
 import it.reactive.torneoDemo.DTO.squadra.SquadreDiGiocatoriDTO;
+import it.reactive.torneoDemo.DTO.tifoseria.TifoseriaDTO;
 import it.reactive.torneoDemo.Repository.Dao.SquadraDao;
 import it.reactive.torneoDemo.DTO.squadra.SquadraDTO;
 import it.reactive.torneoDemo.Mapper.SquadraMapper;
@@ -38,5 +40,19 @@ public class SquadraService {
             squadraResource.add(SquadraMapper.fromModelToResource(model));
         }
         return squadraResource;
+    }
+
+    public SquadraResource aggiungiGiocatore(int id, GiocatoreDto giocatoreDto){
+        SquadraModel squadraModel = squadraDao.aggiungiGiocatore(id,giocatoreDto);
+        return SquadraMapper.fromModelToResource(squadraModel);
+    }
+
+    public SquadraResource aggiungiTifoseria(int idSquadra, TifoseriaDTO tifoseriaDTO){
+        SquadraModel squadraModel = squadraDao.aggiungiTifoseria(idSquadra,tifoseriaDTO);
+        return SquadraMapper.fromModelToResource(squadraModel);
+    }
+
+    public void rimuoviSquadra(int idSquadra){
+        squadraDao.rimuoviSquadra(idSquadra);
     }
 }

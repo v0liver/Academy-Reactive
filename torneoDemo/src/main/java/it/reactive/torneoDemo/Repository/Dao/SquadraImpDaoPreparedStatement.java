@@ -1,6 +1,5 @@
 package it.reactive.torneoDemo.Repository.Dao;
 
-
 import it.reactive.torneoDemo.DTO.giocatore.GiocatoreDto;
 import it.reactive.torneoDemo.DTO.squadra.SquadraDTO;
 import it.reactive.torneoDemo.DTO.squadra.SquadreDiGiocatoriDTO;
@@ -17,14 +16,11 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Repository
-@Profile(Costanti.TORNEO_DAO_JDBC_STATEMENT)
-public class SquadraImpDaoStatement implements SquadraDao {
+@Profile(Costanti.TORNEO_DAO_JDBC_PREPAREDSTATEMENT)
+public class SquadraImpDaoPreparedStatement implements SquadraDao{
     @Autowired
     Connection con;
 
@@ -32,12 +28,16 @@ public class SquadraImpDaoStatement implements SquadraDao {
     public SquadraModel salvaSquadra(SquadraDTO squadraDTO) {
         String nomeSquadra = squadraDTO.getNome();
         String coloriSociali = squadraDTO.getColoriSociali();
-        String query = "insert into squadra (nome,colori_sociali) values ('" + nomeSquadra + "','" + coloriSociali + "')";
+
         try {
-            Statement st = con.createStatement();
-            int nRow = st.executeUpdate(query);
+            PreparedStatement pt = con.prepareStatement("insert into squadra (nome,colori_sociali) values (?,?)");
+            pt.setString(1,nomeSquadra);
+            pt.setString(2,coloriSociali);
+            int nRow = pt.executeUpdate();
             if (nRow == 1) {
-                ResultSet rs = st.executeQuery("select * from squadra where nome='" + nomeSquadra + "'");
+                pt=con.prepareStatement("select * from squadra where nome=?");
+                pt.setString(1,nomeSquadra);
+                ResultSet rs = pt.executeQuery();
                 rs.next();
                 int idSquadra = rs.getInt("id");
                 SquadraModel squadraModel = new SquadraModel();
@@ -51,8 +51,6 @@ public class SquadraImpDaoStatement implements SquadraDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
     @Override
@@ -62,10 +60,14 @@ public class SquadraImpDaoStatement implements SquadraDao {
 
         String query = "insert into squadra (nome,colori_sociali) values ('" + nomeSquadra + "','" + coloriSociali + "')";
         try {
-            Statement st = con.createStatement();
-            int nRow = st.executeUpdate(query);
+            PreparedStatement pt = con.prepareStatement("insert into squadra (nome,colori_sociali) values (?,?)");
+            pt.setString(1,nomeSquadra);
+            pt.setString(2,coloriSociali);
+            int nRow = pt.executeUpdate();
             if (nRow == 1) {
-                ResultSet rs = st.executeQuery("select * from squadra where nome='" + nomeSquadra + "'");
+                pt=con.prepareStatement("select * from squadra where nome=?");
+                pt.setString(1,nomeSquadra);
+                ResultSet rs = pt.executeQuery();
                 rs.next();
                 int idSquadra = rs.getInt("id");
                 SquadraModel squadraModel = new SquadraModel();
@@ -74,13 +76,19 @@ public class SquadraImpDaoStatement implements SquadraDao {
                 squadraModel.setColoriSociali(coloriSociali);
                 Set<GiocatoreModel> giocatoreModelSet = new HashSet<>();
                 for (GiocatoreDto giocatoreDto : squadreDiGiocatoriDTO.getListaGiocatori()) {
-                    ResultSet resultSetGiocatoreDuplicato = st.executeQuery("select * from giocatore where nome_cognome ='" + giocatoreDto.getNomeCognome() + "'");
+                    pt=con.prepareStatement("select * from giocatore where nome_cognome =?");
+                    pt.setString(1,giocatoreDto.getNomeCognome());
+                    ResultSet resultSetGiocatoreDuplicato = pt.executeQuery();
                     if (!resultSetGiocatoreDuplicato.next()) {
-                        String query2 = "insert into giocatore (nome_cognome,id_squadra) values ('" + giocatoreDto.getNomeCognome() + "','" + idSquadra + "')";
-                        nRow = st.executeUpdate(query2);
+                        pt=con.prepareStatement("insert into giocatore (nome_cognome,id_squadra) values (?,?)");
+                        pt.setString(1,giocatoreDto.getNomeCognome());
+                        pt.setInt(2,idSquadra);
+                        nRow = pt.executeUpdate();
                     }else throw new GiocatoreDuplicatoException();
                 }
-                rs = st.executeQuery("select g.id id_giocatore,g.nome_cognome,numero_ammonizioni from giocatore g join squadra sq on g.id_squadra=sq.id where g.id_squadra='" + idSquadra + "'");
+                pt=con.prepareStatement("select g.id id_giocatore,g.nome_cognome,numero_ammonizioni from giocatore g join squadra sq on g.id_squadra=sq.id where g.id_squadra=?");
+                pt.setInt(1,idSquadra);
+                rs = pt.executeQuery();
                 while (rs.next()) {
                     int id_giocatore = rs.getInt("id_giocatore");
                     String nome_cognome = rs.getString("nome_cognome");
@@ -111,8 +119,8 @@ public class SquadraImpDaoStatement implements SquadraDao {
         List<SquadraModel> listSquadraModel = new ArrayList<>();
         if (!completo) {
             try {
-                Statement st = con.createStatement();
-                ResultSet rs = st.executeQuery("select * from squadra sq");
+                PreparedStatement pt = con.prepareStatement("select * from squadra sq");
+                ResultSet rs = pt.executeQuery();
 
                 while (rs.next()){
                     int id_squadra = rs.getInt("id");
@@ -130,8 +138,8 @@ public class SquadraImpDaoStatement implements SquadraDao {
             }
         }else {
             try {
-                Statement st = con.createStatement();
-                ResultSet rs = st.executeQuery("select * from squadra sq");
+                PreparedStatement pt = con.prepareStatement("select * from squadra sq");
+                ResultSet rs = pt.executeQuery();
 
                 while (rs.next()){
                     int id_squadra = rs.getInt("id");
@@ -142,8 +150,9 @@ public class SquadraImpDaoStatement implements SquadraDao {
                     squadraModel.setColoriSociali(colorisociali);
                     squadraModel.setIdSquadra(id_squadra);
 
-                    Statement stGiocatori = con.createStatement();
-                    ResultSet rsGiocatori = stGiocatori.executeQuery("select g.id,g.nome_cognome from giocatore g join squadra sq on g.id_squadra=sq.id where g.id='"+id_squadra+"'");
+                    PreparedStatement ptGiocatori = con.prepareStatement("select g.id,g.nome_cognome from giocatore g join squadra sq on g.id_squadra=sq.id where g.id=?");
+                    ptGiocatori.setInt(1,id_squadra);
+                    ResultSet rsGiocatori = ptGiocatori.executeQuery();
                     Set <GiocatoreModel> giocatoreModelSet = new HashSet<>();
                     while (rsGiocatori.next()){
                         GiocatoreModel giocatoreModel = new GiocatoreModel();
@@ -168,10 +177,14 @@ public class SquadraImpDaoStatement implements SquadraDao {
     @Override
     public SquadraModel aggiungiGiocatore(int id, GiocatoreDto giocatoreDto) {
         try {
-            Statement st = con.createStatement();
             String nomeCognome = giocatoreDto.getNomeCognome();
-            st.executeUpdate("insert into giocatore (id_squadra,nome_cognome) values ('"+id+"','"+nomeCognome+"')");
-            ResultSet rs = st.executeQuery("select * from squadra where id='"+id+"'");
+            PreparedStatement pt = con.prepareStatement("insert into giocatore (id_squadra,nome_cognome) values (?,?)");
+            pt.setInt(1,id);
+            pt.setString(2,nomeCognome);
+            pt.executeUpdate();
+            pt=con.prepareStatement("select * from squadra where id=?");
+            pt.setInt(1,id);
+            ResultSet rs = pt.executeQuery();
             SquadraModel squadraModel = new SquadraModel();
             while (rs.next()){
                 String colorisociali = rs.getString("colori_sociali");
@@ -181,8 +194,9 @@ public class SquadraImpDaoStatement implements SquadraDao {
                 squadraModel.setColoriSociali(colorisociali);
                 squadraModel.setIdSquadra(id);
 
-                Statement stGiocatori = con.createStatement();
-                ResultSet rsGiocatori = stGiocatori.executeQuery("select g.id,g.nome_cognome from giocatore g join squadra sq on g.id_squadra=sq.id where g.id_squadra='"+id+"'");
+                PreparedStatement ptGiocatori = con.prepareStatement("select g.id,g.nome_cognome from giocatore g join squadra sq on g.id_squadra=sq.id where g.id_squadra=?");
+                ptGiocatori.setInt(1,id);
+                ResultSet rsGiocatori = ptGiocatori.executeQuery();
                 Set <GiocatoreModel> giocatoreModelSet = new HashSet<>();
                 while (rsGiocatori.next()){
                     GiocatoreModel giocatoreModel = new GiocatoreModel();
@@ -205,27 +219,36 @@ public class SquadraImpDaoStatement implements SquadraDao {
                 throw new RuntimeException(e);
             }
         }
-
     }
 
     @Override
     public SquadraModel aggiungiTifoseria(int idSquadra, TifoseriaDTO tifoseriaDTO) {
         try {
-            Statement st = con.createStatement();
+            PreparedStatement pt = con.prepareStatement("select t.id from tifoseria t join squadra sq on sq.id=t.id_squadra  where sq.id=?");
+            pt.setInt(1,idSquadra);
             String nomeTifoseria = tifoseriaDTO.getNomeTifoseria();
             int idTifoseria;
-            ResultSet rs = st.executeQuery("select t.id from tifoseria t join squadra sq on sq.id=t.id_squadra  where sq.id='"+idSquadra+"'");
+            ResultSet rs = pt.executeQuery();
             if (rs.next()){
                 idTifoseria = rs.getInt("id");
-                st.executeUpdate("UPDATE tifoseria SET nome_tifoseria ='"+nomeTifoseria+"' where id='"+idTifoseria+"'");
+                pt=con.prepareStatement("UPDATE tifoseria SET nome_tifoseria =? where id=?");
+                pt.setString(1,nomeTifoseria);
+                pt.setInt(2,idTifoseria);
+                pt.executeUpdate();
             }else {
-                st.executeUpdate("insert into tifoseria (id_squadra,nome_tifoseria) values ('" + idSquadra + "','" + nomeTifoseria + "')");
-                rs= st.executeQuery("select t.id from tifoseria t join squadra sq on sq.id=t.id_squadra  where sq.id='"+idSquadra+"'");
+                pt = con.prepareStatement("insert into tifoseria (id_squadra,nome_tifoseria) values (?,?)");
+                pt.setInt(1,idSquadra);
+                pt.setString(2,nomeTifoseria);
+                pt.executeUpdate();
+                pt=con.prepareStatement("select t.id from tifoseria t join squadra sq on sq.id=t.id_squadra  where sq.id=?");
+                pt.setInt(1,idSquadra);
+                rs= pt.executeQuery();
                 rs.next();
                 idTifoseria=rs.getInt("id");
             }
-
-            rs = st.executeQuery("select * from squadra where id='"+idSquadra+"'");
+            pt = con.prepareStatement("select * from squadra where id=?");
+            pt.setInt(1,idSquadra);
+            rs = pt.executeQuery();
             SquadraModel squadraModel = new SquadraModel();
             while (rs.next()){
                 String colorisociali = rs.getString("colori_sociali");
@@ -237,8 +260,9 @@ public class SquadraImpDaoStatement implements SquadraDao {
                 tifoseriaModel.setIdTifoseria(idTifoseria);
                 tifoseriaModel.setNomeTifoseria(nomeTifoseria);
                 squadraModel.setTifoseria(tifoseriaModel);
-                Statement stGiocatori = con.createStatement();
-                ResultSet rsGiocatori = stGiocatori.executeQuery("select g.id,g.nome_cognome from giocatore g join squadra sq on g.id_squadra=sq.id where g.id_squadra='"+idSquadra+"'");
+                PreparedStatement ptGiocatori = con.prepareStatement("select g.id,g.nome_cognome from giocatore g join squadra sq on g.id_squadra=sq.id where g.id_squadra=?");
+                ptGiocatori.setInt(1,idSquadra);
+                ResultSet rsGiocatori = ptGiocatori.executeQuery();
                 Set <GiocatoreModel> giocatoreModelSet = new HashSet<>();
                 while (rsGiocatori.next()){
                     GiocatoreModel giocatoreModel = new GiocatoreModel();
@@ -257,23 +281,26 @@ public class SquadraImpDaoStatement implements SquadraDao {
         catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
     public void rimuoviSquadra(int idSquadra) {
         try {
-            Statement st = con.createStatement();
-            st.executeUpdate("delete from giocatore where id_squadra='"+idSquadra+"'");
-            st =con.createStatement();
-            st.executeUpdate("delete from tifoseria where id_squadra='"+idSquadra+"'");
-            st = con.createStatement();
-            int nRow= st.executeUpdate("delete from squadra where id='"+idSquadra+"'");
+            PreparedStatement pt = con.prepareStatement("delete from giocatore where id_squadra=?");
+            pt.setInt(1,idSquadra);
+            pt.executeUpdate();
+            pt =con.prepareStatement("delete from tifoseria where id_squadra = ?");
+            pt.setInt(1,idSquadra);
+            pt.executeUpdate();
+            pt = con.prepareStatement("delete from squadra where id=?");
+            pt.setInt(1,idSquadra);
+            int nRow= pt.executeUpdate();
             if (nRow==0){
                 throw new SquadraNonPresenteException();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
     }
 }
