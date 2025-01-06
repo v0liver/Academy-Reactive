@@ -10,6 +10,7 @@ import it.reactive.torneoDemo.model.SquadraModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -17,12 +18,11 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 @Profile(Costanti.TORNEO_DAO_SPRING_JDBC_QUERY_PSC)
@@ -37,40 +37,46 @@ public class SquadraImpDaoPreparedStatementCreator implements SquadraDao{
         PreparedStatementCreator psc = new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-                PreparedStatement ps=con.prepareStatement("insert into squadra (nome,colori_sociali) values (?,?)");
+                PreparedStatement ps=con.prepareStatement("insert into squadra (nome,colori_sociali) values (?,?)", Statement.RETURN_GENERATED_KEYS);
                 ps.setString(1,nomeSquadra);
                 ps.setString(2,coloriSociali);
                 return ps;
             }
         };
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        int nRow=jdbcTemplate.update(psc,keyHolder);
-        if (nRow == 1) {
-            psc = new PreparedStatementCreator() {
-                @Override
-                public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-                    PreparedStatement ps = con.prepareStatement("select * from squadra where nome=?");
-                    ps.setString(1,nomeSquadra);
-                    return ps;
-                }
-            };
-            ResultSetExtractor<SquadraModel> rse = new ResultSetExtractor<SquadraModel>() {
-                @Override
-                public SquadraModel extractData(ResultSet rs) throws SQLException, DataAccessException {
-                    rs.next();
-                    int idSquadra = rs.getInt("id");
-                    SquadraModel squadraModel = new SquadraModel();
-                    squadraModel.setIdSquadra(idSquadra);
-                    squadraModel.setNome(nomeSquadra);
-                    squadraModel.setColoriSociali(coloriSociali);
-                    return squadraModel;
-                }
-            };
-            SquadraModel squadraModel = jdbcTemplate.query(psc,rse);
+        try {
+            jdbcTemplate.update(psc,keyHolder);
+            int idSquadra = (int) keyHolder.getKeyList().get(0).get("id");
+            SquadraModel squadraModel = new SquadraModel();
+            squadraModel.setIdSquadra(idSquadra);
+            squadraModel.setNome(nomeSquadra);
+            squadraModel.setColoriSociali(coloriSociali);
             return squadraModel;
-        } else {
+        } catch (DuplicateKeyException e) {
             throw new SquadraDuplicataException();
         }
+
+//            psc = new PreparedStatementCreator() {
+//                @Override
+//                public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+//                    PreparedStatement ps = con.prepareStatement("select * from squadra where nome=?");
+//                    ps.setString(1,nomeSquadra);
+//                    return ps;
+//                }
+//            };
+//            ResultSetExtractor<SquadraModel> rse = new ResultSetExtractor<SquadraModel>() {
+//                @Override
+//                public SquadraModel extractData(ResultSet rs) throws SQLException, DataAccessException {
+//                    rs.next();
+//                    int idSquadra = rs.getInt("id");
+//                    SquadraModel squadraModel = new SquadraModel();
+//                    squadraModel.setIdSquadra(idSquadra);
+//                    squadraModel.setNome(nomeSquadra);
+//                    squadraModel.setColoriSociali(coloriSociali);
+//                    return squadraModel;
+//                }
+//            };
+//            SquadraModel squadraModel = jdbcTemplate.query(psc,rse);
 
     }
 
