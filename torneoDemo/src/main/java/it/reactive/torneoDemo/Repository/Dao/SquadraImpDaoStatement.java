@@ -1,6 +1,4 @@
 package it.reactive.torneoDemo.Repository.Dao;
-
-
 import it.reactive.torneoDemo.DTO.giocatore.GiocatoreDto;
 import it.reactive.torneoDemo.DTO.squadra.SquadraDTO;
 import it.reactive.torneoDemo.DTO.squadra.SquadreDiGiocatoriDTO;
@@ -15,7 +13,6 @@ import it.reactive.torneoDemo.model.TifoseriaModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
