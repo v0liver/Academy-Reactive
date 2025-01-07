@@ -38,6 +38,7 @@ public class SquadraImpDaoPreparedStatement implements SquadraDao {
                 try (ResultSet rs = ps.getGeneratedKeys()) {
                     if (rs.next()) {
                         int idSquadra = rs.getInt(1);
+                        con.commit();
                         return getSquadraById(idSquadra);
                     }
                 }
@@ -51,7 +52,7 @@ public class SquadraImpDaoPreparedStatement implements SquadraDao {
     }
 
     @Override
-    public SquadraModel aggiungiGiocatore(int idSquadra, GiocatoreDto giocatoreDto) {
+    public SquadraModel aggiungiGiocatore(int idSquadra, GiocatoreDto giocatoreDto){
         String nomeCognome = giocatoreDto.getNomeCognome();
         String queryCheck = "select * from giocatore where nome_cognome = ?";
         try (PreparedStatement ps = con.prepareStatement(queryCheck)) {
