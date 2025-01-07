@@ -6,10 +6,14 @@ import it.reactive.torneoDemo.DTO.tifoseria.TifoseriaDTO;
 import it.reactive.torneoDemo.Repository.Dao.SquadraDao;
 import it.reactive.torneoDemo.DTO.squadra.SquadraDTO;
 import it.reactive.torneoDemo.Mapper.SquadraMapper;
+import it.reactive.torneoDemo.exception.GiocatoreDuplicatoException;
+import it.reactive.torneoDemo.exception.SquadraDuplicataException;
 import it.reactive.torneoDemo.model.SquadraModel;
 import it.reactive.torneoDemo.resource.SquadraResource;
+import it.reactive.torneoDemo.resource.TifoseriaResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +23,7 @@ public class SquadraService {
     @Autowired
     SquadraDao squadraDao;
 
+    @Transactional
     public SquadraResource salvaSquadra(SquadraDTO squadraDTO) {
 
         SquadraModel squadraModel = squadraDao.salvaSquadra(squadraDTO);
@@ -26,10 +31,12 @@ public class SquadraService {
         return SquadraMapper.fromModelToResource(squadraModel);
     }
 
+    @Transactional(rollbackFor = {GiocatoreDuplicatoException.class, SquadraDuplicataException.class})
     public SquadraResource salvaSquadraSquadraGiocatori(SquadreDiGiocatoriDTO squadreDiGiocatoriDTO) {
-
-        SquadraModel squadraModel = squadraDao.salvaSquadraSquadraGiocatori(squadreDiGiocatoriDTO);
-
+        SquadraModel squadraModel= squadraDao.salvaSquadra(squadreDiGiocatoriDTO);
+        for (GiocatoreDto giocatoreDto : squadreDiGiocatoriDTO.getListaGiocatori()) {
+            squadraModel=squadraDao.aggiungiGiocatore(squadraModel.getIdSquadra(),giocatoreDto);
+        }
         return SquadraMapper.fromModelToResource(squadraModel);
     }
 

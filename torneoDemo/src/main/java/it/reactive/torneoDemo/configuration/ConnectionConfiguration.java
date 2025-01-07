@@ -19,11 +19,11 @@ public class ConnectionConfiguration {
     private String password;
 
     @Bean
-    @Scope("prototype")
+//    @Scope("prototype")
     public Connection init() throws Exception {
         Connection con = DriverManager.getConnection(url, user, password);
         System.out.println(con);
-        con.setAutoCommit(true);
+        con.setAutoCommit(false);
         return con;
     }
 

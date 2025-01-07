@@ -22,6 +22,7 @@ import java.util.Set;
 @Repository
 @Profile(Costanti.TORNEO_DAO_JDBC_STATEMENT)
 public class SquadraImpDaoStatement implements SquadraDao {
+
     @Autowired
     Connection con;
 
@@ -29,248 +30,155 @@ public class SquadraImpDaoStatement implements SquadraDao {
     public SquadraModel salvaSquadra(SquadraDTO squadraDTO) {
         String nomeSquadra = squadraDTO.getNome();
         String coloriSociali = squadraDTO.getColoriSociali();
-        String query = "insert into squadra (nome,colori_sociali) values ('" + nomeSquadra + "','" + coloriSociali + "')";
-        try {
-            Statement st = con.createStatement();
-            int nRow = st.executeUpdate(query);
+        String query = "insert into squadra (nome, colori_sociali) values ('" + nomeSquadra + "','" + coloriSociali + "')";
+        try (Statement st = con.createStatement()) {
+            int nRow = st.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
             if (nRow == 1) {
-                ResultSet rs = st.executeQuery("select * from squadra where nome='" + nomeSquadra + "'");
-                rs.next();
-                int idSquadra = rs.getInt("id");
-                SquadraModel squadraModel = new SquadraModel();
-                squadraModel.setIdSquadra(idSquadra);
-                squadraModel.setNome(nomeSquadra);
-                squadraModel.setColoriSociali(coloriSociali);
-                return squadraModel;
+                ResultSet rs = st.getGeneratedKeys();
+                if (rs.next()) {
+                    int idSquadra = rs.getInt(1);
+                    return getSquadraById(idSquadra);
+                }
             } else {
                 throw new SquadraDuplicataException();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
+        return null;
     }
 
     @Override
-    public SquadraModel salvaSquadraSquadraGiocatori(SquadreDiGiocatoriDTO squadreDiGiocatoriDTO) {
-        String nomeSquadra = squadreDiGiocatoriDTO.getNome();
-        String coloriSociali = squadreDiGiocatoriDTO.getColoriSociali();
-
-        String query = "insert into squadra (nome,colori_sociali) values ('" + nomeSquadra + "','" + coloriSociali + "')";
-        try {
-            Statement st = con.createStatement();
-            int nRow = st.executeUpdate(query);
-            if (nRow == 1) {
-                ResultSet rs = st.executeQuery("select * from squadra where nome='" + nomeSquadra + "'");
-                rs.next();
-                int idSquadra = rs.getInt("id");
-                SquadraModel squadraModel = new SquadraModel();
-                squadraModel.setIdSquadra(idSquadra);
-                squadraModel.setNome(nomeSquadra);
-                squadraModel.setColoriSociali(coloriSociali);
-                Set<GiocatoreModel> giocatoreModelSet = new HashSet<>();
-                for (GiocatoreDto giocatoreDto : squadreDiGiocatoriDTO.getListaGiocatori()) {
-                    ResultSet resultSetGiocatoreDuplicato = st.executeQuery("select * from giocatore where nome_cognome ='" + giocatoreDto.getNomeCognome() + "'");
-                    if (!resultSetGiocatoreDuplicato.next()) {
-                        String query2 = "insert into giocatore (nome_cognome,id_squadra) values ('" + giocatoreDto.getNomeCognome() + "','" + idSquadra + "')";
-                        nRow = st.executeUpdate(query2);
-                    }else throw new GiocatoreDuplicatoException();
-                }
-                rs = st.executeQuery("select g.id id_giocatore,g.nome_cognome,numero_ammonizioni from giocatore g join squadra sq on g.id_squadra=sq.id where g.id_squadra='" + idSquadra + "'");
-                while (rs.next()) {
-                    int id_giocatore = rs.getInt("id_giocatore");
-                    String nome_cognome = rs.getString("nome_cognome");
-                    int numero_ammonizioni = rs.getInt("numero_ammonizioni");
-                    GiocatoreModel giocatoreModel = new GiocatoreModel();
-                    giocatoreModel.setIdGiocatore(id_giocatore);
-                    giocatoreModel.setNomeCognome(nome_cognome);
-                    //giocatoreModel.setSquadraModel(squadraModel);
-
-                    giocatoreModelSet.add(giocatoreModel);
-                }
-                squadraModel.setGiocatori(giocatoreModelSet);
-                return squadraModel;
-            } else {
-                throw new SquadraDuplicataException();
-            }
-        } catch (SQLException e) {
-            if (e.getSQLState().equals("23505")){// 23505 è lo stato SQL standard per violazione di chiave univoca su Postgres (23000 sugli altri sistemi di database)
-                throw new SquadraDuplicataException();
-            }else {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    @Override
-    public List<SquadraModel> ricercaSquadra(boolean completo) {
-        List<SquadraModel> listSquadraModel = new ArrayList<>();
-        if (!completo) {
-            try {
-                Statement st = con.createStatement();
-                ResultSet rs = st.executeQuery("select * from squadra sq");
-
-                while (rs.next()){
-                    int id_squadra = rs.getInt("id");
-                    String colorisociali = rs.getString("colori_sociali");
-                    String nome = rs.getString("nome");
-                    SquadraModel squadraModel = new SquadraModel();
-                    squadraModel.setNome(nome);
-                    squadraModel.setColoriSociali(colorisociali);
-                    squadraModel.setIdSquadra(id_squadra);
-                    listSquadraModel.add(squadraModel);
-                }
-
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }else {
-            try {
-                Statement st = con.createStatement();
-                ResultSet rs = st.executeQuery("select * from squadra sq");
-
-                while (rs.next()){
-                    int id_squadra = rs.getInt("id");
-                    String colorisociali = rs.getString("colori_sociali");
-                    String nome = rs.getString("nome");
-                    SquadraModel squadraModel = new SquadraModel();
-                    squadraModel.setNome(nome);
-                    squadraModel.setColoriSociali(colorisociali);
-                    squadraModel.setIdSquadra(id_squadra);
-
-                    Statement stGiocatori = con.createStatement();
-                    ResultSet rsGiocatori = stGiocatori.executeQuery("select g.id,g.nome_cognome from giocatore g join squadra sq on g.id_squadra=sq.id where g.id='"+id_squadra+"'");
-                    Set <GiocatoreModel> giocatoreModelSet = new HashSet<>();
-                    while (rsGiocatori.next()){
-                        GiocatoreModel giocatoreModel = new GiocatoreModel();
-                        int id_Giocatore = rsGiocatori.getInt("id");
-                        String nomeCognomeGiocatore = rsGiocatori.getString("nome_cognome");
-                        giocatoreModel.setIdGiocatore(id_Giocatore);
-                        giocatoreModel.setNomeCognome(nomeCognomeGiocatore);
-                        giocatoreModelSet.add(giocatoreModel);
-                    }
-                    squadraModel.setGiocatori(giocatoreModelSet);
-                    listSquadraModel.add(squadraModel);
-                }
-                return listSquadraModel;
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-
-        }
-        return listSquadraModel;
-    }
-
-    @Override
-    public SquadraModel aggiungiGiocatore(int id, GiocatoreDto giocatoreDto) {
-        try {
-            Statement st = con.createStatement();
+    public SquadraModel aggiungiGiocatore(int idSquadra, GiocatoreDto giocatoreDto) {
+        try (Statement st = con.createStatement()) {
             String nomeCognome = giocatoreDto.getNomeCognome();
-            st.executeUpdate("insert into giocatore (id_squadra,nome_cognome) values ('"+id+"','"+nomeCognome+"')");
-            ResultSet rs = st.executeQuery("select * from squadra where id='"+id+"'");
-            SquadraModel squadraModel = new SquadraModel();
-            while (rs.next()){
-                String colorisociali = rs.getString("colori_sociali");
-                String nome = rs.getString("nome");
-
-                squadraModel.setNome(nome);
-                squadraModel.setColoriSociali(colorisociali);
-                squadraModel.setIdSquadra(id);
-
-                Statement stGiocatori = con.createStatement();
-                ResultSet rsGiocatori = stGiocatori.executeQuery("select g.id,g.nome_cognome from giocatore g join squadra sq on g.id_squadra=sq.id where g.id_squadra='"+id+"'");
-                Set <GiocatoreModel> giocatoreModelSet = new HashSet<>();
-                while (rsGiocatori.next()){
-                    GiocatoreModel giocatoreModel = new GiocatoreModel();
-                    int id_Giocatore = rsGiocatori.getInt("id");
-                    String nomeCognomeGiocatore = rsGiocatori.getString("nome_cognome");
-                    giocatoreModel.setIdGiocatore(id_Giocatore);
-                    giocatoreModel.setNomeCognome(nomeCognomeGiocatore);
-                    giocatoreModelSet.add(giocatoreModel);
-                }
-                squadraModel.setGiocatori(giocatoreModelSet);
-
-            }
-            return squadraModel;
-        }
-
-        catch (SQLException e) {
-            if (e.getSQLState().equals("23505")){// 23505 è lo stato SQL standard per violazione di chiave univoca su Postgres (23000 sugli altri sistemi di database)
+            ResultSet rsGiocatore = st.executeQuery("select * from giocatore where nome_cognome ='" + nomeCognome + "'");
+            if (!rsGiocatore.next()) {
+                String query = "insert into giocatore (id_squadra, nome_cognome) values ('" + idSquadra + "','" + nomeCognome + "')";
+                st.executeUpdate(query);
+            } else {
                 throw new GiocatoreDuplicatoException();
-            }else {
-                throw new RuntimeException(e);
             }
-        }
 
+            return getSquadraById(idSquadra);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public SquadraModel aggiungiTifoseria(int idSquadra, TifoseriaDTO tifoseriaDTO) {
-        try {
-            Statement st = con.createStatement();
-            String nomeTifoseria = tifoseriaDTO.getNomeTifoseria();
-            int idTifoseria;
-            ResultSet rs = st.executeQuery("select t.id from tifoseria t join squadra sq on sq.id=t.id_squadra  where sq.id='"+idSquadra+"'");
-            if (rs.next()){
-                idTifoseria = rs.getInt("id");
-                st.executeUpdate("UPDATE tifoseria SET nome_tifoseria ='"+nomeTifoseria+"' where id='"+idTifoseria+"'");
-            }else {
-                st.executeUpdate("insert into tifoseria (id_squadra,nome_tifoseria) values ('" + idSquadra + "','" + nomeTifoseria + "')");
-                rs= st.executeQuery("select t.id from tifoseria t join squadra sq on sq.id=t.id_squadra  where sq.id='"+idSquadra+"'");
-                rs.next();
-                idTifoseria=rs.getInt("id");
-            }
-
-            rs = st.executeQuery("select * from squadra where id='"+idSquadra+"'");
-            SquadraModel squadraModel = new SquadraModel();
-            while (rs.next()){
-                String colorisociali = rs.getString("colori_sociali");
+    public SquadraModel getSquadraById(int idSquadra) {
+        try (Statement st = con.createStatement()) {
+            ResultSet rs = st.executeQuery("select * from squadra where id='" + idSquadra + "'");
+            if (rs.next()) {
                 String nome = rs.getString("nome");
-                squadraModel.setNome(nome);
-                squadraModel.setColoriSociali(colorisociali);
+                String coloriSociali = rs.getString("colori_sociali");
+
+                SquadraModel squadraModel = new SquadraModel();
                 squadraModel.setIdSquadra(idSquadra);
-                TifoseriaModel tifoseriaModel = new TifoseriaModel();
-                tifoseriaModel.setIdTifoseria(idTifoseria);
-                tifoseriaModel.setNomeTifoseria(nomeTifoseria);
-                squadraModel.setTifoseria(tifoseriaModel);
-                Statement stGiocatori = con.createStatement();
-                ResultSet rsGiocatori = stGiocatori.executeQuery("select g.id,g.nome_cognome from giocatore g join squadra sq on g.id_squadra=sq.id where g.id_squadra='"+idSquadra+"'");
-                Set <GiocatoreModel> giocatoreModelSet = new HashSet<>();
-                while (rsGiocatori.next()){
-                    GiocatoreModel giocatoreModel = new GiocatoreModel();
-                    int id_Giocatore = rsGiocatori.getInt("id");
-                    String nomeCognomeGiocatore = rsGiocatori.getString("nome_cognome");
-                    giocatoreModel.setIdGiocatore(id_Giocatore);
-                    giocatoreModel.setNomeCognome(nomeCognomeGiocatore);
-                    giocatoreModelSet.add(giocatoreModel);
-                }
-                squadraModel.setGiocatori(giocatoreModelSet);
+                squadraModel.setNome(nome);
+                squadraModel.setColoriSociali(coloriSociali);
+                squadraModel.setTifoseria(getTifoseriaBySquadraId(idSquadra));
+                Set<GiocatoreModel> giocatori = getGiocatoriBySquadraId(idSquadra);
+                squadraModel.setGiocatori(giocatori);
 
+                return squadraModel;
             }
-            return squadraModel;
-        }
-
-        catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return null;
+    }
 
+    public Set<GiocatoreModel> getGiocatoriBySquadraId(int idSquadra) {
+        Set<GiocatoreModel> giocatori = new HashSet<>();
+        try (Statement st = con.createStatement()) {
+            ResultSet rsGiocatori = st.executeQuery("select g.id, g.nome_cognome from giocatore g join squadra sq on g.id_squadra=sq.id where g.id_squadra='" + idSquadra + "'");
+            while (rsGiocatori.next()) {
+                GiocatoreModel giocatoreModel = new GiocatoreModel();
+                giocatoreModel.setIdGiocatore(rsGiocatori.getInt("id"));
+                giocatoreModel.setNomeCognome(rsGiocatori.getString("nome_cognome"));
+                giocatori.add(giocatoreModel);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return giocatori;
     }
 
     @Override
     public void rimuoviSquadra(int idSquadra) {
-        try {
-            Statement st = con.createStatement();
-            st.executeUpdate("delete from giocatore where id_squadra='"+idSquadra+"'");
-            st =con.createStatement();
-            st.executeUpdate("delete from tifoseria where id_squadra='"+idSquadra+"'");
-            st = con.createStatement();
-            int nRow= st.executeUpdate("delete from squadra where id='"+idSquadra+"'");
-            if (nRow==0){
+        try (Statement st = con.createStatement()) {
+            st.executeUpdate("delete from giocatore where id_squadra='" + idSquadra + "'");
+            st.executeUpdate("delete from tifoseria where id_squadra='" + idSquadra + "'");
+            int nRow = st.executeUpdate("delete from squadra where id='" + idSquadra + "'");
+            if (nRow == 0) {
                 throw new SquadraNonPresenteException();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public List<SquadraModel> ricercaSquadra(boolean completo) {
+        List<SquadraModel> listSquadraModel = new ArrayList<>();
+        try (Statement st = con.createStatement()) {
+            ResultSet rs = st.executeQuery("select * from squadra sq");
+            while (rs.next()) {
+                int idSquadra = rs.getInt("id");
+                SquadraModel squadraModel = new SquadraModel();
+                squadraModel.setIdSquadra(idSquadra);
+                squadraModel.setNome(rs.getString("nome"));
+                squadraModel.setColoriSociali(rs.getString("colori_sociali"));
+
+                if (completo) {
+                    squadraModel.setGiocatori(getGiocatoriBySquadraId(idSquadra));
+                }
+
+                listSquadraModel.add(squadraModel);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listSquadraModel;
+    }
+
+    @Override
+    public SquadraModel aggiungiTifoseria(int idSquadra, TifoseriaDTO tifoseriaDTO) {
+        String nomeTifoseria = tifoseriaDTO.getNomeTifoseria();
+        try (Statement st = con.createStatement()) {
+            ResultSet rsTifoseria = st.executeQuery("select * from tifoseria where nome_tifoseria ='" + nomeTifoseria + "' and id_squadra = " + idSquadra);
+            if (rsTifoseria.next()) {
+                throw new RuntimeException("Tifoseria già associata alla squadra");
+            }
+
+            String query = "insert into tifoseria (id_squadra, nome_tifoseria) values (" + idSquadra + ", '" + nomeTifoseria + "')";
+            st.executeUpdate(query);
+
+            return getSquadraById(idSquadra);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public TifoseriaModel getTifoseriaBySquadraId(int idSquadra) {
+        String query = "select * from tifoseria where id_squadra = " + idSquadra;
+        try (Statement st = con.createStatement()) {
+            ResultSet rs = st.executeQuery(query);
+            if (rs.next()) {
+                TifoseriaModel tifoseriaModel = new TifoseriaModel();
+                tifoseriaModel.setIdTifoseria(rs.getInt("id"));
+                tifoseriaModel.setNomeTifoseria(rs.getString("nome_tifoserianome_tifoseria"));
+                return tifoseriaModel;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
 }
+
