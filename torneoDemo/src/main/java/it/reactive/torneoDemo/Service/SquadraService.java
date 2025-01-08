@@ -31,11 +31,11 @@ public class SquadraService {
         return SquadraMapper.fromModelToResource(squadraModel);
     }
 
-    @Transactional(rollbackFor = {GiocatoreDuplicatoException.class, SquadraDuplicataException.class})
+    @Transactional
     public SquadraResource salvaSquadraSquadraGiocatori(SquadreDiGiocatoriDTO squadreDiGiocatoriDTO) {
-        SquadraModel squadraModel= squadraDao.salvaSquadra(squadreDiGiocatoriDTO);
+        SquadraModel squadraModel = squadraDao.salvaSquadra(squadreDiGiocatoriDTO);
         for (GiocatoreDto giocatoreDto : squadreDiGiocatoriDTO.getListaGiocatori()) {
-            squadraModel=squadraDao.aggiungiGiocatore(squadraModel.getIdSquadra(),giocatoreDto);
+            squadraModel = squadraDao.aggiungiGiocatore(squadraModel.getIdSquadra(), giocatoreDto);
         }
         return SquadraMapper.fromModelToResource(squadraModel);
     }
@@ -49,17 +49,17 @@ public class SquadraService {
         return squadraResource;
     }
 
-    public SquadraResource aggiungiGiocatore(int id, GiocatoreDto giocatoreDto){
-        SquadraModel squadraModel = squadraDao.aggiungiGiocatore(id,giocatoreDto);
+    public SquadraResource aggiungiGiocatore(int id, GiocatoreDto giocatoreDto) {
+        SquadraModel squadraModel = squadraDao.aggiungiGiocatore(id, giocatoreDto);
         return SquadraMapper.fromModelToResource(squadraModel);
     }
 
-    public SquadraResource aggiungiTifoseria(int idSquadra, TifoseriaDTO tifoseriaDTO){
-        SquadraModel squadraModel = squadraDao.aggiungiTifoseria(idSquadra,tifoseriaDTO);
+    public SquadraResource aggiungiTifoseria(int idSquadra, TifoseriaDTO tifoseriaDTO) {
+        SquadraModel squadraModel = squadraDao.aggiungiTifoseria(idSquadra, tifoseriaDTO);
         return SquadraMapper.fromModelToResource(squadraModel);
     }
 
-    public void rimuoviSquadra(int idSquadra){
+    public void rimuoviSquadra(int idSquadra) {
         squadraDao.rimuoviSquadra(idSquadra);
     }
 }

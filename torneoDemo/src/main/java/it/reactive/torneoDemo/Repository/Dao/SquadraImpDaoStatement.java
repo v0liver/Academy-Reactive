@@ -12,7 +12,13 @@ import it.reactive.torneoDemo.model.SquadraModel;
 import it.reactive.torneoDemo.model.TifoseriaModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -24,33 +30,49 @@ import java.util.Set;
 public class SquadraImpDaoStatement implements SquadraDao {
 
     @Autowired
-    Connection con;
+    DataSource dataSource;
+
+    @Autowired
+    PlatformTransactionManager transactionManager;
+
+
+
 
     @Override
     public SquadraModel salvaSquadra(SquadraDTO squadraDTO) {
         String nomeSquadra = squadraDTO.getNome();
         String coloriSociali = squadraDTO.getColoriSociali();
         String query = "insert into squadra (nome, colori_sociali) values ('" + nomeSquadra + "','" + coloriSociali + "')";
-        try (Statement st = con.createStatement()) {
+        Connection con=null;
+        try   {
+            con = DataSourceUtils.getConnection(((DataSourceTransactionManager) transactionManager).getDataSource());
+            Statement st = con.createStatement();
             int nRow = st.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
-            if (nRow == 1) {
                 ResultSet rs = st.getGeneratedKeys();
                 if (rs.next()) {
                     int idSquadra = rs.getInt(1);
                     return getSquadraById(idSquadra);
                 }
-            } else {
-                throw new SquadraDuplicataException();
-            }
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            if ("23505".equals(e.getSQLState())){
+                throw  new SquadraDuplicataException();
+            }else throw new RuntimeException(e);
+        }
+        finally {
+            if(con!=null){
+                DataSourceUtils.releaseConnection(con,((DataSourceTransactionManager)transactionManager).getDataSource());
+            }
         }
         return null;
     }
 
     @Override
     public SquadraModel aggiungiGiocatore(int idSquadra, GiocatoreDto giocatoreDto) {
-        try (Statement st = con.createStatement()) {
+        Connection con = null;
+        try   {
+            con = DataSourceUtils.getConnection(((DataSourceTransactionManager) transactionManager).getDataSource());
+            Statement st = con.createStatement();
             String nomeCognome = giocatoreDto.getNomeCognome();
             ResultSet rsGiocatore = st.executeQuery("select * from giocatore where nome_cognome ='" + nomeCognome + "'");
             if (!rsGiocatore.next()) {
@@ -65,11 +87,19 @@ public class SquadraImpDaoStatement implements SquadraDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        finally {
+            if (con!=null){
+                DataSourceUtils.releaseConnection(con,((DataSourceTransactionManager)transactionManager).getDataSource());
+            }
+        }
     }
 
     @Override
     public SquadraModel getSquadraById(int idSquadra) {
-        try (Statement st = con.createStatement()) {
+        Connection con = null;
+        try  {
+            con = DataSourceUtils.getConnection(((DataSourceTransactionManager) transactionManager).getDataSource());
+            Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select * from squadra where id='" + idSquadra + "'");
             if (rs.next()) {
                 String nome = rs.getString("nome");
@@ -88,12 +118,20 @@ public class SquadraImpDaoStatement implements SquadraDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        finally {
+            if (con!=null){
+                DataSourceUtils.releaseConnection(con,((DataSourceTransactionManager)transactionManager).getDataSource());
+            }
+        }
         return null;
     }
 
     public Set<GiocatoreModel> getGiocatoriBySquadraId(int idSquadra) {
+        Connection con = null;
         Set<GiocatoreModel> giocatori = new HashSet<>();
-        try (Statement st = con.createStatement()) {
+        try  {
+            con = DataSourceUtils.getConnection(((DataSourceTransactionManager) transactionManager).getDataSource());
+            Statement st = con.createStatement();
             ResultSet rsGiocatori = st.executeQuery("select g.id, g.nome_cognome from giocatore g join squadra sq on g.id_squadra=sq.id where g.id_squadra='" + idSquadra + "'");
             while (rsGiocatori.next()) {
                 GiocatoreModel giocatoreModel = new GiocatoreModel();
@@ -104,12 +142,20 @@ public class SquadraImpDaoStatement implements SquadraDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        finally {
+            if (con!=null){
+                DataSourceUtils.releaseConnection(con,((DataSourceTransactionManager)transactionManager).getDataSource());
+            }
+        }
         return giocatori;
     }
 
     @Override
     public void rimuoviSquadra(int idSquadra) {
-        try (Statement st = con.createStatement()) {
+        Connection con = null;
+        try  {
+            con = DataSourceUtils.getConnection(((DataSourceTransactionManager) transactionManager).getDataSource());
+            Statement st = con.createStatement();
             st.executeUpdate("delete from giocatore where id_squadra='" + idSquadra + "'");
             st.executeUpdate("delete from tifoseria where id_squadra='" + idSquadra + "'");
             int nRow = st.executeUpdate("delete from squadra where id='" + idSquadra + "'");
@@ -119,12 +165,20 @@ public class SquadraImpDaoStatement implements SquadraDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        finally {
+            if (con!=null){
+                DataSourceUtils.releaseConnection(con,((DataSourceTransactionManager)transactionManager).getDataSource());
+            }
+        }
     }
 
     @Override
     public List<SquadraModel> ricercaSquadra(boolean completo) {
+        Connection con = null;
         List<SquadraModel> listSquadraModel = new ArrayList<>();
-        try (Statement st = con.createStatement()) {
+        try  {
+            con = DataSourceUtils.getConnection(((DataSourceTransactionManager) transactionManager).getDataSource());
+            Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select * from squadra sq");
             while (rs.next()) {
                 int idSquadra = rs.getInt("id");
@@ -142,13 +196,21 @@ public class SquadraImpDaoStatement implements SquadraDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        finally {
+            if (con!=null){
+                DataSourceUtils.releaseConnection(con,((DataSourceTransactionManager)transactionManager).getDataSource());
+            }
+        }
         return listSquadraModel;
     }
 
     @Override
     public SquadraModel aggiungiTifoseria(int idSquadra, TifoseriaDTO tifoseriaDTO) {
+        Connection con = null;
         String nomeTifoseria = tifoseriaDTO.getNomeTifoseria();
-        try (Statement st = con.createStatement()) {
+        try  {
+            con = DataSourceUtils.getConnection(((DataSourceTransactionManager) transactionManager).getDataSource());
+            Statement st = con.createStatement();
             ResultSet rsTifoseria = st.executeQuery("select * from tifoseria where nome_tifoseria ='" + nomeTifoseria + "' and id_squadra = " + idSquadra);
             if (rsTifoseria.next()) {
                 throw new RuntimeException("Tifoseria già associata alla squadra");
@@ -161,12 +223,20 @@ public class SquadraImpDaoStatement implements SquadraDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        finally {
+            if (con!=null){
+                DataSourceUtils.releaseConnection(con,((DataSourceTransactionManager)transactionManager).getDataSource());
+            }
+        }
     }
 
     @Override
     public TifoseriaModel getTifoseriaBySquadraId(int idSquadra) {
+        Connection con = null;
         String query = "select * from tifoseria where id_squadra = " + idSquadra;
-        try (Statement st = con.createStatement()) {
+        try  {
+            con = DataSourceUtils.getConnection(((DataSourceTransactionManager) transactionManager).getDataSource());
+            Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(query);
             if (rs.next()) {
                 TifoseriaModel tifoseriaModel = new TifoseriaModel();
@@ -176,6 +246,11 @@ public class SquadraImpDaoStatement implements SquadraDao {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+        finally {
+            if (con!=null){
+                DataSourceUtils.releaseConnection(con,((DataSourceTransactionManager)transactionManager).getDataSource());
+            }
         }
         return null;
     }
