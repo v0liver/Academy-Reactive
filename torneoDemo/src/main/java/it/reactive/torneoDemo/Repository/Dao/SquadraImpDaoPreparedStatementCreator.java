@@ -18,7 +18,6 @@ import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -209,7 +208,6 @@ public class SquadraImpDaoPreparedStatementCreator implements SquadraDao {
     public SquadraModel aggiungiTifoseria(int idSquadra, TifoseriaDTO tifoseriaDTO) {
         String nomeTifoseria = tifoseriaDTO.getNomeTifoseria();
         String queryCheck = "SELECT * FROM tifoseria WHERE nome_tifoseria = ? AND id_squadra = ?";
-
         boolean tifoseriaEsistente = Boolean.TRUE.equals(jdbcTemplate.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {

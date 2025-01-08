@@ -81,7 +81,7 @@ public class SquadraController {
             @ApiResponse(code = 500, message = "errore di server")})
     @PutMapping("/addGiocatore/{id}")
     public ResponseEntity<SquadraResource> aggiungiGiocatore(@PathVariable @ApiParam(value = "id squadra", required = true) @Min(0) @Max(10000) Integer id, @Valid @RequestBody @ApiParam(value = "giocatoreDTO", required = true) GiocatoreDto giocatoreDTO) {
-       SquadraResource squadraResource = squadraService.aggiungiGiocatore(id,giocatoreDTO);
+        SquadraResource squadraResource = squadraService.aggiungiGiocatore(id, giocatoreDTO);
         return ResponseEntity.ok(squadraResource);
     }
 
@@ -93,7 +93,7 @@ public class SquadraController {
     @PutMapping("/addTifoseria/{idSquadra}")
     public ResponseEntity<SquadraResource> aggiungiTifoseria(@PathVariable @ApiParam(value = "id squadra", required =
             true) @Min(0) @Max(10000) Integer idSquadra, @RequestBody @ApiParam(value = "tifoseria") @Valid TifoseriaDTO tifoseriaDTO) {
-        SquadraResource squadraResource = squadraService.aggiungiTifoseria(idSquadra,tifoseriaDTO);
+        SquadraResource squadraResource = squadraService.aggiungiTifoseria(idSquadra, tifoseriaDTO);
         return ResponseEntity.ok(squadraResource);
     }
 

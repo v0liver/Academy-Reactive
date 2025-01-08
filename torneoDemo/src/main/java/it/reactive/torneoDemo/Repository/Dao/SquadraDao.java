@@ -15,11 +15,18 @@ import java.util.Set;
 public interface SquadraDao {
 
     SquadraModel salvaSquadra(SquadraDTO squadraDTO);
+
     SquadraModel getSquadraById(int idSquadra);
+
     Set<GiocatoreModel> getGiocatoriBySquadraId(int idSquadra);
+
     List<SquadraModel> ricercaSquadra(boolean completo);
-    SquadraModel aggiungiGiocatore (int idSquadra, GiocatoreDto giocatoreDto);
-    SquadraModel aggiungiTifoseria (int idSquadra, TifoseriaDTO tifoseriaDTO);
+
+    SquadraModel aggiungiGiocatore(int idSquadra, GiocatoreDto giocatoreDto);
+
+    SquadraModel aggiungiTifoseria(int idSquadra, TifoseriaDTO tifoseriaDTO);
+
     void rimuoviSquadra(int idSquadra);
+
     public TifoseriaModel getTifoseriaBySquadraId(int idSquadra);
 }

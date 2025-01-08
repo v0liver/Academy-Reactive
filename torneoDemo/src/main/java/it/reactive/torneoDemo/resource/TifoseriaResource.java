@@ -5,7 +5,6 @@ public class TifoseriaResource {
     private String nomeTifoseria;
 
 
-
     public Integer getIdTifoseria() {
         return idTifoseria;
     }

@@ -3,10 +3,12 @@ package it.reactive.torneoDemo.Mapper;
 import it.reactive.torneoDemo.DTO.giocatore.GiocatoreDto;
 import it.reactive.torneoDemo.model.GiocatoreModel;
 import it.reactive.torneoDemo.resource.GiocatoreResource;
+import org.springframework.stereotype.Component;
 
+@Component
 public class GiocatoreMapper {
 
-    public static GiocatoreResource fromModelToResource(GiocatoreModel giocatoriModel){
+    public  GiocatoreResource fromModelToResource(GiocatoreModel giocatoriModel) {
         GiocatoreResource giocatoreResource = new GiocatoreResource();
         giocatoreResource.setIdGiocatore(giocatoriModel.getIdGiocatore());
         giocatoreResource.setNomeCognome(giocatoriModel.getNomeCognome());
