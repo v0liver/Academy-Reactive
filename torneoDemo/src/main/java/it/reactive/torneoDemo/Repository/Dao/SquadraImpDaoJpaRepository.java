@@ -3,6 +3,7 @@ package it.reactive.torneoDemo.Repository.Dao;
 import it.reactive.torneoDemo.DTO.giocatore.GiocatoreDto;
 import it.reactive.torneoDemo.DTO.squadra.SquadraDTO;
 import it.reactive.torneoDemo.DTO.tifoseria.TifoseriaDTO;
+import it.reactive.torneoDemo.Repository.JpaRepository.GiocatoreJpaRepository;
 import it.reactive.torneoDemo.Repository.JpaRepository.SquadraJpaRepository;
 import it.reactive.torneoDemo.Utility.Costanti;
 import it.reactive.torneoDemo.exception.SquadraDuplicataException;
@@ -10,20 +11,20 @@ import it.reactive.torneoDemo.exception.SquadraNonPresenteException;
 import it.reactive.torneoDemo.model.GiocatoreModel;
 import it.reactive.torneoDemo.model.SquadraModel;
 import it.reactive.torneoDemo.model.TifoseriaModel;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import javax.persistence.Tuple;
+import java.util.*;
 
 @Repository
 @Profile(Costanti.TORNEO_DAO_SPRING_JPA_JPAREPOSITORY)
 public class SquadraImpDaoJpaRepository implements SquadraDao{
     @Autowired
     SquadraJpaRepository squadraJpaRepository;
+    @Autowired
+    GiocatoreJpaRepository giocatoreJpaRepository;
 
     @Override
     public SquadraModel salvaSquadra(SquadraDTO squadraDTO) {
@@ -60,18 +61,37 @@ public class SquadraImpDaoJpaRepository implements SquadraDao{
 
     @Override
     public Set<GiocatoreModel> getGiocatoriBySquadraId(int idSquadra) {
-
-        return Collections.emptySet();
+        return giocatoreJpaRepository.findBySquadraModelIdSquadra(idSquadra);
     }
 
     @Override
     public List<SquadraModel> ricercaSquadra(boolean completo) {
-        return Collections.emptyList();
+        if (completo){
+            return squadraJpaRepository.findAll();
+
+        }else {
+            List<Tuple> tuple = squadraJpaRepository.findAllWithoutGiocatori();
+            List<SquadraModel> squadraModels = new ArrayList<>();
+            for (Tuple tuple1 : tuple) {
+                SquadraModel squadraModel = new SquadraModel();
+                squadraModel.setIdSquadra(tuple1.get("idSquadra",Integer.class));
+                squadraModel.setNome(tuple1.get("nome",String.class));
+                squadraModel.setColoriSociali(tuple1.get("coloriSociali", String.class));
+                squadraModels.add(squadraModel);
+            }
+           return squadraModels;
+        }
+
     }
 
     @Override
     public SquadraModel aggiungiGiocatore(int idSquadra, GiocatoreDto giocatoreDto) {
-        return null;
+        Optional<SquadraModel> squadraModel = squadraJpaRepository.findById(idSquadra);
+        GiocatoreModel giocatoreModel = new GiocatoreModel();
+        giocatoreModel.setSquadraModel(squadraModel.get());
+        giocatoreModel.setNomeCognome(giocatoreDto.getNomeCognome());
+        giocatoreJpaRepository.save(giocatoreModel);
+        return squadraModel.get();
     }
 
     @Override
