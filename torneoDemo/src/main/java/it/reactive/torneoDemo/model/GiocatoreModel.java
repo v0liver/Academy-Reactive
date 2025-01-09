@@ -2,13 +2,24 @@ package it.reactive.torneoDemo.model;
 
 import it.reactive.torneoDemo.resource.TrasferimentiResource;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
+@Table(name="giocatore")
 public class GiocatoreModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer idGiocatore;
+    @Column(name = "nome_cognome")
     private String nomeCognome;
+    @Column(name = "numero_ammonizioni")
     private Integer numeroAmmonizioni;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_squadra")
     private SquadraModel squadraModel;
 
     public Integer getIdGiocatore() {

@@ -2,12 +2,12 @@ package it.reactive.torneoDemo.Repository.Dao;
 
 import it.reactive.torneoDemo.DTO.giocatore.GiocatoreDto;
 import it.reactive.torneoDemo.DTO.squadra.SquadraDTO;
-import it.reactive.torneoDemo.DTO.squadra.SquadreDiGiocatoriDTO;
 import it.reactive.torneoDemo.DTO.tifoseria.TifoseriaDTO;
 import it.reactive.torneoDemo.Utility.Costanti;
 import it.reactive.torneoDemo.exception.GiocatoreDuplicatoException;
 import it.reactive.torneoDemo.exception.SquadraDuplicataException;
 import it.reactive.torneoDemo.exception.SquadraNonPresenteException;
+import it.reactive.torneoDemo.exception.TifoseriaGiaAssegnataException;
 import it.reactive.torneoDemo.model.GiocatoreModel;
 import it.reactive.torneoDemo.model.SquadraModel;
 import it.reactive.torneoDemo.model.TifoseriaModel;
@@ -113,6 +113,8 @@ public class SquadraImpDaoStatement implements SquadraDao {
                 squadraModel.setGiocatori(giocatori);
 
                 return squadraModel;
+            }else {
+                throw new SquadraNonPresenteException();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -121,7 +123,6 @@ public class SquadraImpDaoStatement implements SquadraDao {
                 DataSourceUtils.releaseConnection(con, ((DataSourceTransactionManager) transactionManager).getDataSource());
             }
         }
-        return null;
     }
 
     public Set<GiocatoreModel> getGiocatoriBySquadraId(int idSquadra) {
@@ -182,6 +183,7 @@ public class SquadraImpDaoStatement implements SquadraDao {
                 squadraModel.setIdSquadra(idSquadra);
                 squadraModel.setNome(rs.getString("nome"));
                 squadraModel.setColoriSociali(rs.getString("colori_sociali"));
+                squadraModel.setTifoseria(getTifoseriaBySquadraId(idSquadra));
 
                 if (completo) {
                     squadraModel.setGiocatori(getGiocatoriBySquadraId(idSquadra));
@@ -206,17 +208,23 @@ public class SquadraImpDaoStatement implements SquadraDao {
         try {
             con = DataSourceUtils.getConnection(((DataSourceTransactionManager) transactionManager).getDataSource());
             Statement st = con.createStatement();
-            ResultSet rsTifoseria = st.executeQuery("select * from tifoseria where nome_tifoseria ='" + nomeTifoseria + "' and id_squadra = " + idSquadra);
+            ResultSet rsTifoseria = st.executeQuery("select * from tifoseria where  id_squadra = " + idSquadra);
             if (rsTifoseria.next()) {
-                throw new RuntimeException("Tifoseria già associata alla squadra");
+                String query =
+                        "Update tifoseria SET nome_tifoseria ='" + nomeTifoseria + "' where id= '" + rsTifoseria.getInt("id") +
+                                "'";
+                st.executeUpdate(query);
+                return getSquadraById(idSquadra);
             }
 
             String query = "insert into tifoseria (id_squadra, nome_tifoseria) values (" + idSquadra + ", '" + nomeTifoseria + "')";
             st.executeUpdate(query);
 
             return getSquadraById(idSquadra);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        }catch (SQLException e) {
+            if ("23505".equals(e.getSQLState())) {
+                throw new TifoseriaGiaAssegnataException();
+            } else throw new RuntimeException(e);
         } finally {
             if (con != null) {
                 DataSourceUtils.releaseConnection(con, ((DataSourceTransactionManager) transactionManager).getDataSource());
@@ -235,7 +243,7 @@ public class SquadraImpDaoStatement implements SquadraDao {
             if (rs.next()) {
                 TifoseriaModel tifoseriaModel = new TifoseriaModel();
                 tifoseriaModel.setIdTifoseria(rs.getInt("id"));
-                tifoseriaModel.setNomeTifoseria(rs.getString("nome_tifoserianome_tifoseria"));
+                tifoseriaModel.setNomeTifoseria(rs.getString("nome_tifoseria"));
                 return tifoseriaModel;
             }
         } catch (SQLException e) {

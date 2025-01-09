@@ -1,14 +1,32 @@
 package it.reactive.torneoDemo.model;
 
+import javax.persistence.*;
 import java.util.Set;
 
-
+@Entity
+@Table(name="squadra")
 public class SquadraModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer idSquadra;
+    @Column(name = "nome", unique = true)
     private String nome;
+    @Column(name = "colori_sociali")
     private String coloriSociali;
+
+    @OneToMany(fetch=FetchType.LAZY,mappedBy = "squadraModel")
     private Set<GiocatoreModel> giocatori;
+
+    @OneToOne(fetch = FetchType.EAGER,mappedBy = "squadraModel")
     private TifoseriaModel tifoseria;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "squadra_torneo",
+            joinColumns = @JoinColumn(name = "id_squadra"),
+            inverseJoinColumns = @JoinColumn(name = "id_torneo")
+    )
     private Set<TorneoModel> tornei;
 
     public TifoseriaModel getTifoseria() {

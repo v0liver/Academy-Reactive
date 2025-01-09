@@ -24,7 +24,7 @@ import java.util.List;
 public class SquadraService {
     @Autowired
     SquadraDao squadraDao;
-    
+
     @Autowired
     SquadraMapper squadraMapper;
 

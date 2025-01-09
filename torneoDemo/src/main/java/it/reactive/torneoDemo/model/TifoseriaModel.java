@@ -1,8 +1,18 @@
 package it.reactive.torneoDemo.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="tifoseria")
 public class TifoseriaModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
     private Integer idTifoseria;
+    @Column(name="nome_tifoseria")
     private String nomeTifoseria;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_squadra")
     private SquadraModel squadraModel;
 
     public Integer getIdTifoseria() {

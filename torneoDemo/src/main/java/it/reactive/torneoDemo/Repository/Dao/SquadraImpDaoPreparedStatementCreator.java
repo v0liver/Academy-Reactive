@@ -1,5 +1,4 @@
 package it.reactive.torneoDemo.Repository.Dao;
-
 import it.reactive.torneoDemo.DTO.giocatore.GiocatoreDto;
 import it.reactive.torneoDemo.DTO.squadra.SquadraDTO;
 import it.reactive.torneoDemo.DTO.tifoseria.TifoseriaDTO;
@@ -7,6 +6,7 @@ import it.reactive.torneoDemo.Utility.Costanti;
 import it.reactive.torneoDemo.exception.GiocatoreDuplicatoException;
 import it.reactive.torneoDemo.exception.SquadraDuplicataException;
 import it.reactive.torneoDemo.exception.SquadraNonPresenteException;
+import it.reactive.torneoDemo.exception.TifoseriaGiaAssegnataException;
 import it.reactive.torneoDemo.model.GiocatoreModel;
 import it.reactive.torneoDemo.model.SquadraModel;
 import it.reactive.torneoDemo.model.TifoseriaModel;
@@ -112,8 +112,10 @@ public class SquadraImpDaoPreparedStatementCreator implements SquadraDao {
                     squadraModel.setTifoseria(getTifoseriaBySquadraId(idSquadra));
                     squadraModel.setGiocatori(getGiocatoriBySquadraId(idSquadra));
                     return squadraModel;
+                }else {
+                    throw new SquadraNonPresenteException();
                 }
-                return null;
+
             }
         });
     }
@@ -194,6 +196,7 @@ public class SquadraImpDaoPreparedStatementCreator implements SquadraDao {
                     squadraModel.setIdSquadra(idSquadra);
                     squadraModel.setNome(rs.getString("nome"));
                     squadraModel.setColoriSociali(rs.getString("colori_sociali"));
+                    squadraModel.setTifoseria(getTifoseriaBySquadraId(idSquadra));
                     if (completo) {
                         squadraModel.setGiocatori(getGiocatoriBySquadraId(idSquadra));
                     }
@@ -207,13 +210,13 @@ public class SquadraImpDaoPreparedStatementCreator implements SquadraDao {
     @Override
     public SquadraModel aggiungiTifoseria(int idSquadra, TifoseriaDTO tifoseriaDTO) {
         String nomeTifoseria = tifoseriaDTO.getNomeTifoseria();
-        String queryCheck = "SELECT * FROM tifoseria WHERE nome_tifoseria = ? AND id_squadra = ?";
+        String queryCheck = "SELECT * FROM tifoseria WHERE  id_squadra = ?";
         boolean tifoseriaEsistente = Boolean.TRUE.equals(jdbcTemplate.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
                 PreparedStatement ps = con.prepareStatement(queryCheck);
-                ps.setString(1, nomeTifoseria);
-                ps.setInt(2, idSquadra);
+
+                ps.setInt(1, idSquadra);
                 return ps;
             }
         }, new ResultSetExtractor<Boolean>() {
@@ -223,20 +226,34 @@ public class SquadraImpDaoPreparedStatementCreator implements SquadraDao {
             }
         }));
 
-        if (tifoseriaEsistente) {
-            throw new RuntimeException("Tifoseria già associata alla squadra");
-        }
-
-        String queryInsert = "INSERT INTO tifoseria (id_squadra, nome_tifoseria) VALUES (?, ?)";
-        jdbcTemplate.update(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-                PreparedStatement ps = con.prepareStatement(queryInsert);
-                ps.setInt(1, idSquadra);
-                ps.setString(2, nomeTifoseria);
-                return ps;
+        try {
+            if (tifoseriaEsistente) {
+                String queryUpdate = "Update tifoseria SET nome_tifoseria = ? where id_squadra= ?";
+                jdbcTemplate.update(new PreparedStatementCreator() {
+                    @Override
+                    public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                        PreparedStatement ps = con.prepareStatement(queryUpdate);
+                        ps.setString(1, nomeTifoseria);
+                        ps.setInt(2, idSquadra);
+                        return ps;
+                    }
+                });
+                return getSquadraById(idSquadra);
             }
-        });
+
+            String queryInsert = "INSERT INTO tifoseria (id_squadra, nome_tifoseria) VALUES (?, ?)";
+            jdbcTemplate.update(new PreparedStatementCreator() {
+                @Override
+                public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                    PreparedStatement ps = con.prepareStatement(queryInsert);
+                    ps.setInt(1, idSquadra);
+                    ps.setString(2, nomeTifoseria);
+                    return ps;
+                }
+            });
+        } catch (DuplicateKeyException e) {
+            throw new TifoseriaGiaAssegnataException();
+        }
 
         return getSquadraById(idSquadra);
     }

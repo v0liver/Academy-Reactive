@@ -8,6 +8,7 @@ import it.reactive.torneoDemo.Utility.Costanti;
 import it.reactive.torneoDemo.exception.GiocatoreDuplicatoException;
 import it.reactive.torneoDemo.exception.SquadraDuplicataException;
 import it.reactive.torneoDemo.exception.SquadraNonPresenteException;
+import it.reactive.torneoDemo.exception.TifoseriaGiaAssegnataException;
 import it.reactive.torneoDemo.model.GiocatoreModel;
 import it.reactive.torneoDemo.model.SquadraModel;
 import it.reactive.torneoDemo.model.TifoseriaModel;
@@ -118,7 +119,10 @@ public class SquadraImpDaoPreparedStatement implements SquadraDao {
                     squadraModel.setGiocatori(giocatori);
 
                     return squadraModel;
+                }else {
+                    throw new SquadraNonPresenteException();
                 }
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -127,7 +131,6 @@ public class SquadraImpDaoPreparedStatement implements SquadraDao {
                 DataSourceUtils.releaseConnection(con, ((DataSourceTransactionManager) transactionManager).getDataSource());
             }
         }
-        return null;
     }
 
     public Set<GiocatoreModel> getGiocatoriBySquadraId(int idSquadra) {
@@ -231,6 +234,7 @@ public class SquadraImpDaoPreparedStatement implements SquadraDao {
                 squadraModel.setIdSquadra(idSquadra);
                 squadraModel.setNome(rs.getString("nome"));
                 squadraModel.setColoriSociali(rs.getString("colori_sociali"));
+                squadraModel.setTifoseria(getTifoseriaBySquadraId(idSquadra));
 
                 if (completo) {
                     squadraModel.setGiocatori(getGiocatoriBySquadraId(idSquadra));
@@ -252,28 +256,36 @@ public class SquadraImpDaoPreparedStatement implements SquadraDao {
     public SquadraModel aggiungiTifoseria(int idSquadra, TifoseriaDTO tifoseriaDTO) {
         Connection con = null;
         String nomeTifoseria = tifoseriaDTO.getNomeTifoseria();
-        String queryCheck = "select * from tifoseria where nome_tifoseria = ? and id_squadra = ?";
+        String queryCheck = "select * from tifoseria where id_squadra = ?";
         try {
             con = DataSourceUtils.getConnection(((DataSourceTransactionManager) transactionManager).getDataSource());
             PreparedStatement ps = con.prepareStatement(queryCheck);
-            ps.setString(1, nomeTifoseria);
-            ps.setInt(2, idSquadra);
+            ps.setInt(1, idSquadra);
             ResultSet rsTifoseria = ps.executeQuery();
             if (rsTifoseria.next()) {
-                throw new RuntimeException("Tifoseria già associata alla squadra");
+                String queryInsert = "Update tifoseria SET nome_tifoseria = ? where id= ?";
+                PreparedStatement psInsert = con.prepareStatement(queryInsert);
+                    psInsert.setString(1, nomeTifoseria);
+                    psInsert.setInt(2, rsTifoseria.getInt("id"));
+                    psInsert.executeUpdate();
+                    return getSquadraById(idSquadra);
+
             }
 
             String queryInsert = "insert into tifoseria (id_squadra, nome_tifoseria) values (?, ?)";
-            try (PreparedStatement psInsert = con.prepareStatement(queryInsert)) {
+                PreparedStatement psInsert = con.prepareStatement(queryInsert);
                 psInsert.setInt(1, idSquadra);
                 psInsert.setString(2, nomeTifoseria);
                 psInsert.executeUpdate();
-            }
+                return getSquadraById(idSquadra);
 
-            return getSquadraById(idSquadra);
+
+
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            if ("23505".equals(e.getSQLState())) {
+                throw new TifoseriaGiaAssegnataException();
+            } else throw new RuntimeException(e);
         } finally {
             if (con != null) {
                 DataSourceUtils.releaseConnection(con, ((DataSourceTransactionManager) transactionManager).getDataSource());
