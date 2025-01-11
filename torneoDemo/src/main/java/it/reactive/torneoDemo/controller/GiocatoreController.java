@@ -3,7 +3,9 @@ package it.reactive.torneoDemo.controller;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import it.reactive.torneoDemo.Service.GiocatoreService;
 import it.reactive.torneoDemo.resource.GiocatoreResource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,6 +21,8 @@ import javax.validation.constraints.Min;
 @RequestMapping(value = "giocatori", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Validated
 public class GiocatoreController {
+    @Autowired
+    GiocatoreService giocatoreService;
 
     @ApiOperation(value = "Aggiorna ammonizione per un determinato giocatore", response = GiocatoreResource.class)
     @ApiResponses(value = {
@@ -27,7 +31,8 @@ public class GiocatoreController {
             @ApiResponse(code = 500, message = "Errore di server")})
     @PutMapping("/updateAmmonizioni/{idGiocatore}")
     public ResponseEntity<GiocatoreResource> aggiornaAmmonizione(@PathVariable @Min(0) @Max(10000) Integer idGiocatore) {
-        return ResponseEntity.ok(null);
+
+        return ResponseEntity.ok(giocatoreService.aggiornaAmmonizione(idGiocatore));
     }
 
 }

@@ -51,7 +51,11 @@ public class SquadraService {
         List<SquadraModel> squadraModel = squadraDao.ricercaSquadra(completo);
         List<SquadraResource> squadraResource = new ArrayList<>();
         for (SquadraModel model : squadraModel) {
-            squadraResource.add(squadraMapper.fromModelToResource(model));
+            if (completo){
+                squadraResource.add(squadraMapper.fromModelToResource(model));
+            }else {
+                squadraResource.add(squadraMapper.fromModelToResourceWithouthGiocatori(model));
+            }
         }
         return squadraResource;
     }

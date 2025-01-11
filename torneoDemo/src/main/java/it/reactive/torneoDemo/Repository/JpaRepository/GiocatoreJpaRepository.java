@@ -7,4 +7,5 @@ import java.util.Set;
 
 public interface GiocatoreJpaRepository extends JpaRepository<GiocatoreModel,Integer> {
     Set<GiocatoreModel> findBySquadraModelIdSquadra(Integer idSquadra);
+    void deleteBySquadraModelIdSquadra(Integer idSquadra);
 }

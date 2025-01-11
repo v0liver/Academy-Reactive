@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class SquadraMapper {
@@ -41,5 +42,16 @@ GiocatoreMapper giocatoreMapper;
 
         return squadraResource;
 
+    }
+
+    public SquadraResource fromModelToResourceWithouthGiocatori(SquadraModel squadraModel) {
+        SquadraResource squadraResource = new SquadraResource();
+        squadraResource.setIdSquadra(squadraModel.getIdSquadra());
+        squadraResource.setNome(squadraModel.getNome());
+        squadraResource.setColoriSociali(squadraModel.getColoriSociali());
+        if (squadraModel.getTifoseria() != null) {
+            squadraResource.setTifoseria(tifoseriaMapper.fromModelToResource(squadraModel.getTifoseria()));
+        }
+        return squadraResource;
     }
 }

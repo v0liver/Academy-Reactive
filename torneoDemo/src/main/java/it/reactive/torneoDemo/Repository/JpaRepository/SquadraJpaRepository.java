@@ -15,6 +15,6 @@ public interface SquadraJpaRepository extends JpaRepository<SquadraModel,Integer
     //List<SquadraModel> findAllWithoutGiocatori();
 //    @Query("SELECT new SquadraDTO(s.idSquadra, s.nome, s.coloriSociali) FROM SquadraModel s")
 //    List<SquadraDTO> findAllWithoutGiocatori();
-     @Query("SELECT s.idSquadra as idSquadra, s.nome as nome, s.coloriSociali as coloriSociali FROM SquadraModel s")
-    List<Tuple> findAllWithoutGiocatori();
+//     @Query("SELECT s.idSquadra as idSquadra, s.nome as nome, s.coloriSociali as coloriSociali FROM SquadraModel s")
+//     List<Tuple> findAllWithoutGiocatori();
 }
