@@ -3,6 +3,11 @@ package it.reactive.torneoDemo.model;
 import javax.persistence.*;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "TifoseriaModel.findByIdSquadra",
+                query="Select t From TifoseriaModel t where t.squadraModel.idSquadra=:idSquadra"
+        )
+})
 @Table(name="tifoseria")
 public class TifoseriaModel {
     @Id

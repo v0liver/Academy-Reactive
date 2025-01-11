@@ -7,6 +7,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "GiocatoreModel.findByIdSquadra",
+                    query="Select g From GiocatoreModel g where g.squadraModel.idSquadra=:idSquadra"
+        )
+})
 @Table(name="giocatore")
 public class GiocatoreModel {
     @Id
@@ -16,7 +21,7 @@ public class GiocatoreModel {
     @Column(name = "nome_cognome")
     private String nomeCognome;
     @Column(name = "numero_ammonizioni")
-    private Integer numeroAmmonizioni;
+    private Integer numeroAmmonizioni = 0;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_squadra")

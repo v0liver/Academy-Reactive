@@ -4,6 +4,16 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(
+                name = "SquadraModel.findById",
+                query = "Select s From SquadraModel s where s.idSquadra=:id"
+        ),
+        @NamedQuery(
+                name = "SquadraModel.findByNome",
+                query = "Select s From SquadraModel s where s.nome=:nomeSquadra"
+        )
+})
 @Table(name="squadra")
 public class SquadraModel {
     @Id

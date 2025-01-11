@@ -1,4 +1,4 @@
-package it.reactive.torneoDemo.Repository.Dao;
+package it.reactive.torneoDemo.Repository.Dao.GiocatoreDao;
 
 import it.reactive.torneoDemo.Repository.JpaRepository.GiocatoreJpaRepository;
 import it.reactive.torneoDemo.Utility.Costanti;
@@ -17,12 +17,7 @@ public class GiocatoreImpDaoJpaRepository implements GiocatoreDao {
     @Override
     public GiocatoreModel updateammonizioni(Integer idGiocatore) {
         GiocatoreModel giocatoreModel = getGiocatorebyId(idGiocatore);
-        if (giocatoreModel.getNumeroAmmonizioni()!=null) {
-            giocatoreModel.setNumeroAmmonizioni(giocatoreModel.getNumeroAmmonizioni() + 1);
-        }else {
-            giocatoreModel.setNumeroAmmonizioni(1);
-        }
-
+            giocatoreModel.setNumeroAmmonizioni(giocatoreModel.getNumeroAmmonizioni()+1);
         return giocatoreModel;
     }
 

@@ -1,4 +1,4 @@
-package it.reactive.torneoDemo.Repository.Dao;
+package it.reactive.torneoDemo.Repository.Dao.SquadraDao;
 
 import it.reactive.torneoDemo.DTO.giocatore.GiocatoreDto;
 import it.reactive.torneoDemo.DTO.squadra.SquadraDTO;
@@ -7,6 +7,7 @@ import it.reactive.torneoDemo.Repository.JpaRepository.GiocatoreJpaRepository;
 import it.reactive.torneoDemo.Repository.JpaRepository.SquadraJpaRepository;
 import it.reactive.torneoDemo.Repository.JpaRepository.TifoseriaJpaRepository;
 import it.reactive.torneoDemo.Utility.Costanti;
+import it.reactive.torneoDemo.exception.GiocatoreDuplicatoException;
 import it.reactive.torneoDemo.exception.SquadraDuplicataException;
 import it.reactive.torneoDemo.exception.SquadraNonPresenteException;
 import it.reactive.torneoDemo.exception.TifoseriaGiaAssegnataException;
@@ -88,11 +89,16 @@ public class SquadraImpDaoJpaRepository implements SquadraDao {
     @Override
     public SquadraModel aggiungiGiocatore(int idSquadra, GiocatoreDto giocatoreDto) {
         Optional<SquadraModel> squadraModel = squadraJpaRepository.findById(idSquadra);
-        GiocatoreModel giocatoreModel = new GiocatoreModel();
-        giocatoreModel.setSquadraModel(squadraModel.get());
-        giocatoreModel.setNomeCognome(giocatoreDto.getNomeCognome());
-        giocatoreJpaRepository.save(giocatoreModel);
-        return squadraModel.get();
+        if (squadraModel.isPresent()) {
+             GiocatoreModel giocatoreModel = giocatoreJpaRepository.findByNomeCognome(giocatoreDto.getNomeCognome()).orElse(new GiocatoreModel());
+            if (giocatoreModel.getNomeCognome()!=null){
+                throw new GiocatoreDuplicatoException();
+            }
+            giocatoreModel.setSquadraModel(squadraModel.get());
+            giocatoreModel.setNomeCognome(giocatoreDto.getNomeCognome());
+            giocatoreJpaRepository.save(giocatoreModel);
+            return squadraModel.get();
+        }else throw new SquadraNonPresenteException();
     }
 
     @Override

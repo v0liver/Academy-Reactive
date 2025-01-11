@@ -1,8 +1,7 @@
-package it.reactive.torneoDemo.Repository.Dao;
+package it.reactive.torneoDemo.Repository.Dao.SquadraDao;
 
 import it.reactive.torneoDemo.DTO.giocatore.GiocatoreDto;
 import it.reactive.torneoDemo.DTO.squadra.SquadraDTO;
-import it.reactive.torneoDemo.DTO.squadra.SquadreDiGiocatoriDTO;
 import it.reactive.torneoDemo.DTO.tifoseria.TifoseriaDTO;
 import it.reactive.torneoDemo.model.GiocatoreModel;
 import it.reactive.torneoDemo.model.SquadraModel;

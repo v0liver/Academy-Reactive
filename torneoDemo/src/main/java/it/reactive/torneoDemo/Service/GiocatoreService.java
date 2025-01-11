@@ -1,8 +1,7 @@
 package it.reactive.torneoDemo.Service;
 
 import it.reactive.torneoDemo.Mapper.GiocatoreMapper;
-import it.reactive.torneoDemo.Repository.Dao.GiocatoreDao;
-import it.reactive.torneoDemo.Repository.Dao.SquadraDao;
+import it.reactive.torneoDemo.Repository.Dao.GiocatoreDao.GiocatoreDao;
 import it.reactive.torneoDemo.resource.GiocatoreResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
