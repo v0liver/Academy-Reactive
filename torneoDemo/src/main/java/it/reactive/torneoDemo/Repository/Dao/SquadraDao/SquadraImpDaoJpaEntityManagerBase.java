@@ -11,19 +11,21 @@ import it.reactive.torneoDemo.model.TifoseriaModel;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
+import javax.swing.text.html.parser.Entity;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 @Repository
-@Profile(Costanti.TORNEO_DAO_SPRING_JPA_ENTITY_MANAGER_QUERY)
-public class SquadraImpDaoJpaEntityManagerQuery implements SquadraDao{
+@Profile(Costanti.TORNEO_DAO_SPRING_JPA_ENTITY_MANAGER_BASE)
+public class SquadraImpDaoJpaEntityManagerBase implements SquadraDao{
     @Autowired
     EntityManager entityManager;
 
@@ -32,27 +34,20 @@ public class SquadraImpDaoJpaEntityManagerQuery implements SquadraDao{
         if (!entityManager.createNamedQuery("SquadraModel.findByNome",SquadraModel.class)
                 .setParameter("nomeSquadra",squadraDTO.getNome()).getResultList().isEmpty()){
             throw new SquadraDuplicataException();
+        }else {
+            SquadraModel squadraModel = new SquadraModel();
+            squadraModel.setNome(squadraDTO.getNome());
+            squadraModel.setColoriSociali(squadraDTO.getColoriSociali());
+            entityManager.persist(squadraModel);
+
+            return squadraModel;
+
         }
-        String sql = "insert into squadra (nome,colori_sociali) values (:nome,:coloriSociali) Returning id";
-
-       int idSquadra= (Integer) entityManager.createNativeQuery(sql)
-                .setParameter("nome",squadraDTO.getNome())
-                .setParameter("coloriSociali",squadraDTO.getColoriSociali())
-                .getSingleResult();
-
-        SquadraModel squadraModel = new SquadraModel();
-        squadraModel.setNome(squadraDTO.getNome());
-        squadraModel.setColoriSociali(squadraDTO.getColoriSociali());
-        squadraModel.setIdSquadra(idSquadra);
-
-        return squadraModel;
     }
 
     @Override
     public SquadraModel getSquadraById(int idSquadra) {
-        return entityManager.createNamedQuery("SquadraModel.findById",SquadraModel.class)
-                .setParameter("id",idSquadra)
-                .getSingleResult();
+        return entityManager.find(SquadraModel.class,idSquadra);
     }
 
     @Override
@@ -74,39 +69,39 @@ public class SquadraImpDaoJpaEntityManagerQuery implements SquadraDao{
 
     @Override
     public SquadraModel aggiungiGiocatore(int idSquadra, GiocatoreDto giocatoreDto) {
-        if (getSquadraById(idSquadra)!=null){
-        if (!entityManager.createNamedQuery("GiocatoreModel.findByNomeCognome",GiocatoreModel.class)
-                .setParameter("nomeCognomeGiocatore",giocatoreDto.getNomeCognome()).getResultList().isEmpty()){
-            throw new GiocatoreDuplicatoException();
-        }else {
-            String sql = "insert into giocatore (nome_cognome,id_squadra) values (:nomeCognome,:idSquadra)";
-            entityManager.createNativeQuery(sql)
-                    .setParameter("nomeCognome", giocatoreDto.getNomeCognome())
-                    .setParameter("idSquadra", idSquadra)
-                    .executeUpdate();
-
-            return getSquadraById(idSquadra);
-        }
+        if (getSquadraById(idSquadra)!=null) {
+            if (!entityManager.createNamedQuery("GiocatoreModel.findByNomeCognome", GiocatoreModel.class)
+                    .setParameter("nomeCognomeGiocatore", giocatoreDto.getNomeCognome()).getResultList().isEmpty()) {
+                throw new GiocatoreDuplicatoException();
+            } else {
+                GiocatoreModel giocatoreModel = new GiocatoreModel();
+                giocatoreModel.setNomeCognome(giocatoreDto.getNomeCognome());
+                giocatoreModel.setSquadraModel(getSquadraById(idSquadra));
+                entityManager.persist(giocatoreModel);
+                return getSquadraById(idSquadra);
+            }
         }else throw new SquadraNonPresenteException();
-    }
 
+    }
     @Override
     public SquadraModel aggiungiTifoseria(int idSquadra, TifoseriaDTO tifoseriaDTO) {
-
         try {
-            if (getTifoseriaBySquadraId(idSquadra)==null) {
-                String sql = "Insert into tifoseria (nome_tifoseria,id_squadra) values (:nomeTifoseria,:idSquadra)";
-                entityManager.createNativeQuery(sql)
-                        .setParameter("nomeTifoseria", tifoseriaDTO.getNomeTifoseria())
-                        .setParameter("idSquadra", idSquadra)
-                        .executeUpdate();
-            }else {
-                String jpql = "Update  TifoseriaModel t  Set t.nomeTifoseria=:nomeTifoseria where id_squadra= :idSquadra";
-                entityManager.createQuery(jpql)
-                        .setParameter("nomeTifoseria", tifoseriaDTO.getNomeTifoseria())
-                        .setParameter("idSquadra", idSquadra)
-                        .executeUpdate();
+            TifoseriaModel tifoseriaModel = getTifoseriaBySquadraId(idSquadra);
+
+            if (tifoseriaModel != null) {
+                tifoseriaModel.setNomeTifoseria(tifoseriaDTO.getNomeTifoseria());
+                entityManager.merge(tifoseriaModel);
+            } else {
+
+                tifoseriaModel = new TifoseriaModel();
+                tifoseriaModel.setNomeTifoseria(tifoseriaDTO.getNomeTifoseria());
+                tifoseriaModel.setSquadraModel(getSquadraById(idSquadra));
+                entityManager.persist(tifoseriaModel);
+                SquadraModel squadraModel = getSquadraById(idSquadra);
+                entityManager.refresh(squadraModel);//senza refresh non funziona il persist e ti restituisce l oggtto
+                // vecchio non aggiornato
             }
+            return getSquadraById(idSquadra);
         } catch (PersistenceException e) {
             if (e.getCause() instanceof ConstraintViolationException){
                 throw new TifoseriaGiaAssegnataException();
@@ -115,8 +110,9 @@ public class SquadraImpDaoJpaEntityManagerQuery implements SquadraDao{
             }
 
         }
-        return getSquadraById(idSquadra);
-    }
+
+        }
+
 
     @Override
     public void rimuoviSquadra(int idSquadra) {
@@ -146,7 +142,6 @@ public class SquadraImpDaoJpaEntityManagerQuery implements SquadraDao{
         if (squadraModels.isEmpty()){
             return null;
         }
-
         return squadraModels.get(0);
     }
 }

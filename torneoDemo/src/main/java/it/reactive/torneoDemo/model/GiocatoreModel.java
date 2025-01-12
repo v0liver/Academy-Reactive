@@ -10,6 +10,10 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(name = "GiocatoreModel.findByIdSquadra",
                     query="Select g From GiocatoreModel g where g.squadraModel.idSquadra=:idSquadra"
+        ),
+        @NamedQuery(
+                name = "GiocatoreModel.findByNomeCognome",
+                query = "Select g From GiocatoreModel g where g.nomeCognome = :nomeCognomeGiocatore"
         )
 })
 @Table(name="giocatore")

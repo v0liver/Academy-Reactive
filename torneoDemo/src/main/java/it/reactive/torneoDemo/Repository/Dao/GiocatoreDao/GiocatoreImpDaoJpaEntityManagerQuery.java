@@ -19,6 +19,11 @@ public class GiocatoreImpDaoJpaEntityManagerQuery implements GiocatoreDao{
         Optional<GiocatoreModel> giocatoreModel = Optional.ofNullable(getGiocatorebyId(idGiocatore));
         if (giocatoreModel.isPresent()) {
             giocatoreModel.get().setNumeroAmmonizioni(giocatoreModel.get().getNumeroAmmonizioni() + 1);
+            String jpql = "Update  GiocatoreModel g  Set g.numeroAmmonizioni=:numeroAmmonizioni where g.id= :idGiocatore";
+            entityManager.createQuery(jpql)
+                    .setParameter("numeroAmmonizioni", giocatoreModel.get().getNumeroAmmonizioni())
+                    .setParameter("idGiocatore", idGiocatore)
+                    .executeUpdate();
             return giocatoreModel.get();
         }else throw new GiocatoreNonPresenteException();
     }

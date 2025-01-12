@@ -64,7 +64,7 @@ public class SquadraService {
     @Transactional
     public SquadraResource aggiungiTifoseria(int idSquadra, TifoseriaDTO tifoseriaDTO) {
         SquadraModel squadraModel = squadraDao.aggiungiTifoseria(idSquadra, tifoseriaDTO);
-        return squadraMapper.fromModelToResource(squadraModel);
+        return squadraMapper.fromModelToResourceWithouthGiocatori(squadraModel);
     }
 
     @Transactional
