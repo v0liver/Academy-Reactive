@@ -1,4 +1,5 @@
 package it.reactive.torneoDemo.Repository.Dao.SquadraDao;
+
 import it.reactive.torneoDemo.DTO.giocatore.GiocatoreDto;
 import it.reactive.torneoDemo.DTO.squadra.SquadraDTO;
 import it.reactive.torneoDemo.DTO.tifoseria.TifoseriaDTO;
@@ -18,6 +19,7 @@ import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -112,7 +114,7 @@ public class SquadraImpDaoPreparedStatementCreator implements SquadraDao {
                     squadraModel.setTifoseria(getTifoseriaBySquadraId(idSquadra));
                     squadraModel.setGiocatori(getGiocatoriBySquadraId(idSquadra));
                     return squadraModel;
-                }else {
+                } else {
                     throw new SquadraNonPresenteException();
                 }
 

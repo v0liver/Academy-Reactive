@@ -8,12 +8,15 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Optional;
+
 @Repository
 @Profile(Costanti.TORNEO_DAO_SPRING_JPA_ENTITY_MANAGER_QUERY)
-public class GiocatoreImpDaoJpaEntityManagerQuery implements GiocatoreDao{
-    @Autowired
+public class GiocatoreImpDaoJpaEntityManagerQuery implements GiocatoreDao {
+    @PersistenceContext
     EntityManager entityManager;
+
     @Override
     public GiocatoreModel updateammonizioni(Integer idGiocatore) {
         Optional<GiocatoreModel> giocatoreModel = Optional.ofNullable(getGiocatorebyId(idGiocatore));
@@ -25,11 +28,11 @@ public class GiocatoreImpDaoJpaEntityManagerQuery implements GiocatoreDao{
                     .setParameter("idGiocatore", idGiocatore)
                     .executeUpdate();
             return giocatoreModel.get();
-        }else throw new GiocatoreNonPresenteException();
+        } else throw new GiocatoreNonPresenteException();
     }
 
     @Override
     public GiocatoreModel getGiocatorebyId(Integer idGiocatore) {
-        return entityManager.find(GiocatoreModel.class,idGiocatore);
+        return entityManager.find(GiocatoreModel.class, idGiocatore);
     }
 }

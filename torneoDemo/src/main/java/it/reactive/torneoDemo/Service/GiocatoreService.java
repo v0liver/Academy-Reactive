@@ -15,7 +15,7 @@ public class GiocatoreService {
     GiocatoreMapper giocatoreMapper;
 
     @Transactional
-    public GiocatoreResource aggiornaAmmonizione(Integer idGiocatore){
+    public GiocatoreResource aggiornaAmmonizione(Integer idGiocatore) {
         return giocatoreMapper.fromModelToResource(giocatoreDao.updateammonizioni(idGiocatore));
     }
 

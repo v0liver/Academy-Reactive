@@ -7,9 +7,10 @@ import javax.validation.constraints.NotBlank;
 import java.util.Optional;
 import java.util.Set;
 
-public interface GiocatoreJpaRepository extends JpaRepository<GiocatoreModel,Integer> {
+public interface GiocatoreJpaRepository extends JpaRepository<GiocatoreModel, Integer> {
     Set<GiocatoreModel> findBySquadraModelIdSquadra(Integer idSquadra);
+
     void deleteBySquadraModelIdSquadra(Integer idSquadra);
 
-   Optional <GiocatoreModel> findByNomeCognome(String nomeCognome);
+    Optional<GiocatoreModel> findByNomeCognome(String nomeCognome);
 }

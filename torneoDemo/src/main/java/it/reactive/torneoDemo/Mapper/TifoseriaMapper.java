@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TifoseriaMapper {
-    public  TifoseriaResource fromModelToResource(TifoseriaModel tifoseriaModel) {
+    public TifoseriaResource fromModelToResource(TifoseriaModel tifoseriaModel) {
         TifoseriaResource tifoseriaResource = new TifoseriaResource();
         tifoseriaResource.setIdTifoseria(tifoseriaModel.getIdTifoseria());
         tifoseriaResource.setNomeTifoseria(tifoseriaModel.getNomeTifoseria());

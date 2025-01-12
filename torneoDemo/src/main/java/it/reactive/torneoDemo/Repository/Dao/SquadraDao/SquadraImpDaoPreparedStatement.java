@@ -118,7 +118,7 @@ public class SquadraImpDaoPreparedStatement implements SquadraDao {
                     squadraModel.setGiocatori(giocatori);
 
                     return squadraModel;
-                }else {
+                } else {
                     throw new SquadraNonPresenteException();
                 }
 
@@ -264,21 +264,19 @@ public class SquadraImpDaoPreparedStatement implements SquadraDao {
             if (rsTifoseria.next()) {
                 String queryInsert = "Update tifoseria SET nome_tifoseria = ? where id= ?";
                 PreparedStatement psInsert = con.prepareStatement(queryInsert);
-                    psInsert.setString(1, nomeTifoseria);
-                    psInsert.setInt(2, rsTifoseria.getInt("id"));
-                    psInsert.executeUpdate();
-                    return getSquadraById(idSquadra);
+                psInsert.setString(1, nomeTifoseria);
+                psInsert.setInt(2, rsTifoseria.getInt("id"));
+                psInsert.executeUpdate();
+                return getSquadraById(idSquadra);
 
             }
 
             String queryInsert = "insert into tifoseria (id_squadra, nome_tifoseria) values (?, ?)";
-                PreparedStatement psInsert = con.prepareStatement(queryInsert);
-                psInsert.setInt(1, idSquadra);
-                psInsert.setString(2, nomeTifoseria);
-                psInsert.executeUpdate();
-                return getSquadraById(idSquadra);
-
-
+            PreparedStatement psInsert = con.prepareStatement(queryInsert);
+            psInsert.setInt(1, idSquadra);
+            psInsert.setString(2, nomeTifoseria);
+            psInsert.executeUpdate();
+            return getSquadraById(idSquadra);
 
 
         } catch (SQLException e) {

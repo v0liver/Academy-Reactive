@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name="torneo")
+@Table(name = "torneo")
 public class TorneoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,7 +12,7 @@ public class TorneoModel {
     private Integer idTorneo;
     @Column(name = "nome_torneo")
     private String nomeTorneo;
-    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "tornei")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tornei")
     private Set<SquadraModel> squadre;
 
     public Integer getIdTorneo() {

@@ -15,13 +15,13 @@ import java.util.stream.Collectors;
 @Component
 public class SquadraMapper {
 
-@Autowired
-TifoseriaMapper tifoseriaMapper;
+    @Autowired
+    TifoseriaMapper tifoseriaMapper;
 
-@Autowired
-GiocatoreMapper giocatoreMapper;
+    @Autowired
+    GiocatoreMapper giocatoreMapper;
 
-    public  SquadraResource fromModelToResource(SquadraModel squadraModel) {
+    public SquadraResource fromModelToResource(SquadraModel squadraModel) {
         SquadraResource squadraResource = new SquadraResource();
         squadraResource.setIdSquadra(squadraModel.getIdSquadra());
         squadraResource.setNome(squadraModel.getNome());

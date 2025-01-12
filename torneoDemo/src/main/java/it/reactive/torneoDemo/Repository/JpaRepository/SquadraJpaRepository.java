@@ -9,7 +9,7 @@ import javax.persistence.Tuple;
 import java.util.List;
 import java.util.Optional;
 
-public interface SquadraJpaRepository extends JpaRepository<SquadraModel,Integer> {
+public interface SquadraJpaRepository extends JpaRepository<SquadraModel, Integer> {
     Optional<SquadraModel> findByNome(String nome);
     //@Query("Select s from SquadraModel s")
     //List<SquadraModel> findAllWithoutGiocatori();

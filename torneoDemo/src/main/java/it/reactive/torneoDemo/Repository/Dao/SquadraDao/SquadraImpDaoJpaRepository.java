@@ -90,15 +90,15 @@ public class SquadraImpDaoJpaRepository implements SquadraDao {
     public SquadraModel aggiungiGiocatore(int idSquadra, GiocatoreDto giocatoreDto) {
         Optional<SquadraModel> squadraModel = squadraJpaRepository.findById(idSquadra);
         if (squadraModel.isPresent()) {
-             GiocatoreModel giocatoreModel = giocatoreJpaRepository.findByNomeCognome(giocatoreDto.getNomeCognome()).orElse(new GiocatoreModel());
-            if (giocatoreModel.getNomeCognome()!=null){
+            GiocatoreModel giocatoreModel = giocatoreJpaRepository.findByNomeCognome(giocatoreDto.getNomeCognome()).orElse(new GiocatoreModel());
+            if (giocatoreModel.getNomeCognome() != null) {
                 throw new GiocatoreDuplicatoException();
             }
             giocatoreModel.setSquadraModel(squadraModel.get());
             giocatoreModel.setNomeCognome(giocatoreDto.getNomeCognome());
             giocatoreJpaRepository.save(giocatoreModel);
             return squadraModel.get();
-        }else throw new SquadraNonPresenteException();
+        } else throw new SquadraNonPresenteException();
     }
 
     @Override
@@ -122,13 +122,13 @@ public class SquadraImpDaoJpaRepository implements SquadraDao {
 
     @Override
     public void rimuoviSquadra(int idSquadra) {
-    Optional<SquadraModel> squadraModel = squadraJpaRepository.findById(idSquadra);
-    if (!squadraModel.isPresent()){
-        throw new SquadraNonPresenteException();
-    }
-            giocatoreJpaRepository.deleteBySquadraModelIdSquadra(idSquadra);
-            tifoseriaJpaRepository.deleteBySquadraModelIdSquadra(idSquadra);
-            squadraJpaRepository.deleteById(idSquadra);
+        Optional<SquadraModel> squadraModel = squadraJpaRepository.findById(idSquadra);
+        if (!squadraModel.isPresent()) {
+            throw new SquadraNonPresenteException();
+        }
+        giocatoreJpaRepository.deleteBySquadraModelIdSquadra(idSquadra);
+        tifoseriaJpaRepository.deleteBySquadraModelIdSquadra(idSquadra);
+        squadraJpaRepository.deleteById(idSquadra);
     }
 
     @Override

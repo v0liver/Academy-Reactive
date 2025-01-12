@@ -5,16 +5,16 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "TifoseriaModel.findByIdSquadra",
-                query="Select t From TifoseriaModel t where t.squadraModel.idSquadra=:idSquadra"
+                query = "Select t From TifoseriaModel t where t.squadraModel.idSquadra=:idSquadra"
         )
 })
-@Table(name="tifoseria")
+@Table(name = "tifoseria")
 public class TifoseriaModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private Integer idTifoseria;
-    @Column(name="nome_tifoseria")
+    @Column(name = "nome_tifoseria")
     private String nomeTifoseria;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_squadra")

@@ -14,7 +14,7 @@ import java.util.Set;
                 query = "Select s From SquadraModel s where s.nome = :nomeSquadra"
         )
 })
-@Table(name="squadra")
+@Table(name = "squadra")
 public class SquadraModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,10 +25,10 @@ public class SquadraModel {
     @Column(name = "colori_sociali")
     private String coloriSociali;
 
-    @OneToMany(fetch=FetchType.LAZY,mappedBy = "squadraModel")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "squadraModel")
     private Set<GiocatoreModel> giocatori;
 
-    @OneToOne(fetch = FetchType.EAGER,mappedBy = "squadraModel")
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "squadraModel")
     private TifoseriaModel tifoseria;
 
     @ManyToMany(fetch = FetchType.LAZY)

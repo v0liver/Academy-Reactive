@@ -30,7 +30,6 @@ import java.util.Set;
 public class SquadraImpDaoStatement implements SquadraDao {
 
 
-
     @Autowired
     DataSource dataSource;
 
@@ -112,7 +111,7 @@ public class SquadraImpDaoStatement implements SquadraDao {
                 squadraModel.setGiocatori(giocatori);
 
                 return squadraModel;
-            }else {
+            } else {
                 throw new SquadraNonPresenteException();
             }
         } catch (SQLException e) {
@@ -220,7 +219,7 @@ public class SquadraImpDaoStatement implements SquadraDao {
             st.executeUpdate(query);
 
             return getSquadraById(idSquadra);
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             if ("23505".equals(e.getSQLState())) {
                 throw new TifoseriaGiaAssegnataException();
             } else throw new RuntimeException(e);

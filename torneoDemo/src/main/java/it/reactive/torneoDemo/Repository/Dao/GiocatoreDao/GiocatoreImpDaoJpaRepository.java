@@ -17,8 +17,8 @@ public class GiocatoreImpDaoJpaRepository implements GiocatoreDao {
     @Override
     public GiocatoreModel updateammonizioni(Integer idGiocatore) {
         GiocatoreModel giocatoreModel = getGiocatorebyId(idGiocatore);
-            giocatoreModel.setNumeroAmmonizioni(giocatoreModel.getNumeroAmmonizioni()+1);
-            giocatoreJpaRepository.save(giocatoreModel);
+        giocatoreModel.setNumeroAmmonizioni(giocatoreModel.getNumeroAmmonizioni() + 1);
+        giocatoreJpaRepository.save(giocatoreModel);
         return giocatoreModel;
     }
 

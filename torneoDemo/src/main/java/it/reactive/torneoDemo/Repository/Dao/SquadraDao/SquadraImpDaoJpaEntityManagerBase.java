@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.swing.text.html.parser.Entity;
@@ -23,18 +24,19 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 @Repository
 @Profile(Costanti.TORNEO_DAO_SPRING_JPA_ENTITY_MANAGER_BASE)
-public class SquadraImpDaoJpaEntityManagerBase implements SquadraDao{
-    @Autowired
+public class SquadraImpDaoJpaEntityManagerBase implements SquadraDao {
+    @PersistenceContext
     EntityManager entityManager;
 
     @Override
     public SquadraModel salvaSquadra(SquadraDTO squadraDTO) {
-        if (!entityManager.createNamedQuery("SquadraModel.findByNome",SquadraModel.class)
-                .setParameter("nomeSquadra",squadraDTO.getNome()).getResultList().isEmpty()){
+        if (!entityManager.createNamedQuery("SquadraModel.findByNome", SquadraModel.class)
+                .setParameter("nomeSquadra", squadraDTO.getNome()).getResultList().isEmpty()) {
             throw new SquadraDuplicataException();
-        }else {
+        } else {
             SquadraModel squadraModel = new SquadraModel();
             squadraModel.setNome(squadraDTO.getNome());
             squadraModel.setColoriSociali(squadraDTO.getColoriSociali());
@@ -47,7 +49,7 @@ public class SquadraImpDaoJpaEntityManagerBase implements SquadraDao{
 
     @Override
     public SquadraModel getSquadraById(int idSquadra) {
-        return entityManager.find(SquadraModel.class,idSquadra);
+        return entityManager.find(SquadraModel.class, idSquadra);
     }
 
     @Override
@@ -55,21 +57,21 @@ public class SquadraImpDaoJpaEntityManagerBase implements SquadraDao{
 
         return new HashSet<GiocatoreModel>(entityManager.createNamedQuery("GiocatoreModel.findByIdSquadra",
                         GiocatoreModel.class)
-                .setParameter("idSquadra",idSquadra)
+                .setParameter("idSquadra", idSquadra)
                 .getResultList());
     }
 
     @Override
     public List<SquadraModel> ricercaSquadra(boolean completo) {
-        TypedQuery<SquadraModel> typedQuery =  entityManager.createQuery("Select s From SquadraModel s",
+        TypedQuery<SquadraModel> typedQuery = entityManager.createQuery("Select s From SquadraModel s",
                 SquadraModel.class);
 
-        return  typedQuery.getResultList();
+        return typedQuery.getResultList();
     }
 
     @Override
     public SquadraModel aggiungiGiocatore(int idSquadra, GiocatoreDto giocatoreDto) {
-        if (getSquadraById(idSquadra)!=null) {
+        if (getSquadraById(idSquadra) != null) {
             if (!entityManager.createNamedQuery("GiocatoreModel.findByNomeCognome", GiocatoreModel.class)
                     .setParameter("nomeCognomeGiocatore", giocatoreDto.getNomeCognome()).getResultList().isEmpty()) {
                 throw new GiocatoreDuplicatoException();
@@ -80,9 +82,10 @@ public class SquadraImpDaoJpaEntityManagerBase implements SquadraDao{
                 entityManager.persist(giocatoreModel);
                 return getSquadraById(idSquadra);
             }
-        }else throw new SquadraNonPresenteException();
+        } else throw new SquadraNonPresenteException();
 
     }
+
     @Override
     public SquadraModel aggiungiTifoseria(int idSquadra, TifoseriaDTO tifoseriaDTO) {
         try {
@@ -103,27 +106,27 @@ public class SquadraImpDaoJpaEntityManagerBase implements SquadraDao{
             }
             return getSquadraById(idSquadra);
         } catch (PersistenceException e) {
-            if (e.getCause() instanceof ConstraintViolationException){
+            if (e.getCause() instanceof ConstraintViolationException) {
                 throw new TifoseriaGiaAssegnataException();
-            }else{
+            } else {
                 throw new RuntimeException("Problema nell' aggiunta della tifoseria");
             }
 
         }
 
-        }
+    }
 
 
     @Override
     public void rimuoviSquadra(int idSquadra) {
         SquadraModel squadraModel = getSquadraById(idSquadra);
-        if (squadraModel==null){
+        if (squadraModel == null) {
             throw new SquadraNonPresenteException();
         }
-        if (squadraModel.getTifoseria()!=null) {
+        if (squadraModel.getTifoseria() != null) {
             entityManager.remove(squadraModel.getTifoseria());
         }
-        if (squadraModel.getGiocatori()!=null) {
+        if (squadraModel.getGiocatori() != null) {
             for (GiocatoreModel giocatoreModel : squadraModel.getGiocatori()) {
                 entityManager.remove(giocatoreModel);
             }
@@ -137,9 +140,9 @@ public class SquadraImpDaoJpaEntityManagerBase implements SquadraDao{
     public TifoseriaModel getTifoseriaBySquadraId(int idSquadra) {
         List<TifoseriaModel> squadraModels = (List<TifoseriaModel>) entityManager.createNamedQuery("TifoseriaModel.findByIdSquadra",
                         TifoseriaModel.class)
-                .setParameter("idSquadra",idSquadra)
+                .setParameter("idSquadra", idSquadra)
                 .getResultList();
-        if (squadraModels.isEmpty()){
+        if (squadraModels.isEmpty()) {
             return null;
         }
         return squadraModels.get(0);

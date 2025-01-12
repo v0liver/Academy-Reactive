@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class GiocatoreMapper {
 
-    public  GiocatoreResource fromModelToResource(GiocatoreModel giocatoriModel) {
+    public GiocatoreResource fromModelToResource(GiocatoreModel giocatoriModel) {
         GiocatoreResource giocatoreResource = new GiocatoreResource();
         giocatoreResource.setIdGiocatore(giocatoriModel.getIdGiocatore());
         giocatoreResource.setNomeCognome(giocatoriModel.getNomeCognome());
