@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@Profile(Costanti.TORNEO_DAO_SPRING_JPA_JPAREPOSITORY)
+@Profile(Costanti.TORNEO_DAO_SPRING_JDBC_QUERY)
 public class GiocatoreImpDaoJpaRepository implements GiocatoreDao {
     @Autowired
     GiocatoreJpaRepository giocatoreJpaRepository;

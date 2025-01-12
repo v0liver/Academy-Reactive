@@ -3,7 +3,6 @@ package it.reactive.torneoDemo.Repository.Dao.GiocatoreDao;
 import it.reactive.torneoDemo.Utility.Costanti;
 import it.reactive.torneoDemo.exception.GiocatoreNonPresenteException;
 import it.reactive.torneoDemo.model.GiocatoreModel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 

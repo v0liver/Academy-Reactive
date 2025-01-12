@@ -140,14 +140,14 @@ public class SquadraImpDaoJpaEntityManagerQuery implements SquadraDao {
 
     @Override
     public TifoseriaModel getTifoseriaBySquadraId(int idSquadra) {
-        List<TifoseriaModel> squadraModels = (List<TifoseriaModel>) entityManager.createNamedQuery("TifoseriaModel.findByIdSquadra",
+        List<TifoseriaModel> tifoseriaModels = (List<TifoseriaModel>) entityManager.createNamedQuery("TifoseriaModel.findByIdSquadra",
                         TifoseriaModel.class)
                 .setParameter("idSquadra", idSquadra)
                 .getResultList();
-        if (squadraModels.isEmpty()) {
+        if (tifoseriaModels.isEmpty()) {
             return null;
         }
 
-        return squadraModels.get(0);
+        return tifoseriaModels.get(0);
     }
 }
