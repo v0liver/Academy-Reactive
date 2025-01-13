@@ -1,6 +1,7 @@
 package it.reactive.torneoDemo.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,7 +14,7 @@ public class TorneoModel {
     @Column(name = "nome_torneo")
     private String nomeTorneo;
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tornei")
-    private Set<SquadraModel> squadre;
+    private List<SquadraModel> squadre;
 
     public Integer getIdTorneo() {
         return idTorneo;
@@ -31,11 +32,11 @@ public class TorneoModel {
         this.nomeTorneo = nomeTorneo;
     }
 
-    public Set<SquadraModel> getSquadre() {
+    public List<SquadraModel> getSquadre() {
         return squadre;
     }
 
-    public void setSquadre(Set<SquadraModel> squadre) {
+    public void setSquadre(List<SquadraModel> squadre) {
         this.squadre = squadre;
     }
 }

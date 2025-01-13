@@ -4,7 +4,9 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import it.reactive.torneoDemo.DTO.torneo.TorneoDTO;
+import it.reactive.torneoDemo.Service.TorneoService;
 import it.reactive.torneoDemo.resource.TorneoResource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,8 @@ import java.util.List;
 @RequestMapping(value = "tornei", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Validated
 public class TorneoController {
-
+    @Autowired
+    TorneoService torneoService;
 
     @ApiOperation(value = "Creo un nuovo torneo", response = TorneoResource.class)
     @ApiResponses(value = {
@@ -30,7 +33,7 @@ public class TorneoController {
     })
     @PostMapping
     public ResponseEntity<TorneoResource> aggiungiTorneo(@RequestBody @Valid TorneoDTO torneoDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(null);
+        return ResponseEntity.status(HttpStatus.CREATED).body(torneoService.aggiungiTorneo(torneoDTO));
     }
 
 
@@ -43,7 +46,7 @@ public class TorneoController {
     @PutMapping("/addSquadraToTorneo/{idTorneo}/{idSquadra}")
     public ResponseEntity<TorneoResource> censitaSquadraAlTorneo(@PathVariable @Min(0) @Max(10000) Integer idTorneo,
                                                                  @PathVariable @Min(0) @Max(10000) Integer idSquadra) {
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(torneoService.censitaSquadraAlTorneo(idTorneo,idSquadra));
     }
 
 
@@ -55,7 +58,7 @@ public class TorneoController {
     })
     @GetMapping()
     public ResponseEntity<List<TorneoResource>> getTorneoEndSquadre() {
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(torneoService.getTorneoEndSquadre());
     }
 
     @ApiOperation(value = "Elimino il torneo con relative squadre assciare se non fanno parte di una altro torneo con relativi giocatori", response = TorneoResource.class, responseContainer = "List")
@@ -66,7 +69,7 @@ public class TorneoController {
     })
     @DeleteMapping("/{idTorneo}")
     public ResponseEntity<List<TorneoResource>> eliminaTorneoConSquadreAndGiocatori(@PathVariable @Min(0) @Max(10000) Integer idTorneo) {
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(torneoService.eliminaTorneoConSquadreAndGiocatori(idTorneo));
     }
 
 }
