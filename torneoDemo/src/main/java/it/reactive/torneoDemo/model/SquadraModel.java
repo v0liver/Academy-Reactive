@@ -11,7 +11,7 @@ import java.util.Set;
         ),
         @NamedQuery(
                 name = "SquadraModel.findByNome",
-                query = "Select s From SquadraModel s where s.nome = :nomeSquadra"
+                query = "Select s From SquadraModel s where s.nome = :nome"
         )
 })
 @Table(name = "squadra")

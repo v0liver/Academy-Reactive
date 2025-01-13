@@ -34,7 +34,7 @@ public class SquadraImpDaoJpaEntityManagerBase implements SquadraDao {
     @Override
     public SquadraModel salvaSquadra(SquadraDTO squadraDTO) {
         if (!entityManager.createNamedQuery("SquadraModel.findByNome", SquadraModel.class)
-                .setParameter("nomeSquadra", squadraDTO.getNome()).getResultList().isEmpty()) {
+                .setParameter("nome", squadraDTO.getNome()).getResultList().isEmpty()) {
             throw new SquadraDuplicataException();
         } else {
             SquadraModel squadraModel = new SquadraModel();
