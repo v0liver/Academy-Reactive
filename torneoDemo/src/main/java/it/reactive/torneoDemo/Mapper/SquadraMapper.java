@@ -1,6 +1,6 @@
 package it.reactive.torneoDemo.Mapper;
 
-import com.fasterxml.jackson.databind.introspect.TypeResolutionContext;
+import it.reactive.torneoDemo.Repository.Trasferimenti;
 import it.reactive.torneoDemo.model.GiocatoreModel;
 import it.reactive.torneoDemo.model.SquadraModel;
 import it.reactive.torneoDemo.resource.GiocatoreResource;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Component
 public class SquadraMapper {
@@ -20,6 +19,8 @@ public class SquadraMapper {
 
     @Autowired
     GiocatoreMapper giocatoreMapper;
+
+
 
     public SquadraResource fromModelToResource(SquadraModel squadraModel) {
         SquadraResource squadraResource = new SquadraResource();
@@ -43,6 +44,7 @@ public class SquadraMapper {
         return squadraResource;
 
     }
+
 
     public SquadraResource fromModelToResourceWithouthGiocatori(SquadraModel squadraModel) {
         SquadraResource squadraResource = new SquadraResource();

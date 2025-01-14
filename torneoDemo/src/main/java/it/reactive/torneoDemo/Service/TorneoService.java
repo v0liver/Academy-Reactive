@@ -3,8 +3,11 @@ package it.reactive.torneoDemo.Service;
 import it.reactive.torneoDemo.DTO.torneo.TorneoDTO;
 import it.reactive.torneoDemo.Mapper.TorneoMapper;
 import it.reactive.torneoDemo.Repository.Dao.TorneoDao.TorneoDao;
+import it.reactive.torneoDemo.Repository.Trasferimenti;
 import it.reactive.torneoDemo.model.SquadraModel;
 import it.reactive.torneoDemo.model.TorneoModel;
+import it.reactive.torneoDemo.resource.GiocatoreResource;
+import it.reactive.torneoDemo.resource.SquadraResource;
 import it.reactive.torneoDemo.resource.TorneoResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,8 @@ public class TorneoService   {
     TorneoDao torneoDao;
     @Autowired
     TorneoMapper torneoMapper;
+    @Autowired
+    Trasferimenti trasferimenti;
 
     public TorneoResource aggiungiTorneo(TorneoDTO torneoDTO) {
         return torneoMapper.fromModelToResource(torneoDao.aggiungiTorneo(torneoDTO));
@@ -37,6 +42,13 @@ public class TorneoService   {
 
         for (TorneoModel torneoModel : torneoDao.getTorneoEndSquadre()) {
             torneoResourceList.add(torneoMapper.fromModelToResource(torneoModel));
+        }
+        for (TorneoResource torneoResource : torneoResourceList) {
+            for (SquadraResource squadraResource : torneoResource.getSquadre()) {
+                for (GiocatoreResource giocatoreResource : squadraResource.getGiocatori()) {
+                    giocatoreResource.setTrasferimenti(trasferimenti.trasferimenti(giocatoreResource.getNomeCognome()));
+                }
+            }
         }
         return torneoResourceList;
     }
