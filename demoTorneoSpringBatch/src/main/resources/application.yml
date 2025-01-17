@@ -1,7 +1,7 @@
 #spring.application.name=demoTorneoSpringBatch
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/torneodemobatch
+  datasource-torneo:
+    jdbcUrl: jdbc:postgresql://localhost:5432/torneodemobatch
     username: postgres
     password: example
-    driverClassName: org.postgresql.Driver
+    driver-class-name: org.postgresql.Driver
