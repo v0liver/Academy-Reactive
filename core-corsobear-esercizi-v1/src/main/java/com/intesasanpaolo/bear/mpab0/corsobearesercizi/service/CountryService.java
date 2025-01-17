@@ -1,14 +1,24 @@
 package com.intesasanpaolo.bear.mpab0.corsobearesercizi.service;
 
+import com.intesasanpaolo.bear.connector.jdbc.JDBCQueryType;
+import com.intesasanpaolo.bear.mpab0.corsobearesercizi.connector.GetCountriesjdbcConnector;
+import com.intesasanpaolo.bear.mpab0.corsobearesercizi.connector.transformer.GetCountriesJDBCRequestTransformer;
+import com.intesasanpaolo.bear.mpab0.corsobearesercizi.connector.transformer.GetCountriesJDBCResponseTransformer;
 import com.intesasanpaolo.bear.mpab0.corsobearesercizi.model.CountryModel;
 import com.intesasanpaolo.bear.service.BaseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CountryService extends BaseService {
-
+    @Autowired
+    GetCountriesjdbcConnector countriesjdbcConnector;
+    @Autowired
+    GetCountriesJDBCRequestTransformer getCountriesJDBCRequestTransformer;
+    @Autowired
+    GetCountriesJDBCResponseTransformer getCountriesJDBCResponseTransformer;
 
     public List<CountryModel> getCountries(){
         List<CountryModel> countryModelList = new ArrayList<>();
@@ -39,5 +49,11 @@ public class CountryService extends BaseService {
         countryModelList.add(countryModel3);
         return countryModelList;
     }
+
+    public List<CountryModel> getCountriesJdbc(){
+       List<CountryModel> countryModelList = countriesjdbcConnector.call("Select * from countries",getCountriesJDBCRequestTransformer,getCountriesJDBCResponseTransformer, JDBCQueryType.FIND);
+       return countryModelList;
+    }
+
 
 }

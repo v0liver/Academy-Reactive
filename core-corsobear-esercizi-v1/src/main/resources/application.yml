@@ -28,3 +28,16 @@ keycloak:
         - name: reserved
           patterns:
             - /*
+
+connectors:
+ jdbcConfigurations:
+   default:
+     connectionPoolSize: 5
+     timeout: 30000
+     mocked: false
+   items:
+     GetCountriesjdbcConnector:
+       uri: jdbc:postgresql://localhost:5432/corebearesercizi
+       driver-class-name: org.postgresql.Driver
+       username: postgres
+       password: example

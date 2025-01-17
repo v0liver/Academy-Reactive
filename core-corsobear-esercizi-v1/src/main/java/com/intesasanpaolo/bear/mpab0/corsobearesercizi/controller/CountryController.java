@@ -1,6 +1,7 @@
 package com.intesasanpaolo.bear.mpab0.corsobearesercizi.controller;
 import com.intesasanpaolo.bear.core.controller.CoreController;
 import com.intesasanpaolo.bear.mpab0.corsobearesercizi.command.CountryCommand;
+import com.intesasanpaolo.bear.mpab0.corsobearesercizi.command.CountryCommandJdbc;
 import com.intesasanpaolo.bear.mpab0.corsobearesercizi.command.CountryCommandService;
 import com.intesasanpaolo.bear.mpab0.corsobearesercizi.command.CountryCommandServiceParam;
 import com.intesasanpaolo.bear.mpab0.corsobearesercizi.factory.CountryFactory;
@@ -47,10 +48,22 @@ public class CountryController extends CoreController {
         return ResponseEntity.ok(countryResourceList);
     }
 
-    @GetMapping(value = "/countries")
+   // @GetMapping(value = "/countries")
     public ResponseEntity<List<CountryResource>> getCountriesServiceParam(long id,String info) throws BeansException,Exception {
         List<CountryResource> countryResourceList = new ArrayList<>();
         for (CountryModel countryModel : beanFactory.getBean(CountryCommandServiceParam.class,id,info).execute()) {
+            countryResourceList.add( countryFactory.fromModelToResource(countryModel));
+
+        }
+
+        return ResponseEntity.ok(countryResourceList);
+    }
+
+    @GetMapping(value = "/countries")
+    public ResponseEntity<List<CountryResource>> getCountriesServiceJdbc() throws BeansException,
+            Exception {
+        List<CountryResource> countryResourceList = new ArrayList<>();
+        for (CountryModel countryModel : beanFactory.getBean(CountryCommandJdbc.class).execute()) {
             countryResourceList.add( countryFactory.fromModelToResource(countryModel));
 
         }

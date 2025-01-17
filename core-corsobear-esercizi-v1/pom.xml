@@ -32,6 +32,22 @@
          <groupId>com.intesasanpaolo.bear</groupId>
          <version>${bear.version}</version>
      </dependency>
+      <dependency>
+          <groupId>com.intesasanpaolo.bear</groupId>
+          <artifactId>bear-arch-jdbc</artifactId>
+          <version>${bear.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>com.intesasanpaolo.bear</groupId>
+          <artifactId>bear-arch-jdbc-mock</artifactId>
+          <version>${bear.version}</version>
+          <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.postgresql</groupId>
+          <artifactId>postgresql</artifactId>
+          <scope>runtime</scope>
+      </dependency>
      <dependency>
          <artifactId>bear-arch-rest</artifactId>
          <groupId>com.intesasanpaolo.bear</groupId>
