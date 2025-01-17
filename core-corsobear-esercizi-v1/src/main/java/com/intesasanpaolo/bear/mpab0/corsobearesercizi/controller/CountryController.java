@@ -1,9 +1,6 @@
 package com.intesasanpaolo.bear.mpab0.corsobearesercizi.controller;
 import com.intesasanpaolo.bear.core.controller.CoreController;
-import com.intesasanpaolo.bear.mpab0.corsobearesercizi.command.CountryCommand;
-import com.intesasanpaolo.bear.mpab0.corsobearesercizi.command.CountryCommandJdbc;
-import com.intesasanpaolo.bear.mpab0.corsobearesercizi.command.CountryCommandService;
-import com.intesasanpaolo.bear.mpab0.corsobearesercizi.command.CountryCommandServiceParam;
+import com.intesasanpaolo.bear.mpab0.corsobearesercizi.command.*;
 import com.intesasanpaolo.bear.mpab0.corsobearesercizi.factory.CountryFactory;
 import com.intesasanpaolo.bear.mpab0.corsobearesercizi.model.CountryModel;
 import com.intesasanpaolo.bear.mpab0.corsobearesercizi.resource.CountryResource;
@@ -12,6 +9,7 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
@@ -69,6 +67,14 @@ public class CountryController extends CoreController {
         }
 
         return ResponseEntity.ok(countryResourceList);
+    }
+
+    @PostMapping(value = "/country")
+    public ResponseEntity<CountryResource> getCountryJpa(long id) throws BeansException,
+            Exception {
+       CountryResource countryResource = countryFactory.fromModelToResource(beanFactory.getBean(CountryCommandJpa.class,id).execute()) ;
+
+        return ResponseEntity.ok(countryResource);
     }
 
 

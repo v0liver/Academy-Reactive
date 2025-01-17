@@ -1,9 +1,11 @@
 package com.intesasanpaolo.bear.mpab0.corsobearesercizi.service;
 
 import com.intesasanpaolo.bear.connector.jdbc.JDBCQueryType;
+import com.intesasanpaolo.bear.mpab0.corsobearesercizi.connector.CountryJpaRepositoryConnector;
 import com.intesasanpaolo.bear.mpab0.corsobearesercizi.connector.GetCountriesjdbcConnector;
 import com.intesasanpaolo.bear.mpab0.corsobearesercizi.connector.transformer.GetCountriesJDBCRequestTransformer;
 import com.intesasanpaolo.bear.mpab0.corsobearesercizi.connector.transformer.GetCountriesJDBCResponseTransformer;
+import com.intesasanpaolo.bear.mpab0.corsobearesercizi.exception.CountryNonTrovatoException;
 import com.intesasanpaolo.bear.mpab0.corsobearesercizi.model.CountryModel;
 import com.intesasanpaolo.bear.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class CountryService extends BaseService {
     GetCountriesJDBCRequestTransformer getCountriesJDBCRequestTransformer;
     @Autowired
     GetCountriesJDBCResponseTransformer getCountriesJDBCResponseTransformer;
+    @Autowired
+    CountryJpaRepositoryConnector countryJpaRepositoryConnector;
 
     public List<CountryModel> getCountries(){
         List<CountryModel> countryModelList = new ArrayList<>();
@@ -53,6 +57,12 @@ public class CountryService extends BaseService {
     public List<CountryModel> getCountriesJdbc(){
        List<CountryModel> countryModelList = countriesjdbcConnector.call("Select * from countries",getCountriesJDBCRequestTransformer,getCountriesJDBCResponseTransformer, JDBCQueryType.FIND);
        return countryModelList;
+    }
+
+    public CountryModel getCountryJpa(long id){
+        CountryModel countryModel =
+                countryJpaRepositoryConnector.findById(id).orElseThrow(()->new CountryNonTrovatoException());
+        return countryModel;
     }
 
 
