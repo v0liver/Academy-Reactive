@@ -14,9 +14,9 @@ public class CountryRestRequestTransformer implements IRestRequestTransformer<St
         RestConnectorRequest<Long> restConnectorRequest =
                 new RestConnectorRequest<>();
         Map m = new HashMap<>();
-        if(args!=null && args.length>0){
+
             m.put("id",Long.valueOf(om));
-        }
+
         //restConnectorRequest.setQueryParams(m);
         restConnectorRequest.setParams(m);
 //        restConnectorRequest.setRequest(Long.valueOf(om));
