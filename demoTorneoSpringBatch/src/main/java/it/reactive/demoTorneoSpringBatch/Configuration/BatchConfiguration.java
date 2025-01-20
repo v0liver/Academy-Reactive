@@ -172,11 +172,13 @@ public class BatchConfiguration {
     public ClassifierCompositeItemWriter<TipoFile> writerInsert(@Qualifier(Costanti.dataSourceTorneo) DataSource dataSource){
         Classifier<TipoFile, ItemWriter<? super TipoFile>> classifier = tipoRecord -> {
             if (tipoRecord instanceof TorneoDTO){
-                return new JdbcBatchItemWriterBuilder<>().dataSource(dataSource)
-                        .itemPreparedStatementSetter((item, ps) -> {
-                            TorneoDTO torneoDTO = (TorneoDTO) item;
+                return new JdbcBatchItemWriterBuilder<>()
+                        .dataSource(dataSource)
+                        .itemPreparedStatementSetter((tipoFile, ps) -> {
+                            TorneoDTO torneoDTO = (TorneoDTO) tipoFile;
                             ps.setString(1, torneoDTO.getNomeTorneo());
-                        }).sql("insert into torneo(nome_torneo) values (?)")
+                        })
+                        .sql("insert into torneo(nome_torneo) values (?)")
                         .build();
             }
             throw new RuntimeException("TipoRecord non gestito: " + tipoRecord.getClass().getSimpleName());
