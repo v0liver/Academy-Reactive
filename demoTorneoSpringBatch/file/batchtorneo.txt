@@ -1,0 +1,8 @@
+TOTorneo 1                                                                                                                                                                                                     -
+TOTorneo 2                                                                                                                                                                                                    -
+SQSquadra 1                                                                                           Colori                                                                                                 -
+SQSquadra 2                                                                                           Colori                                                                                                -
+TSTorneo 1                                                                                            Squadra 1                                                                                           Tifoseria 1
+TSTorneo 1                                                                                            Squadra 2                                                                                            -
+GIGiocatore 1                                       Cognome 1                                         Squadra 2                                                                                           -
+GIGiocatore 2                                       Cognome 2                                         Squadra 2                                                                                           -
