@@ -3,7 +3,7 @@ package com.intesasanpaolo.bear.mpab0.corsobearesercizi.resource;
 import com.intesasanpaolo.bear.core.resource.BaseResource;
 
 public class CountryResource extends BaseResource {
-   private long chiave;
+   private Long chiave;
    private String name;
    private String language;
    private String continent;

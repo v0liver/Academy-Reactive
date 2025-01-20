@@ -8,10 +8,8 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,8 +67,8 @@ public class CountryController extends CoreController {
         return ResponseEntity.ok(countryResourceList);
     }
 
-    @PostMapping(value = "/country")
-    public ResponseEntity<CountryResource> getCountryJpa(long id) throws BeansException,
+    @PostMapping(value = "/country/{id}")
+    public ResponseEntity<CountryResource> getCountryJpa(@PathVariable long id) throws BeansException,
             Exception {
        CountryResource countryResource = countryFactory.fromModelToResource(beanFactory.getBean(CountryCommandJpa.class,id).execute()) ;
 

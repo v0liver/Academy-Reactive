@@ -55,3 +55,14 @@ keycloak:
         - name: reserved
           patterns:
             - /*
+
+
+connectors:
+  bearInternalConfigurations:
+    items:
+      CountryConnector:
+        url: http://localhost:8080/Country/country/{id}
+        enabledTracing: true
+        timeout: 5000
+        mocked: false
+        method: POST
