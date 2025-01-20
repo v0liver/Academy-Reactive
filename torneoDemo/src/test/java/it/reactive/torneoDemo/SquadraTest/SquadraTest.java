@@ -12,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.sql.SQLException;
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -28,5 +29,6 @@ public class SquadraTest {
         squadraDTO.setNome("Juventus");
         squadraDTO.setColoriSociali("Bianco e Nero");
         assertThrows(SquadraDuplicataException.class,()->squadraDao.salvaSquadra(squadraDTO));
+
     }
 }

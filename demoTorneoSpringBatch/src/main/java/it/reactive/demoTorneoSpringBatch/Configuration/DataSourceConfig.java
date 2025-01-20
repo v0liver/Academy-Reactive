@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -34,24 +35,35 @@ public class DataSourceConfig {
         return DataSourceBuilder.create().build();
     }
 
-//    @Primary
-//    @Bean
-//    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-//        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-//        em.setDataSource(dataSource());
-//        em.setPackagesToScan("it.reactive.demoTorneoSpringBatch.model");
-//        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-//        em.setJpaVendorAdapter(vendorAdapter);
-//
-//        return em;
-//    }
-//
-//    @Primary
-//    @Bean(name = "torneoTransactionManager")
-//    public PlatformTransactionManager transactionManager(
-//            @Qualifier("torneoEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
-//        return new JpaTransactionManager(entityManagerFactory);
-//    }
+    @Bean(Costanti.JdbcTorneo)
+    public JdbcTemplate jdbcTemplate(@Qualifier(Costanti.dataSourceTorneo)DataSource dataSource){
+        return new JdbcTemplate(dataSource);
+    }
+
+
+
+    @Bean(Costanti.entityManagerTorneo)
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier(Costanti.dataSourceTorneo)DataSource dataSource) {
+        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource(dataSource);
+        em.setPackagesToScan("it.reactive.demoTorneoSpringBatch.model");
+        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        em.setJpaVendorAdapter(vendorAdapter);
+
+        return em;
+    }
+
+    @Bean(Costanti.transactionalManagerTorneo)
+    public PlatformTransactionManager platformTransactionManager(@Qualifier(Costanti.entityManagerTorneo) EntityManagerFactory entityManagerFactory){
+        return new JpaTransactionManager(entityManagerFactory);
+    }
+
+    @Primary
+    @Bean(name = "torneoTransactionManager")
+    public PlatformTransactionManager transactionManager(
+            @Qualifier(Costanti.entityManagerTorneo) EntityManagerFactory entityManagerFactory) {
+        return new JpaTransactionManager(entityManagerFactory);
+    }
 
     @Bean(name = "dataSource")
     //@BatchDataSource
