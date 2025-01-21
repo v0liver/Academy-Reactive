@@ -4,5 +4,5 @@ SQSquadra 1                                                                     
 SQSquadra 2                                                                                           Colori                                                                                              Tifoseria 1
 TSTorneo 1                                                                                            Squadra 1                                                                                           -
 TSTorneo 1                                                                                            Squadra 2                                                                                           -
-GIGiocatore 1                                       Cognome 1                                         Squadra 2                                                                                           -
+GIGiocatore 1                                       Cognome 1                                         Squadra 1                                                                                           -
 GIGiocatore 2                                       Cognome 2                                         Squadra 2                                                                                           -

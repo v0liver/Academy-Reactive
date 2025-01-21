@@ -104,16 +104,17 @@ public class BatchConfiguration {
             @Override
             public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
                 System.out.println("Primo Step");
+                Connection con = dataSource.getConnection();
                 try {
                     PreparedStatement ps = dataSource.getConnection().prepareStatement("truncate table squadra cascade");
                     ps.executeUpdate();
-                    ps = dataSource.getConnection().prepareStatement("truncate table giocatore cascade");
+                    ps = con.prepareStatement("truncate table giocatore cascade");
                     ps.executeUpdate();
-                    ps = dataSource.getConnection().prepareStatement("truncate table tifoseria cascade");
+                    ps = con.prepareStatement("truncate table tifoseria cascade");
                     ps.executeUpdate();
-                    ps = dataSource.getConnection().prepareStatement("truncate table squadra_torneo cascade");
+                    ps = con.prepareStatement("truncate table squadra_torneo cascade");
                     ps.executeUpdate();
-                    ps = dataSource.getConnection().prepareStatement("truncate table torneo cascade");
+                    ps = con.prepareStatement("truncate table torneo cascade");
                     ps.executeUpdate();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
@@ -279,27 +280,30 @@ public class BatchConfiguration {
         return new ItemStreamWriter<TipoFile>() {
             @Override
             public void write(Chunk<? extends TipoFile> chunk) throws Exception {
+                Connection con = dataSource.getConnection();
                 chunk.forEach(tipoFile -> {
-                    try {
-                        GiocatoreDto giocatoreDto = (GiocatoreDto) tipoFile;
-                        Connection con = dataSource.getConnection();
-                        PreparedStatement ps2 = con.prepareStatement("select * from squadra where nome=?");
-                        ps2.setString(1, giocatoreDto.getNomeSquadra());
-                        ResultSet rs = ps2.executeQuery();
-                        int idSquadra = 0;
-                        if (rs.next()) {
 
-                            idSquadra = rs.getInt("id");
+                        try {
+                            GiocatoreDto giocatoreDto = (GiocatoreDto) tipoFile;
+
+                            PreparedStatement ps2 = con.prepareStatement("select * from squadra where nome=?");
+                            ps2.setString(1, giocatoreDto.getNomeSquadra());
+                            ResultSet rs = ps2.executeQuery();
+                            int idSquadra = 0;
+                            if (rs.next()) {
+
+                                idSquadra = rs.getInt("id");
+                            }
+                            PreparedStatement ps = con.prepareStatement("insert into giocatore(nome_cognome,id_squadra) values (?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
+                            ps.setString(1, giocatoreDto.getNomeCognome());
+                            ps.setInt(2, idSquadra);
+                            ps.executeUpdate();
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
                         }
-                        PreparedStatement ps = con.prepareStatement("insert into giocatore(nome_cognome,id_squadra) values (?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
-                        ps.setString(1, giocatoreDto.getNomeCognome());
-                        ps.setInt(2, idSquadra);
-                        ps.executeUpdate();
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
 
-                });
+
+                    });
             }
         };
     }
@@ -345,7 +349,7 @@ public class BatchConfiguration {
         return new JdbcCursorItemReaderBuilder<GiocatoreSquadraDTO>()
                 .name(Costanti.Reader_Csv)
                 .dataSource(dataSource)
-                .sql("select g.*, s.nome AS nome_squadra, s.colori_sociali, t.nome_tifoseria " + "from giocatore g " + "join squadra s on g.id_squadra = s.id " + "left join tifoseria t on t.id_squadra = s.id")
+                .sql("select g.*, s.nome , s.colori_sociali, t.nome_tifoseria from giocatore g squadra s on g.id_squadra = s.id left join tifoseria t on t.id_squadra = s.id")
                 .rowMapper((rs, rowNum) -> {
                     GiocatoreSquadraDTO giocatore = new GiocatoreSquadraDTO();
                     giocatore.setNomeCognome(rs.getString("nome_cognome"));
