@@ -365,19 +365,42 @@ public class BatchConfiguration {
                 .build();
     }
 
+    // per avere una scrittura formattata personalizzata sul csv
     @Bean(Costanti.WRITER_CSV)
     public FlatFileItemWriter<GiocatoreSquadraDTO> writerCSV() {
         return new FlatFileItemWriterBuilder<GiocatoreSquadraDTO>()
                 .name(Costanti.WRITER_CSV)
                 .resource(new FileSystemResource("file/batchTorneoGiocatore.csv"))
-                .lineAggregator(new DelimitedLineAggregator<GiocatoreSquadraDTO>() {{
-                    setDelimiter(";");
-                    setFieldExtractor(new BeanWrapperFieldExtractor<GiocatoreSquadraDTO>() {{
-                        setNames(new String[]{"idGiocatore", "nomeCognome", "nomeSquadra", "nomeTifoseria", "coloriSociali", "numeroAmmonizioni"});
-                    }});
-                }})
+                .lineAggregator(new LineAggregator<GiocatoreSquadraDTO>() {
+                    @Override
+                    public String aggregate(GiocatoreSquadraDTO item) {
+                        return String.format(
+                                "Id Giocatore: %d; Nome Cognome: %s; Ammonizioni: %d; Squadra: %s; Tifoseria: %s; Colori Sociali: %s",
+                                item.getIdGiocatore(),
+                                item.getNomeCognome(),
+                                item.getNumeroAmmonizioni(),
+                                item.getNomeSquadra(),
+                                item.getNomeTifoseria() != null ? item.getNomeTifoseria() : "",
+                                item.getColoriSociali()
+                        );
+                    }
+                })
                 .build();
     }
-}
+//per scrivere un file delimitato da un certo carattere per creare file csv
+//    @Bean(Costanti.WRITER_CSV)
+//    public FlatFileItemWriter<GiocatoreSquadraDTO> writerCSV() {
+//        return new FlatFileItemWriterBuilder<GiocatoreSquadraDTO>()
+//                .name(Costanti.WRITER_CSV)
+//                .resource(new FileSystemResource("file/batchTorneoGiocatore.csv"))
+//                .lineAggregator(new DelimitedLineAggregator<GiocatoreSquadraDTO>() {{
+//                    setDelimiter(";");
+//                    setFieldExtractor(new BeanWrapperFieldExtractor<GiocatoreSquadraDTO>() {{
+//                        setNames(new String[]{"idGiocatore", "nomeCognome", "numeroAmmonizioni", "nomeSquadra", "nomeTifoseria", "coloriSociali"});
+//                    }});
+//                }})
+//                .build();
+//    }
+    }
 
 
