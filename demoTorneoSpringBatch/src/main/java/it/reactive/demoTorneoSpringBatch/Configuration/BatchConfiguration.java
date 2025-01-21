@@ -375,7 +375,7 @@ public class BatchConfiguration {
                     @Override
                     public String aggregate(GiocatoreSquadraDTO item) {
                         return String.format(
-                                "Id Giocatore: %d; Nome Cognome: %s; Ammonizioni: %d; Squadra: %s; Tifoseria: %s; Colori Sociali: %s",
+                                "%-15d;%-15s;%-15d;%-15s;%-15s;%-15s",//per settare come vuoi la stringa
                                 item.getIdGiocatore(),
                                 item.getNomeCognome(),
                                 item.getNumeroAmmonizioni(),
@@ -385,6 +385,14 @@ public class BatchConfiguration {
                         );
                     }
                 })
+                .headerCallback(writer -> writer.write(
+                        String.format("%-15s;%-15s;%-15s;%-15s;%-15s;%-15s",
+                                        "Id Giocatore",
+                                        "Nome Cognome",
+                                        "Ammonizioni",
+                                        "Squadra",
+                                        "Tifoseria",
+                                        "Colori Sociali")))//per settare una riga fissa all inizio
                 .build();
     }
 //per scrivere un file delimitato da un certo carattere per creare file csv
@@ -396,7 +404,7 @@ public class BatchConfiguration {
 //                .lineAggregator(new DelimitedLineAggregator<GiocatoreSquadraDTO>() {{
 //                    setDelimiter(";");
 //                    setFieldExtractor(new BeanWrapperFieldExtractor<GiocatoreSquadraDTO>() {{
-//                        setNames(new String[]{"idGiocatore", "nomeCognome", "numeroAmmonizioni", "nomeSquadra", "nomeTifoseria", "coloriSociali"});
+//                        setNames(new String[]{"idGiocatore", "nomeCognome", "numeroAmmonizioni", "nomeSquadra", "nomeTifoseria", "coloriSociali"});//nome attributi dell oggetto e non del db
 //                    }});
 //                }})
 //                .build();

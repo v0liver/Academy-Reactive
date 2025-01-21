@@ -1,2 +1,3 @@
-Id Giocatore: 55; Nome Cognome: Vito Oliveri; Ammonizioni: 0; Squadra: Squadra 1; Tifoseria: ; Colori Sociali: Blu
-Id Giocatore: 56; Nome Cognome: Alessia Palumbo; Ammonizioni: 0; Squadra: Squadra 2; Tifoseria: Tifoseria 1; Colori Sociali: Rosso
+Id Giocatore   ;Nome Cognome   ;Ammonizioni    ;Squadra        ;Tifoseria      ;Colori Sociali 
+73             ;Vito Oliveri   ;0              ;Squadra 1      ;               ;Blu            
+74             ;Alessia Palumbo;0              ;Squadra 2      ;Tifoseria 1    ;Rosso          
