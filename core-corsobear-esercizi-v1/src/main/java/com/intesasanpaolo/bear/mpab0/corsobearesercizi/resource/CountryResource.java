@@ -39,4 +39,11 @@ public class CountryResource extends BaseResource {
     public void setContinent(String continent) {
         this.continent = continent;
     }
+
+    @Override
+    public String toString() {
+        return "CountryResource{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
