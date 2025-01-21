@@ -13,5 +13,11 @@ public class Costanti {
     public static final String FLAT_ITEM_STREAM_WRITER_PosizionaleCP = "FLAT_ITEM_STREAM_WRITER_PosizionaleCP";
     public static final String PROCESSOR_INSERT="PROCESSOR_INSERT";
     public static final String WRITER_INSERT = "WRITER_INSERT";
+    public static final String WRITER_SQUADRA = "WRITER_SQUADRA";
+    public static final String WRITER_Giocatore = "WRITER_Giocatore";
+    public static final String WRITER_Squadra_Torneo = "WRITER_Squadra_Torneo";
+    public static final String StepCSV = "StepCSV";
+    public static final String Reader_Csv = "Reader_Csv";
+    public static final String WRITER_CSV = "WRITER_CSV";
     public static int ChunkSize = 2;
 }
