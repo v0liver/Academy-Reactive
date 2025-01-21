@@ -349,7 +349,8 @@ public class BatchConfiguration {
         return new JdbcCursorItemReaderBuilder<GiocatoreSquadraDTO>()
                 .name(Costanti.Reader_Csv)
                 .dataSource(dataSource)
-                .sql("select g.*, s.nome , s.colori_sociali, t.nome_tifoseria from giocatore g squadra s on g.id_squadra = s.id left join tifoseria t on t.id_squadra = s.id")
+                .sql("select g.*, s.nome, s.colori_sociali, t.nome_tifoseria from giocatore g join squadra s on g.id_squadra = s.id left join tifoseria t on s.id = t.id_squadra ")
+
                 .rowMapper((rs, rowNum) -> {
                     GiocatoreSquadraDTO giocatore = new GiocatoreSquadraDTO();
                     giocatore.setNomeCognome(rs.getString("nome_cognome"));

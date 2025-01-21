@@ -1,8 +1,8 @@
 TOTorneo 1                                                                                                                                                                                                -
 TOTorneo 2                                                                                                                                                                                                -
-SQSquadra 1                                                                                           Colori                                                                                              -
-SQSquadra 2                                                                                           Colori                                                                                              Tifoseria 1
+SQSquadra 1                                                                                           Blu                                                                                                 -
+SQSquadra 2                                                                                           Rosso                                                                                               Tifoseria 1
 TSTorneo 1                                                                                            Squadra 1                                                                                           -
 TSTorneo 1                                                                                            Squadra 2                                                                                           -
-GIGiocatore 1                                       Cognome 1                                         Squadra 1                                                                                           -
-GIGiocatore 2                                       Cognome 2                                         Squadra 2                                                                                           -
+GIVito                                                Oliveri                                         Squadra 1                                                                                           -
+GIAlessia                                             Palumbo                                         Squadra 2                                                                                           -
