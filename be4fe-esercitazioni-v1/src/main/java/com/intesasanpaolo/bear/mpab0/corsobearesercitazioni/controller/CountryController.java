@@ -20,7 +20,7 @@ public class CountryController extends BaseController {
     BeanFactory beanFactory;
 
     @GetMapping("/{id}")
-    public ResponseEntity<CountryResource> getCountryJpa(String id) throws BeansException,
+    public ResponseEntity<CountryResource> getCountryJpa(@PathVariable String id) throws BeansException,
             Exception {
 
 
