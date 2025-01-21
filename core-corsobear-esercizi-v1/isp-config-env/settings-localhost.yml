@@ -1,0 +1,10 @@
+#Chiavi che sono valide per tutti gli ambienti e che ho inserito nella runconfigutìration
+KAFKA_STRATEGIA_BROKERS: 10.207.236.68:29092
+KAFKA_STRATEGIA_GROUPID: mpab0
+KAFKA_STRATEGIA_SECURITY_PROTOCOL: PLAINTEXT
+KEYTAB_STRATEGIA_KERB_FILE_PATH: /usr/local/security/SDH_MPAB0.keytab
+KEYTAB_STRATEGIA_KERB_USERNAME: SDH_MPAB0
+KEYTAB_STRATEGIA_KERB_REALM_DOMAIN: SYSSEDE.SYSTEST.SANPAOLOIMI.COM
+KAFKA_TOPIC_DEMO: Country-Oliveri
+URL_SWA: http://sswp20.syssede.systest.sanpaoloimi.com:8024/scriptSwp20/swp2/ServiceSoap
+SWA_MOCK: true

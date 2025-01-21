@@ -44,14 +44,37 @@ connectors:
 
  jpaConfigurations:
    connection:
-      url: jdbc:postgresql://localhost:5432/corebearesercizi
-      driver-class-name: org.postgresql.Driver
-      username: postgres
-      password: example
-      connectionPoolSize: 5
-      timeout: 30000
-      mocked: false
-      hbm2ddl: none
-      hibernateDialect: org.hibernate.dialect.Oracle10gDialect
+     url: jdbc:postgresql://localhost:5432/corebearesercizi
+     driver-class-name: org.postgresql.Driver
+     username: postgres
+     password: example
+     connectionPoolSize: 5
+     timeout: 30000
+     mocked: false
+     hbm2ddl: none
+     hibernateDialect: org.hibernate.dialect.Oracle10gDialect
    repositories:
      - CountryJpaRepositoryConnector
+
+listeners:
+  eventConfigurations:
+   items:
+      CountryListener:
+        bootstrapServers: ${KAFKA_STRATEGIA_BROKERS}
+        topic: ${KAFKA_TOPIC_DEMO}
+        groupId: ${KAFKA_STRATEGIA_GROUPID}
+        clientId: DEMO
+        concurrency: 3
+        enable.auto.commit: true
+        max.poll.records: 10
+        security:
+          protocol: ${KAFKA_STRATEGIA_SECURITY_PROTOCOL}
+        sasl:
+          kerberos:
+            service:
+              name: ${KAFKA_STRATEGIA_SERVICE_NAME:xx}
+          jaas:
+            config: "com.sun.security.auth.module.Krb5LoginModule required
+             useKeyTab=true keyTab=\"${KEYTAB_STRATEGIA_KERB_FILE_PATH}\"
+             principal=\"${KEYTAB_STRATEGIA_KERB_USERNAME}@${KEYTAB_STRATEGIA_KERB_REALM_DOMAIN}\";"
+

@@ -65,5 +65,13 @@ public class CountryService extends BaseService {
         return countryModel;
     }
 
+//    public List<CountryModel> getCountriesJdbcWithLanguage(String language){
+//        List<CountryModel> countryModelList = countriesjdbcConnector.call("Select * from countries",getCountriesJDBCRequestTransformer,getCountriesJDBCResponseTransformer, JDBCQueryType.FIND);
+//        List<CountryModel> countryModelListWithLanguage = new ArrayList<>();
+//        for (CountryModel countryModel : countryModelList) {
+//            if (countryModel.ge)
+//        }
+//        return countryModelList;
+//    }
 
 }
