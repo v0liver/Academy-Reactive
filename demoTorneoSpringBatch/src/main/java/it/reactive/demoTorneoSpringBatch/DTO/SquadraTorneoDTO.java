@@ -24,7 +24,7 @@ public class SquadraTorneoDTO extends TipoFile {
         this.idTorneo = idTorneo;
     }
 
-    public String getNomeTorneo()  {
+    public String getNomeTorneo() {
         return nomeTorneo;
     }
 

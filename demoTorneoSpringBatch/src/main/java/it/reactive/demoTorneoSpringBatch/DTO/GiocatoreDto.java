@@ -20,7 +20,6 @@ public class GiocatoreDto extends TipoFile {
     }
 
 
-
     public String getNomeSquadra() {
         return nomeSquadra;
     }

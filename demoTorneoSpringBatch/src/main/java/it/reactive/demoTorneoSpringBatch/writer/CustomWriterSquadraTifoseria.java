@@ -40,7 +40,7 @@ public class CustomWriterSquadraTifoseria implements ItemStreamWriter<TipoFile> 
             try {
                 writerSquadra.write(Chunk.of(tipoRecord));
                 SquadraDTO squadraDTO = (SquadraDTO) tipoRecord;
-                if (!squadraDTO.getTifoseria().equals("-")){
+                if (!squadraDTO.getTifoseria().equals("-")) {
                     writerTifoseria.write(Chunk.of(tipoRecord));
                 }
             } catch (Exception e) {

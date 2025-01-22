@@ -16,6 +16,7 @@ public class GiocatoreSquadraDTO {
     }
 
     int idGiocatore;
+
     public String getNomeCognome() {
         return nomeCognome;
     }
