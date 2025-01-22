@@ -4,15 +4,19 @@ package it.reactive.demoTorneoSpringBatch.Configuration;
 import it.reactive.demoTorneoSpringBatch.DTO.*;
 import it.reactive.demoTorneoSpringBatch.Utility.Costanti;
 import it.reactive.demoTorneoSpringBatch.model.TipoFile;
+import it.reactive.demoTorneoSpringBatch.writer.CustomWriterSquadraTifoseria;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
+import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.scope.context.ChunkContext;
+import org.springframework.batch.core.scope.context.StepSynchronizationManager;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.item.*;
+import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
 import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
@@ -24,6 +28,7 @@ import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.*;
 import org.springframework.batch.item.support.ClassifierCompositeItemProcessor;
 import org.springframework.batch.item.support.ClassifierCompositeItemWriter;
+import org.springframework.batch.item.support.builder.CompositeItemWriterBuilder;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.classify.Classifier;
@@ -36,10 +41,7 @@ import org.springframework.validation.BindException;
 
 import javax.sql.DataSource;
 import java.io.Writer;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -151,7 +153,13 @@ public class BatchConfiguration {
     }
 
     @Bean(Costanti.PROCESSOR_INSERT)
-    public ClassifierCompositeItemProcessor<List<String>, TipoFile> processorInsert() {
+    public ClassifierCompositeItemProcessor<List<String>, TipoFile> processorInsert(@Qualifier(Costanti.dataSourceTorneo) DataSource dataSource) {
+        Connection con;
+        try {
+            con = dataSource.getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         Classifier<List<String>, ItemProcessor<?, ? extends TipoFile>> classifier = new Classifier<>() {
             @Override
             public ItemProcessor classify(List<String> lista) {
@@ -159,8 +167,16 @@ public class BatchConfiguration {
                     return new ItemProcessor<List<String>, TipoFile>() {
                         @Override
                         public TipoFile process(List<String> item) throws Exception {
+                            PreparedStatement ps = con.prepareStatement("SELECT nextval(pg_get_serial_sequence('torneo', 'id'))");
+                            ResultSet rs = ps.executeQuery();
+                            rs.next();
+                            Integer idTorneo = rs.getInt(1);
                             TorneoDTO torneoDTO = new TorneoDTO();
                             torneoDTO.setNomeTorneo(lista.get(1));
+                            torneoDTO.setId(idTorneo);
+                            StepExecution stepExecution = StepSynchronizationManager.getContext().getStepExecution();
+                            ExecutionContext stepContext = stepExecution.getExecutionContext();
+                            stepContext.put(torneoDTO.getNomeTorneo() + "torneo", torneoDTO.getId());
                             return torneoDTO;
                         }
                     };
@@ -168,10 +184,18 @@ public class BatchConfiguration {
                     return new ItemProcessor<List<String>, TipoFile>() {
                         @Override
                         public TipoFile process(List<String> item) throws Exception {
+                            PreparedStatement ps = con.prepareStatement("SELECT nextval(pg_get_serial_sequence('squadra', 'id'))");
+                            ResultSet rs = ps.executeQuery();
+                            rs.next();
+                            Integer idSquadra = rs.getInt(1);
                             SquadraDTO squadraDTO = new SquadraDTO();
+                            squadraDTO.setId(idSquadra);
                             squadraDTO.setNome(lista.get(1));
                             squadraDTO.setColoriSociali(lista.get(2));
                             squadraDTO.setTifoseria(lista.get(3));
+                            StepExecution stepExecution = StepSynchronizationManager.getContext().getStepExecution();
+                            ExecutionContext stepContext = stepExecution.getExecutionContext();
+                            stepContext.put(squadraDTO.getNome() + "squadra", squadraDTO.getId());
                             return squadraDTO;
                         }
                     };
@@ -179,10 +203,17 @@ public class BatchConfiguration {
                     return new ItemProcessor<List<String>, TipoFile>() {
                         @Override
                         public TipoFile process(List<String> item) throws Exception {
+                            PreparedStatement ps = con.prepareStatement("SELECT nextval(pg_get_serial_sequence('torneo', 'id'))");
+                            ResultSet rs = ps.executeQuery();
+                            rs.next();
+                            Integer idGiocatore = rs.getInt(1);
                             GiocatoreDto giocatoreDto = new GiocatoreDto();
                             String nomeCognome = lista.get(1).substring(0, 49).trim() + " " + lista.get(1).substring(50).trim();
                             giocatoreDto.setNomeCognome(nomeCognome);
                             giocatoreDto.setNomeSquadra(lista.get(2));
+                            StepExecution stepExecution = StepSynchronizationManager.getContext().getStepExecution();
+                            ExecutionContext stepContext = stepExecution.getExecutionContext();
+                            stepContext.put(giocatoreDto.getNomeCognome() + "giocatore", giocatoreDto.getId());
                             return giocatoreDto;
                         }
                     };
@@ -193,6 +224,10 @@ public class BatchConfiguration {
                             SquadraTorneoDTO squadraTorneoDTO = new SquadraTorneoDTO();
                             squadraTorneoDTO.setNomeTorneo(lista.get(1));
                             squadraTorneoDTO.setNomeSquadra(lista.get(2));
+                            StepExecution stepExecution = StepSynchronizationManager.getContext().getStepExecution();
+                            ExecutionContext stepContext = stepExecution.getExecutionContext();
+                            squadraTorneoDTO.setIdSquadra((Integer) stepContext.get(squadraTorneoDTO.getNomeSquadra()+"squadra"));
+                            squadraTorneoDTO.setIdTorneo((Integer) stepContext.get(squadraTorneoDTO.getNomeTorneo()+"torneo"));
                             return squadraTorneoDTO;
                         }
                     };
@@ -213,9 +248,7 @@ public class BatchConfiguration {
 
     @Bean(Costanti.WRITER_INSERT)
     public ClassifierCompositeItemWriter<TipoFile> writerInsert(@Qualifier(Costanti.dataSourceTorneo) DataSource dataSource,
-                                                                @Qualifier(Costanti.WRITER_SQUADRA) ItemStreamWriter<TipoFile> writerSquadra,
-                                                                @Qualifier(Costanti.WRITER_Giocatore) ItemStreamWriter<TipoFile> writerGiocatore,
-                                                                @Qualifier(Costanti.WRITER_Squadra_Torneo) ItemStreamWriter<TipoFile> writerSquadraTorneo) {
+                                                                @Qualifier(Costanti.WRITER_SQUADRA_TIFOSERIA) CustomWriterSquadraTifoseria writerSquadraTifoseria) {
         Classifier<TipoFile, ItemWriter<? super TipoFile>> classifier = tipoFile -> {
             if (tipoFile instanceof TorneoDTO) {
                 return new JdbcBatchItemWriterBuilder<>()
@@ -226,123 +259,174 @@ public class BatchConfiguration {
                         })
                         .sql("insert into torneo(nome_torneo) values (?)")
                         .build();
-            } else if (tipoFile instanceof SquadraDTO) {
-                return writerSquadra;
-            } else if (tipoFile instanceof GiocatoreDto) {
-                return writerGiocatore;
-            } else if (tipoFile instanceof SquadraTorneoDTO) {
-                return writerSquadraTorneo;
-            }
 
+            }
+            else if (tipoFile instanceof SquadraDTO) {
+                return writerSquadraTifoseria;
+//                return new CompositeItemWriterBuilder<>()
+//                        .delegates(
+//                                new JdbcBatchItemWriterBuilder<>()
+//                                        .dataSource(dataSource)
+//                                        .sql("insert into squadra(nome, colori_sociali) values (?,?)")
+//                                        .itemPreparedStatementSetter((file, ps) -> {
+//                                            SquadraDTO squadraDTO = (SquadraDTO) file;
+//                                            ps.setString(1, squadraDTO.getNome());
+//                                            ps.setString(2, squadraDTO.getColoriSociali());
+//                                        })
+//                                        .build(),
+//                                new JdbcBatchItemWriterBuilder<>()
+//                                        .dataSource(dataSource)
+//                                        .sql("insert into tifoseria (nome_tifoseria, id_squadra) values (?,?)")
+//                                        .itemPreparedStatementSetter((file, ps) -> {
+//                                            SquadraDTO squadraDTO = (SquadraDTO) file;
+//                                            StepExecution stepExecution = StepSynchronizationManager.getContext().getStepExecution();
+//                                            ExecutionContext stepContext = stepExecution.getExecutionContext();
+//                                            ps.setString(1, squadraDTO.getTifoseria());
+//                                            ps.setInt(2, (Integer) stepContext.get(squadraDTO.getNome() + "squadra"));
+//                                        })
+//                                        .build()
+//                        ).build();
+
+            }
+            else if (tipoFile instanceof GiocatoreDto) {
+                return new JdbcBatchItemWriterBuilder<>()
+                                        .dataSource(dataSource)
+                                        .sql("insert into giocatore(nome_cognome, id_squadra) values (?,?)")
+                                        .itemPreparedStatementSetter((file, ps) -> {
+                                            GiocatoreDto giocatoreDto = (GiocatoreDto) file;
+                                            StepExecution stepExecution = StepSynchronizationManager.getContext().getStepExecution();
+                                            ExecutionContext stepContext = stepExecution.getExecutionContext();
+                                            ps.setString(1, giocatoreDto.getNomeCognome());
+                                            ps.setInt(2, (Integer) stepContext.get(giocatoreDto.getNomeSquadra() + "squadra"));
+                                        })
+                                        .build();
+
+            } else if (tipoFile instanceof SquadraTorneoDTO) {
+                return new JdbcBatchItemWriterBuilder<>()
+                                        .dataSource(dataSource)
+                                        .sql("insert into squadra_torneo(id_squadra, id_torneo) values (?,?)")
+                                        .itemPreparedStatementSetter((file, ps) -> {
+                                            SquadraTorneoDTO squadraTorneoDTO = (SquadraTorneoDTO) file;
+                                            StepExecution stepExecution = StepSynchronizationManager.getContext().getStepExecution();
+                                            ExecutionContext stepContext = stepExecution.getExecutionContext();
+                                            ps.setInt(1, (Integer) stepContext.get(squadraTorneoDTO.getNomeSquadra() + "squadra"));
+                                            ps.setInt(2, (Integer) stepContext.get(squadraTorneoDTO.getNomeTorneo() + "torneo"));
+                                        })
+                                        .build();
+
+            }
             throw new RuntimeException("TipoRecord non gestito: " + tipoFile.getClass().getSimpleName());
         };
+
         ClassifierCompositeItemWriter<TipoFile> classifierWriter = new ClassifierCompositeItemWriter<>();
         classifierWriter.setClassifier(classifier);
         return classifierWriter;
     }
 
-    @Bean(Costanti.WRITER_SQUADRA)
-    public ItemStreamWriter<TipoFile> writerSquadra(@Qualifier(Costanti.dataSourceTorneo) DataSource dataSource) {
-        return new ItemStreamWriter<TipoFile>() {
-            @Override
-            public void write(Chunk<? extends TipoFile> chunk) throws Exception {
-                chunk.forEach(tipoFile -> {
-                    try {
-                        SquadraDTO squadraDTO = (SquadraDTO) tipoFile;
-                        Connection con = dataSource.getConnection();
-                        PreparedStatement ps = con.prepareStatement("insert into squadra(nome, colori_sociali) values (?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
-                        ps.setString(1, squadraDTO.getNome());
-                        ps.setString(2, squadraDTO.getColoriSociali());
-                        ps.executeUpdate();
-                        ResultSet rs = ps.getGeneratedKeys();
-                        int id = 0;
-                        if (rs.next()) {
-                            id = rs.getInt(1);
-                            squadraDTO.setId(id);
-                        }
-                        if (!squadraDTO.getTifoseria().equals("-")) {
-                            ps = con.prepareStatement("insert into tifoseria (nome_tifoseria, id_squadra) values (?,?)");
-                            ps.setString(1, squadraDTO.getTifoseria());
-                            ps.setInt(2, id);
-                            ps.executeUpdate();
-                        }
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
 
-                });
-            }
-        };
-    }
-
-    @Bean(Costanti.WRITER_Giocatore)
-    public ItemStreamWriter<TipoFile> writerGiocatore(@Qualifier(Costanti.dataSourceTorneo) DataSource dataSource) {
-        return new ItemStreamWriter<TipoFile>() {
-            @Override
-            public void write(Chunk<? extends TipoFile> chunk) throws Exception {
-                Connection con = dataSource.getConnection();
-                chunk.forEach(tipoFile -> {
-
-                        try {
-                            GiocatoreDto giocatoreDto = (GiocatoreDto) tipoFile;
-
-                            PreparedStatement ps2 = con.prepareStatement("select * from squadra where nome=?");
-                            ps2.setString(1, giocatoreDto.getNomeSquadra());
-                            ResultSet rs = ps2.executeQuery();
-                            int idSquadra = 0;
-                            if (rs.next()) {
-
-                                idSquadra = rs.getInt("id");
-                            }
-                            PreparedStatement ps = con.prepareStatement("insert into giocatore(nome_cognome,id_squadra) values (?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
-                            ps.setString(1, giocatoreDto.getNomeCognome());
-                            ps.setInt(2, idSquadra);
-                            ps.executeUpdate();
-                        } catch (SQLException e) {
-                            throw new RuntimeException(e);
-                        }
-
-
-                    });
-            }
-        };
-    }
-
-    @Bean(Costanti.WRITER_Squadra_Torneo)
-    public ItemStreamWriter<TipoFile> writerSquadraTorneo(@Qualifier(Costanti.dataSourceTorneo) DataSource dataSource) {
-        return new ItemStreamWriter<TipoFile>() {
-            @Override
-            public void write(Chunk<? extends TipoFile> chunk) throws Exception {
-                chunk.forEach(tipoFile -> {
-                    try {
-                        SquadraTorneoDTO squadraTorneoDTO = (SquadraTorneoDTO) tipoFile;
-                        Connection con = dataSource.getConnection();
-                        PreparedStatement ps2 = con.prepareStatement("select * from squadra where nome=?");
-                        ps2.setString(1, squadraTorneoDTO.getNomeSquadra());
-                        ResultSet rs = ps2.executeQuery();
-                        int idSquadra = 0;
-                        if (rs.next()) {
-                            idSquadra = rs.getInt("id");
-                        }
-                        PreparedStatement ps3 = con.prepareStatement("select * from torneo where nome_torneo=?");
-                        ps3.setString(1, squadraTorneoDTO.getNomeTorneo());
-                        ResultSet rs2 = ps3.executeQuery();
-                        int idTorneo = 0;
-                        if (rs2.next()) {
-                            idTorneo = rs.getInt("id");
-                        }
-                        PreparedStatement ps = con.prepareStatement("insert into squadra_torneo(id_squadra,id_torneo) values (?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
-                        ps.setInt(1, idSquadra);
-                        ps.setInt(2, idTorneo);
-                        ps.executeUpdate();
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                });
-            }
-        };
-    }
+//    @Bean(Costanti.WRITER_SQUADRA)
+//    public ItemStreamWriter<TipoFile> writerSquadra(@Qualifier(Costanti.dataSourceTorneo) DataSource dataSource) {
+//        return new ItemStreamWriter<TipoFile>() {
+//            @Override
+//            public void write(Chunk<? extends TipoFile> chunk) throws Exception {
+//                chunk.forEach(tipoFile -> {
+//                    try {
+//                        SquadraDTO squadraDTO = (SquadraDTO) tipoFile;
+//                        Connection con = dataSource.getConnection();
+//                        PreparedStatement ps = con.prepareStatement("insert into squadra(nome, colori_sociali) values (?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
+//                        ps.setString(1, squadraDTO.getNome());
+//                        ps.setString(2, squadraDTO.getColoriSociali());
+//                        ps.executeUpdate();
+//                        ResultSet rs = ps.getGeneratedKeys();
+//                        int id = 0;
+//                        if (rs.next()) {
+//                            id = rs.getInt(1);
+//                            squadraDTO.setId(id);
+//                        }
+//                        if (!squadraDTO.getTifoseria().equals("-")) {
+//                            ps = con.prepareStatement("insert into tifoseria (nome_tifoseria, id_squadra) values (?,?)");
+//                            ps.setString(1, squadraDTO.getTifoseria());
+//                            ps.setInt(2, id);
+//                            ps.executeUpdate();
+//                        }
+//                    } catch (SQLException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//
+//                });
+//            }
+//        };
+//    }
+//
+//    @Bean(Costanti.WRITER_Giocatore)
+//    public ItemStreamWriter<TipoFile> writerGiocatore(@Qualifier(Costanti.dataSourceTorneo) DataSource dataSource) {
+//        return new ItemStreamWriter<TipoFile>() {
+//            @Override
+//            public void write(Chunk<? extends TipoFile> chunk) throws Exception {
+//                Connection con = dataSource.getConnection();
+//                PreparedStatement ps2 = con.prepareStatement("select * from squadra where nome=?");
+//                chunk.forEach(tipoFile -> {
+//
+//                    try {
+//                        GiocatoreDto giocatoreDto = (GiocatoreDto) tipoFile;
+//
+//
+//                        ps2.setString(1, giocatoreDto.getNomeSquadra());
+//                        ResultSet rs = ps2.executeQuery();
+//                        int idSquadra = 0;
+//                        if (rs.next()) {
+//
+//                            idSquadra = rs.getInt("id");
+//                        }
+//                        PreparedStatement ps = con.prepareStatement("insert into giocatore(nome_cognome,id_squadra) values (?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
+//                        ps.setString(1, giocatoreDto.getNomeCognome());
+//                        ps.setInt(2, idSquadra);
+//                        ps.executeUpdate();
+//                    } catch (SQLException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//
+//
+//                });
+//            }
+//        };
+//    }
+//
+//    @Bean(Costanti.WRITER_Squadra_Torneo)
+//    public ItemStreamWriter<TipoFile> writerSquadraTorneo(@Qualifier(Costanti.dataSourceTorneo) DataSource dataSource) {
+//        return new ItemStreamWriter<TipoFile>() {
+//            @Override
+//            public void write(Chunk<? extends TipoFile> chunk) throws Exception {
+//                chunk.forEach(tipoFile -> {
+//                    try {
+//                        SquadraTorneoDTO squadraTorneoDTO = (SquadraTorneoDTO) tipoFile;
+//                        Connection con = dataSource.getConnection();
+//                        PreparedStatement ps2 = con.prepareStatement("select * from squadra where nome=?");
+//                        ps2.setString(1, squadraTorneoDTO.getNomeSquadra());
+//                        ResultSet rs = ps2.executeQuery();
+//                        int idSquadra = 0;
+//                        if (rs.next()) {
+//                            idSquadra = rs.getInt("id");
+//                        }
+//                        PreparedStatement ps3 = con.prepareStatement("select * from torneo where nome_torneo=?");
+//                        ps3.setString(1, squadraTorneoDTO.getNomeTorneo());
+//                        ResultSet rs2 = ps3.executeQuery();
+//                        int idTorneo = 0;
+//                        if (rs2.next()) {
+//                            idTorneo = rs.getInt("id");
+//                        }
+//                        PreparedStatement ps = con.prepareStatement("insert into squadra_torneo(id_squadra,id_torneo) values (?,?)", PreparedStatement.RETURN_GENERATED_KEYS);
+//                        ps.setInt(1, idSquadra);
+//                        ps.setInt(2, idTorneo);
+//                        ps.executeUpdate();
+//                    } catch (SQLException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//
+//                });
+//            }
+//        };
+//    }
 
     @Bean(Costanti.Reader_Csv)
     public JdbcCursorItemReader<GiocatoreSquadraDTO> giocatoreReader(@Qualifier(Costanti.dataSourceTorneo) DataSource dataSource) {
@@ -387,12 +471,12 @@ public class BatchConfiguration {
                 })
                 .headerCallback(writer -> writer.write(
                         String.format("%-15s;%-15s;%-15s;%-15s;%-15s;%-15s",
-                                        "Id Giocatore",
-                                        "Nome Cognome",
-                                        "Ammonizioni",
-                                        "Squadra",
-                                        "Tifoseria",
-                                        "Colori Sociali")))//per settare una riga fissa all inizio
+                                "Id Giocatore",
+                                "Nome Cognome",
+                                "Ammonizioni",
+                                "Squadra",
+                                "Tifoseria",
+                                "Colori Sociali")))//per settare una riga fissa all inizio
                 .build();
     }
 //per scrivere un file delimitato da un certo carattere per creare file csv
@@ -409,6 +493,6 @@ public class BatchConfiguration {
 //                }})
 //                .build();
 //    }
-    }
+}
 
 

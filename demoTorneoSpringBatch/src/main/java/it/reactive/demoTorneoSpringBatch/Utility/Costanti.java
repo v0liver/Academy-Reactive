@@ -19,5 +19,6 @@ public class Costanti {
     public static final String StepCSV = "StepCSV";
     public static final String Reader_Csv = "Reader_Csv";
     public static final String WRITER_CSV = "WRITER_CSV";
+    public static final String WRITER_SQUADRA_TIFOSERIA = "WRITER_SQUADRA_TIFOSERIA";
     public static int ChunkSize = 2;
 }

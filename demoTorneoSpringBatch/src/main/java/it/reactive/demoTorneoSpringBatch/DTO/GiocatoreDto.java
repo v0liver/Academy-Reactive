@@ -6,9 +6,20 @@ import it.reactive.demoTorneoSpringBatch.model.TipoFile;
 public class GiocatoreDto extends TipoFile {
 
 
-
+    private Integer id;
     private String nomeCognome;
     private String nomeSquadra;
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+
 
     public String getNomeSquadra() {
         return nomeSquadra;
