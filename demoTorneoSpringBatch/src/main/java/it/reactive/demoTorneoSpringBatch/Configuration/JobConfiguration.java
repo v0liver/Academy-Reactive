@@ -16,7 +16,6 @@ import org.springframework.batch.core.scope.context.StepSynchronizationManager;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.item.*;
-import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
 import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
@@ -28,25 +27,22 @@ import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.*;
 import org.springframework.batch.item.support.ClassifierCompositeItemProcessor;
 import org.springframework.batch.item.support.ClassifierCompositeItemWriter;
-import org.springframework.batch.item.support.builder.CompositeItemWriterBuilder;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.classify.Classifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.validation.BindException;
 
 import javax.sql.DataSource;
-import java.io.Writer;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-public class BatchConfiguration {
+public class JobConfiguration {
 
 
     @Bean(Costanti.Job)
@@ -184,7 +180,7 @@ public class BatchConfiguration {
                     return new ItemProcessor<List<String>, TipoFile>() {
                         @Override
                         public TipoFile process(List<String> item) throws Exception {
-                            PreparedStatement ps = con.prepareStatement("SELECT nextval(pg_get_serial_sequence('squadra', 'id'))");
+                            PreparedStatement ps = con.prepareStatement("SELECT nextval(pg_get_serial_sequence('squadra', 'id'))"); //restituisce l utlimo id inserito sul db incrementato di 1 e lo incrementa anche sul db
                             ResultSet rs = ps.executeQuery();
                             rs.next();
                             Integer idSquadra = rs.getInt(1);
@@ -203,17 +199,11 @@ public class BatchConfiguration {
                     return new ItemProcessor<List<String>, TipoFile>() {
                         @Override
                         public TipoFile process(List<String> item) throws Exception {
-                            PreparedStatement ps = con.prepareStatement("SELECT nextval(pg_get_serial_sequence('torneo', 'id'))");
-                            ResultSet rs = ps.executeQuery();
-                            rs.next();
-                            Integer idGiocatore = rs.getInt(1);
                             GiocatoreDto giocatoreDto = new GiocatoreDto();
                             String nomeCognome = lista.get(1).substring(0, 49).trim() + " " + lista.get(1).substring(50).trim();
                             giocatoreDto.setNomeCognome(nomeCognome);
                             giocatoreDto.setNomeSquadra(lista.get(2));
-                            StepExecution stepExecution = StepSynchronizationManager.getContext().getStepExecution();
-                            ExecutionContext stepContext = stepExecution.getExecutionContext();
-                            stepContext.put(giocatoreDto.getNomeCognome() + "giocatore", giocatoreDto.getId());
+
                             return giocatoreDto;
                         }
                     };
@@ -256,8 +246,9 @@ public class BatchConfiguration {
                         .itemPreparedStatementSetter((file, ps) -> {
                             TorneoDTO torneoDTO = (TorneoDTO) file;
                             ps.setString(1, torneoDTO.getNomeTorneo());
+                            ps.setInt(2,torneoDTO.getId());
                         })
-                        .sql("insert into torneo(nome_torneo) values (?)")
+                        .sql("insert into torneo(nome_torneo,id) values (?,?)")
                         .build();
 
             }
