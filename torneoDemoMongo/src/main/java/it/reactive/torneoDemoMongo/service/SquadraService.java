@@ -40,8 +40,7 @@ public class SquadraService {
     public SquadraResource salvaSquadra(SquadraDTO squadraDTO) {
         SquadraModel squadraModel = squadraDao.findByNome(squadraDTO.getNome());
         if (squadraModel == null) {
-            SquadraResource squadraResource = squadraMapper.fromModelToResourceWithouthGiocatori(squadraDao.salvaSquadra(squadraDTO));
-            return squadraResource;
+            return squadraMapper.fromModelToResourceWithouthGiocatori(squadraDao.salvaSquadra(squadraDTO));
         } else throw new SquadraDuplicataException();
     }
 

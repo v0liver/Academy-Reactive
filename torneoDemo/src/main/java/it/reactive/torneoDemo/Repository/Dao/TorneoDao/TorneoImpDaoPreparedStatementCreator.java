@@ -27,7 +27,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 @Repository
-@Profile(Costanti.TORNEO_DAO_JDBC_PREPAREDSTATEMENT)
+@Profile(Costanti.TORNEO_DAO_SPRING_JDBC_QUERY_PSC)
 public class TorneoImpDaoPreparedStatementCreator implements TorneoDao {
 
     @Autowired
@@ -42,7 +42,7 @@ public class TorneoImpDaoPreparedStatementCreator implements TorneoDao {
     @Override
     public TorneoModel aggiungiTorneo(TorneoDTO torneoDTO) {
         String nomeTorneo = torneoDTO.getNomeTorneo();
-        String query = "INSERT INTO torneo (nome_torneo) VALUES (?)";
+        String query = "insert into torneo (nome_torneo) values (?)";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         try {
@@ -64,7 +64,7 @@ public class TorneoImpDaoPreparedStatementCreator implements TorneoDao {
 
     @Override
     public TorneoModel censitaSquadraAlTorneo(Integer idTorneo, Integer idSquadra) {
-        String query = "INSERT INTO squadra_torneo (id_squadra, id_torneo) VALUES (?, ?)";
+        String query = "insert into squadra_torneo (id_squadra, id_torneo) values (?, ?)";
 
         try {
             jdbcTemplate.update(new PreparedStatementCreator() {
@@ -84,7 +84,7 @@ public class TorneoImpDaoPreparedStatementCreator implements TorneoDao {
 
     @Override
     public List<TorneoModel> getTorneoEndSquadre() {
-        String query = "SELECT * FROM torneo";
+        String query = "select * from torneo";
         List<TorneoModel> torneoModels = new ArrayList<>();
         jdbcTemplate.query(new PreparedStatementCreator() {
             @Override
@@ -112,7 +112,7 @@ public class TorneoImpDaoPreparedStatementCreator implements TorneoDao {
     @Override
     public List<TorneoModel> eliminaTorneoConSquadreAndGiocatori(int idTorneo) {
         List<SquadraModel> squadraModelList = getSquadreByIdTorneo(idTorneo);
-        String queryDeleteTorneo = "DELETE FROM torneo WHERE id = ?";
+        String queryDeleteTorneo = "delete from torneo where id = ?";
 
 
         try {
@@ -124,7 +124,7 @@ public class TorneoImpDaoPreparedStatementCreator implements TorneoDao {
                 if (getTorneiByIdSquadra(squadraModel.getIdSquadra()).size() > 1) {
                     throw new TorneoConPiuSquadreException();
                 } else {
-                    jdbcTemplate.update("DELETE FROM squadra_torneo WHERE id_squadra = ?", squadraModel.getIdSquadra());
+                    jdbcTemplate.update("delete from squadra_torneo where id_squadra = ?", squadraModel.getIdSquadra());
                     squadraDao.rimuoviSquadra(squadraModel.getIdSquadra());
                     jdbcTemplate.update(queryDeleteTorneo, idTorneo);
                     return getTorneoEndSquadre();
@@ -141,7 +141,7 @@ public class TorneoImpDaoPreparedStatementCreator implements TorneoDao {
 
     @Override
     public TorneoModel getTorneoById(Integer idTorneo) {
-        String query = "SELECT * FROM torneo WHERE id = ?";
+        String query = "select * from torneo where id = ?";
         return jdbcTemplate.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
@@ -168,7 +168,7 @@ public class TorneoImpDaoPreparedStatementCreator implements TorneoDao {
 
     @Override
     public List<SquadraModel> getSquadreByIdTorneo(Integer idTorneo) {
-        String query = "SELECT s.nome, s.id FROM squadra_torneo st JOIN squadra s ON s.id = st.id_squadra WHERE st.id_torneo = ?";
+        String query = "select s.nome, s.id from squadra_torneo st join squadra s on s.id = st.id_squadra where st.id_torneo = ?";
         List<SquadraModel> squadraModelList = new ArrayList<>();
         jdbcTemplate.query(new PreparedStatementCreator() {
             @Override
@@ -194,7 +194,7 @@ public class TorneoImpDaoPreparedStatementCreator implements TorneoDao {
 
     @Override
     public List<TorneoModel> getTorneiByIdSquadra(Integer idSquadra) {
-        String query = "SELECT t.nome_torneo, t.id FROM squadra_torneo st JOIN torneo t ON t.id = st.id_torneo WHERE st.id_squadra = ?";
+        String query = "select t.nome_torneo, t.id from squadra_torneo st join torneo t on t.id = st.id_torneo where st.id_squadra = ?";
         List<TorneoModel> torneoModelList = new ArrayList<>();
         jdbcTemplate.query(new PreparedStatementCreator() {
             @Override
