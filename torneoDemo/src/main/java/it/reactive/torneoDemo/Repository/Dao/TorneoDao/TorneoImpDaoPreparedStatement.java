@@ -64,27 +64,30 @@ public class TorneoImpDaoPreparedStatement implements TorneoDao {
 
     @Override
     public TorneoModel censitaSquadraAlTorneo(Integer idTorneo, Integer idSquadra) {
-        String query = "INSERT INTO squadra_torneo (id_squadra, id_torneo) VALUES (?, ?)";
+        SquadraModel squadraModel = squadraDao.getSquadraById(idSquadra);
+        if (squadraModel!=null) {
+            String query = "INSERT INTO squadra_torneo (id_squadra, id_torneo) VALUES (?, ?)";
 
-        Connection con = null;
-        try {
-            con = DataSourceUtils.getConnection(((DataSourceTransactionManager) transactionManager).getDataSource());
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1, idSquadra);
-            ps.setInt(2, idTorneo);
-            ps.executeUpdate();
-            return getTorneoById(idTorneo);
-        } catch (SQLException e) {
-            if ("23505".equals(e.getSQLState())) {
-                throw new SquadraDuplicataException();
-            } else {
-                throw new RuntimeException(e);
+            Connection con = null;
+            try {
+                con = DataSourceUtils.getConnection(((DataSourceTransactionManager) transactionManager).getDataSource());
+                PreparedStatement ps = con.prepareStatement(query);
+                ps.setInt(1, idSquadra);
+                ps.setInt(2, idTorneo);
+                ps.executeUpdate();
+                return getTorneoById(idTorneo);
+            } catch (SQLException e) {
+                if ("23505".equals(e.getSQLState())) {
+                    throw new SquadraDuplicataException();
+                } else {
+                    throw new RuntimeException(e);
+                }
+            } finally {
+                if (con != null) {
+                    DataSourceUtils.releaseConnection(con, ((DataSourceTransactionManager) transactionManager).getDataSource());
+                }
             }
-        } finally {
-            if (con != null) {
-                DataSourceUtils.releaseConnection(con, ((DataSourceTransactionManager) transactionManager).getDataSource());
-            }
-        }
+        }else throw new SquadraNonPresenteException();
     }
 
     @Override
