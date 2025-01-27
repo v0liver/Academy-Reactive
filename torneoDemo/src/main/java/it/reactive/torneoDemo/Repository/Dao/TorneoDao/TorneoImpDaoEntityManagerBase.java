@@ -27,10 +27,12 @@ public class TorneoImpDaoEntityManagerBase implements TorneoDao {
     @Override
 
     public TorneoModel aggiungiTorneo(TorneoDTO torneoDTO) {
-        TorneoModel torneoModel = new TorneoModel();
-        torneoModel.setNomeTorneo(torneoDTO.getNomeTorneo());
-        entityManager.persist(torneoModel);
-        return torneoModel;
+        TorneoModel torneoModel = getTorneoByNome(torneoDTO.getNomeTorneo());
+        if (torneoModel==null) {
+            torneoModel.setNomeTorneo(torneoDTO.getNomeTorneo());
+            entityManager.persist(torneoModel);
+            return torneoModel;
+        }else throw new TorneoDuplicatoException();
     }
 
     @Override
@@ -76,15 +78,21 @@ public class TorneoImpDaoEntityManagerBase implements TorneoDao {
 
     @Override
     public List<SquadraModel> getSquadreByIdTorneo(Integer idTorneo) {
-        return entityManager.createQuery("select s from squadraModel s join s.tornei t where t.idTorneo = :idTorneo", SquadraModel.class)
+        return entityManager.createQuery("select s from SquadraModel s join s.tornei t where t.idTorneo = :idTorneo", SquadraModel.class)
                 .setParameter("idTorneo", idTorneo)
                 .getResultList();
     }
 
     @Override
     public List<TorneoModel> getTorneiByIdSquadra(Integer idSquadra) {
-        return entityManager.createQuery("select t from torneoModel t join t.squadre s where s.idSquadra = :idSquadra", TorneoModel.class)
+        return entityManager.createQuery("select t from TorneoModel t join t.squadre s where s.idSquadra = :idSquadra", TorneoModel.class)
                 .setParameter("idSquadra", idSquadra)
                 .getResultList();
+    }
+
+    public TorneoModel getTorneoByNome(String nomeTorneo){
+        return entityManager.createQuery("select t from TorneoModel t where t.nomeTorneo = :nomeTorneo",TorneoModel.class)
+                .setParameter("nomeTorneo",nomeTorneo)
+                .getSingleResult();
     }
 }
