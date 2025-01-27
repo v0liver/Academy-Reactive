@@ -44,7 +44,11 @@ public class TorneoService {
         if (torneoModel != null) {
             SquadraModel squadraModel = squadraDao.findByNome(nomeSquadra);
             if (squadraModel != null) {
-                torneoModel.setSquadre(Arrays.asList(nomeSquadra));
+                if (torneoModel.getSquadre()==null) {
+                    torneoModel.setSquadre(Arrays.asList(nomeSquadra));
+                }else {
+                    torneoModel.getSquadre().add(nomeSquadra);
+                }
                 return torneoMapper.fromModelToResource(mongoTemplate.save(torneoModel));
             } else throw new SquadraNonPresenteException();
 
