@@ -12,6 +12,7 @@ import it.reactive.torneoDemo.resource.TorneoResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,17 +27,18 @@ public class TorneoService   {
     @Autowired
     Trasferimenti trasferimenti;
 
+    @Transactional
     public TorneoResource aggiungiTorneo(TorneoDTO torneoDTO) {
         return torneoMapper.fromModelToResource(torneoDao.aggiungiTorneo(torneoDTO));
     }
 
-
+    @Transactional
     public TorneoResource censitaSquadraAlTorneo(Integer idTorneo, Integer idSquadra) {
 
         return  torneoMapper.fromModelToResource(torneoDao.censitaSquadraAlTorneo(idTorneo,idSquadra)) ;
     }
 
-
+    @Transactional
     public List<TorneoResource> getTorneoEndSquadre() {
         List<TorneoResource> torneoResourceList = new ArrayList<>();
 
@@ -54,7 +56,7 @@ public class TorneoService   {
         return torneoResourceList;
     }
 
-
+    @Transactional
     public List<TorneoResource> eliminaTorneoConSquadreAndGiocatori(int idTorneo) {
         List<TorneoModel> torneoModelList = torneoDao.eliminaTorneoConSquadreAndGiocatori(idTorneo);
        List<TorneoResource> torneoResourceList = new ArrayList<>();

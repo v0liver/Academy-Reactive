@@ -23,8 +23,10 @@ public class TorneoMapper {
         torneoResource.setIdTorneo(torneoModel.getIdTorneo());
         torneoResource.setNomeTorneo(torneoModel.getNomeTorneo());
         List<SquadraResource> squadraResources = new ArrayList<>();
-        for (SquadraModel squadraModel : torneoModel.getSquadre()) {
-            squadraResources.add(squadraMapper.fromModelToResource(squadraModel));
+        if (torneoModel.getSquadre()!=null) {
+            for (SquadraModel squadraModel : torneoModel.getSquadre()) {
+                squadraResources.add(squadraMapper.fromModelToResource(squadraModel));
+            }
         }
         torneoResource.setSquadre(squadraResources);
         return torneoResource;

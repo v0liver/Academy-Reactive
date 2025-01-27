@@ -19,12 +19,13 @@ import java.util.List;
 public class TorneoImpDaoEntityManagerBase implements TorneoDao {
 
     @PersistenceContext
-    private EntityManager entityManager;
+     EntityManager entityManager;
 
     @Autowired
-    private SquadraDao squadraDao;
+     SquadraDao squadraDao;
 
     @Override
+
     public TorneoModel aggiungiTorneo(TorneoDTO torneoDTO) {
         TorneoModel torneoModel = new TorneoModel();
         torneoModel.setNomeTorneo(torneoDTO.getNomeTorneo());
@@ -45,7 +46,7 @@ public class TorneoImpDaoEntityManagerBase implements TorneoDao {
 
     @Override
     public List<TorneoModel> getTorneoEndSquadre() {
-        return entityManager.createQuery("from torneoModel t left join t.squadre ", TorneoModel.class).getResultList();
+        return entityManager.createQuery("from TorneoModel t", TorneoModel.class).getResultList();
     }
 
     @Override
