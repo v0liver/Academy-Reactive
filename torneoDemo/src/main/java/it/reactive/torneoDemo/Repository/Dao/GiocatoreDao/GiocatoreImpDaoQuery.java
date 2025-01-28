@@ -29,7 +29,7 @@ public class GiocatoreImpDaoQuery implements GiocatoreDao{
         Map<String,Object> params = new HashMap<>();
         int ammonizioni=giocatoreModel.getNumeroAmmonizioni();
         giocatoreModel.setNumeroAmmonizioni(++ammonizioni);
-        String updateSql = "UPDATE giocatore SET numero_ammonizioni = :numeroAmmonizioni WHERE id = :idGiocatore";
+        String updateSql = "update giocatore set numero_ammonizioni = :numeroAmmonizioni where id = :idGiocatore";
         params.put("numeroAmmonizioni",ammonizioni);
         namedParameterJdbcTemplate.update(updateSql, params);
         return giocatoreModel;

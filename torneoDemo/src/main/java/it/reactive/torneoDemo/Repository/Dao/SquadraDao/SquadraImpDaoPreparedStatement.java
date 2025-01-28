@@ -262,7 +262,7 @@ public class SquadraImpDaoPreparedStatement implements SquadraDao {
             ps.setInt(1, idSquadra);
             ResultSet rsTifoseria = ps.executeQuery();
             if (rsTifoseria.next()) {
-                String queryInsert = "Update tifoseria SET nome_tifoseria = ? where id= ?";
+                String queryInsert = "update tifoseria set nome_tifoseria = ? where id= ?";
                 PreparedStatement psInsert = con.prepareStatement(queryInsert);
                 psInsert.setString(1, nomeTifoseria);
                 psInsert.setInt(2, rsTifoseria.getInt("id"));

@@ -150,7 +150,7 @@ public class TorneoImpDaoStatement implements TorneoDao {
                 try {
                     con = DataSourceUtils.getConnection(((DataSourceTransactionManager) transactionManager).getDataSource());
                     Statement st = con.createStatement();
-                    st.executeUpdate("DELETE FROM squadra_torneo WHERE id_squadra = " + squadraModel.getIdSquadra());
+                    st.executeUpdate("delete from squadra_torneo where id_squadra = " + squadraModel.getIdSquadra());
                     squadraDao.rimuoviSquadra(squadraModel.getIdSquadra());
                     int nRow = st.executeUpdate(sql);
                     if (nRow == 0) {
@@ -206,9 +206,9 @@ public class TorneoImpDaoStatement implements TorneoDao {
         try {
             con = DataSourceUtils.getConnection(((DataSourceTransactionManager) transactionManager).getDataSource());
             Statement st = con.createStatement();
-            ResultSet rsSquadre = st.executeQuery("SELECT s.nome, s.id,s.colori_sociali FROM squadra_torneo st JOIN " +
-                    "squadra s ON s.id = st" +
-                    ".id_squadra WHERE st.id_torneo = " + idTorneo);
+            ResultSet rsSquadre = st.executeQuery("select s.nome, s.id,s.colori_sociali from squadra_torneo st join " +
+                    "squadra s on s.id = st" +
+                    ".id_squadra where st.id_torneo = " + idTorneo);
             while (rsSquadre.next()) {
                 SquadraModel squadraModel = new SquadraModel();
                 squadraModel.setNome(rsSquadre.getString("nome"));
@@ -235,8 +235,8 @@ public class TorneoImpDaoStatement implements TorneoDao {
         try {
             con = DataSourceUtils.getConnection(((DataSourceTransactionManager) transactionManager).getDataSource());
             Statement st = con.createStatement();
-            ResultSet rsSquadre = st.executeQuery("SELECT t.nome_torneo, t.id FROM squadra_torneo st JOIN torneo t ON t.id = st" +
-                    ".id_squadra WHERE st.id_squadra = " + idSuadra);
+            ResultSet rsSquadre = st.executeQuery("select t.nome_torneo, t.id from squadra_torneo st join torneo t on t.id = st" +
+                    ".id_squadra where st.id_squadra = " + idSuadra);
             while (rsSquadre.next()) {
                 TorneoModel torneoModel = new TorneoModel();
                 torneoModel.setNomeTorneo(rsSquadre.getString("nome_torneo"));

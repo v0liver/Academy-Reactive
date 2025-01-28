@@ -35,7 +35,7 @@ public class TorneoImpDaoPreparedStatement implements TorneoDao {
     @Override
     public TorneoModel aggiungiTorneo(TorneoDTO torneoDTO) {
         String nomeTorneo = torneoDTO.getNomeTorneo();
-        String query = "INSERT INTO torneo (nome_torneo) VALUES (?)";
+        String query = "insert into torneo (nome_torneo) values (?)";
 
         Connection con = null;
         try {
@@ -66,7 +66,7 @@ public class TorneoImpDaoPreparedStatement implements TorneoDao {
     public TorneoModel censitaSquadraAlTorneo(Integer idTorneo, Integer idSquadra) {
         SquadraModel squadraModel = squadraDao.getSquadraById(idSquadra);
         if (squadraModel!=null) {
-            String query = "INSERT INTO squadra_torneo (id_squadra, id_torneo) VALUES (?, ?)";
+            String query = "insert into squadra_torneo (id_squadra, id_torneo) values (?, ?)";
 
             Connection con = null;
             try {
@@ -92,7 +92,7 @@ public class TorneoImpDaoPreparedStatement implements TorneoDao {
 
     @Override
     public List<TorneoModel> getTorneoEndSquadre() {
-        String query = "SELECT * FROM torneo";
+        String query = "select * from torneo";
         Connection con = null;
         List<TorneoModel> torneoModels = new ArrayList<>();
         try {
@@ -122,7 +122,7 @@ public class TorneoImpDaoPreparedStatement implements TorneoDao {
     @Override
     public List<TorneoModel> eliminaTorneoConSquadreAndGiocatori(int idTorneo) {
         List<SquadraModel> squadraModelList = getSquadreByIdTorneo(idTorneo);
-        String queryDeleteTorneo = "DELETE FROM torneo WHERE id = ?";
+        String queryDeleteTorneo = "delete from torneo where id = ?";
         Connection con = null;
         try {
             con = DataSourceUtils.getConnection(((DataSourceTransactionManager) transactionManager).getDataSource());
@@ -142,7 +142,7 @@ public class TorneoImpDaoPreparedStatement implements TorneoDao {
                 } else {
                     con.setAutoCommit(false);
                     try {
-                        PreparedStatement ps = con.prepareStatement("DELETE FROM squadra_torneo WHERE id_squadra = ?");
+                        PreparedStatement ps = con.prepareStatement("delete from squadra_torneo where id_squadra = ?");
                         ps.setInt(1, squadraModel.getIdSquadra());
                         ps.executeUpdate();
 
@@ -175,7 +175,7 @@ public class TorneoImpDaoPreparedStatement implements TorneoDao {
 
     @Override
     public TorneoModel getTorneoById(Integer idTorneo) {
-        String query = "SELECT * FROM torneo WHERE id = ?";
+        String query = "select * from torneo where id = ?";
         Connection con = null;
         try {
             con = DataSourceUtils.getConnection(((DataSourceTransactionManager) transactionManager).getDataSource());
@@ -203,7 +203,7 @@ public class TorneoImpDaoPreparedStatement implements TorneoDao {
 
     @Override
     public List<SquadraModel> getSquadreByIdTorneo(Integer idTorneo) {
-        String query = "SELECT s.nome, s.id FROM squadra_torneo st JOIN squadra s ON s.id = st.id_squadra WHERE st.id_torneo = ?";
+        String query = "select s.nome, s.id from squadra_torneo st join squadra s on s.id = st.id_squadra where st.id_torneo = ?";
         Connection con = null;
         List<SquadraModel> squadraModelList = new ArrayList<>();
         try {
@@ -229,7 +229,7 @@ public class TorneoImpDaoPreparedStatement implements TorneoDao {
 
     @Override
     public List<TorneoModel> getTorneiByIdSquadra(Integer idSquadra) {
-        String query = "SELECT t.nome_torneo, t.id FROM squadra_torneo st JOIN torneo t ON t.id = st.id_torneo WHERE st.id_squadra = ?";
+        String query = "select t.nome_torneo, t.id from squadra_torneo st join torneo t on t.id = st.id_torneo where st.id_squadra = ?";
         Connection con = null;
         List<TorneoModel> torneoModelList = new ArrayList<>();
         try {

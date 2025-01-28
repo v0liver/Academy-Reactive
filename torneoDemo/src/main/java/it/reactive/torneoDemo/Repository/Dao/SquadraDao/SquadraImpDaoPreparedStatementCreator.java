@@ -35,7 +35,7 @@ public class SquadraImpDaoPreparedStatementCreator implements SquadraDao {
 
     @Override
     public SquadraModel salvaSquadra(SquadraDTO squadraDTO) {
-        String query = "INSERT INTO squadra (nome, colori_sociali) VALUES (?, ?)";
+        String query = "insert into squadra (nome, colori_sociali) values (?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         try {
@@ -59,7 +59,7 @@ public class SquadraImpDaoPreparedStatementCreator implements SquadraDao {
     @Override
     public SquadraModel aggiungiGiocatore(int idSquadra, GiocatoreDto giocatoreDto) {
         String nomeCognome = giocatoreDto.getNomeCognome();
-        String queryCheck = "SELECT * FROM giocatore WHERE nome_cognome = ?";
+        String queryCheck = "select * from giocatore where nome_cognome = ?";
 
         boolean giocatoreEsistente = Boolean.TRUE.equals(jdbcTemplate.query(new PreparedStatementCreator() {
             @Override
@@ -79,7 +79,7 @@ public class SquadraImpDaoPreparedStatementCreator implements SquadraDao {
             throw new GiocatoreDuplicatoException();
         }
 
-        String queryInsert = "INSERT INTO giocatore (id_squadra, nome_cognome) VALUES (?, ?)";
+        String queryInsert = "insert into giocatore (id_squadra, nome_cognome) values (?, ?)";
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
@@ -95,7 +95,7 @@ public class SquadraImpDaoPreparedStatementCreator implements SquadraDao {
 
     @Override
     public SquadraModel getSquadraById(int idSquadra) {
-        String query = "SELECT * FROM squadra WHERE id = ?";
+        String query = "select * from squadra where id = ?";
         return jdbcTemplate.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
@@ -123,7 +123,7 @@ public class SquadraImpDaoPreparedStatementCreator implements SquadraDao {
     }
 
     public Set<GiocatoreModel> getGiocatoriBySquadraId(int idSquadra) {
-        String query = "SELECT g.id, g.nome_cognome FROM giocatore g JOIN squadra sq ON g.id_squadra = sq.id WHERE g.id_squadra = ?";
+        String query = "select g.id, g.nome_cognome from giocatore g join squadra sq on g.id_squadra = sq.id where g.id_squadra = ?";
         return jdbcTemplate.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
@@ -148,7 +148,7 @@ public class SquadraImpDaoPreparedStatementCreator implements SquadraDao {
 
     @Override
     public TifoseriaModel getTifoseriaBySquadraId(int idSquadra) {
-        String query = "SELECT * FROM tifoseria WHERE id_squadra = ?";
+        String query = "select * from tifoseria where id_squadra = ?";
         return jdbcTemplate.query(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
@@ -172,13 +172,13 @@ public class SquadraImpDaoPreparedStatementCreator implements SquadraDao {
 
     @Override
     public void rimuoviSquadra(int idSquadra) {
-        String queryDeleteGiocatori = "DELETE FROM giocatore WHERE id_squadra = ?";
+        String queryDeleteGiocatori = "delete from giocatore where id_squadra = ?";
         jdbcTemplate.update(queryDeleteGiocatori, idSquadra);
 
-        String queryDeleteTifoseria = "DELETE FROM tifoseria WHERE id_squadra = ?";
+        String queryDeleteTifoseria = "delete from tifoseria where id_squadra = ?";
         jdbcTemplate.update(queryDeleteTifoseria, idSquadra);
 
-        String queryDeleteSquadra = "DELETE FROM squadra WHERE id = ?";
+        String queryDeleteSquadra = "delete from squadra where id = ?";
         int nRow = jdbcTemplate.update(queryDeleteSquadra, idSquadra);
         if (nRow == 0) {
             throw new SquadraNonPresenteException();

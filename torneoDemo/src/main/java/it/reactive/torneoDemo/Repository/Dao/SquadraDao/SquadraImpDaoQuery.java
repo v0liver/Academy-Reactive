@@ -37,7 +37,7 @@ public class SquadraImpDaoQuery implements SquadraDao {
 
     @Override
     public SquadraModel salvaSquadra(SquadraDTO squadraDTO) {
-        String sql = "INSERT INTO squadra (nome, colori_sociali) VALUES (?, ?)";
+        String sql = "insert into squadra (nome, colori_sociali) values (?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int idSquadra = 0;
         try {
@@ -89,7 +89,7 @@ public class SquadraImpDaoQuery implements SquadraDao {
 
     @Override
     public SquadraModel aggiungiGiocatore(int idSquadra, GiocatoreDto giocatoreDto) {
-        String sql = "INSERT INTO giocatore (nome_cognome, id_squadra) VALUES (?, ?)";
+        String sql = "insert into giocatore (nome_cognome, id_squadra) values (?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         final int idSQuadra = idSquadra;
         try {

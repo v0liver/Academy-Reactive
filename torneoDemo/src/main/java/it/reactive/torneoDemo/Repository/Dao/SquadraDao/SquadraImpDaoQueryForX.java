@@ -32,19 +32,19 @@ public class SquadraImpDaoQueryForX implements SquadraDao {
 
     @Override
     public SquadraModel salvaSquadra(SquadraDTO squadraDTO) {
-        String sql = "INSERT INTO squadra (nome, colori_sociali) VALUES (?, ?)";
+        String sql = "insert into squadra (nome, colori_sociali) values (?, ?)";
         try {
             jdbcTemplate.update(sql, squadraDTO.getNome(), squadraDTO.getColoriSociali());
         } catch (DuplicateKeyException e) {
             throw new SquadraDuplicataException();
         }
-        String selectSql = "SELECT * FROM squadra WHERE nome = ? AND colori_sociali = ?";
+        String selectSql = "select * from squadra where nome = ? and colori_sociali = ?";
         return jdbcTemplate.queryForObject(selectSql, new SquadraRowMapper(), squadraDTO.getNome(), squadraDTO.getColoriSociali());
     }
 
     @Override
     public SquadraModel getSquadraById(int idSquadra) {
-        String sql = "SELECT * FROM squadra WHERE id = :idSquadra";
+        String sql = "select * from squadra where id = :idsquadra";
         Map<String,Object> params = new HashMap<>();
         params.put("idSquadra",idSquadra);
 //        SquadraModel squadraModel = Optional.ofNullable(namedParameterJdbcTemplate.queryForObject(sql,
@@ -64,13 +64,13 @@ public class SquadraImpDaoQueryForX implements SquadraDao {
 
     @Override
     public Set<GiocatoreModel> getGiocatoriBySquadraId(int idSquadra) {
-        String sql = "SELECT * FROM giocatore WHERE id_squadra = ?";
+        String sql = "select * from giocatore where id_squadra = ?";
         return new HashSet<>(jdbcTemplate.query(sql, new GiocatoreRowMapper(), idSquadra));
     }
 
     @Override
     public List<SquadraModel> ricercaSquadra(boolean completo) {
-        String sql = "SELECT * FROM squadra";
+        String sql = "select * from squadra";
 
 
         List<Map<String, Object>> mappaDiSquadre = jdbcTemplate.queryForList(sql);
@@ -92,7 +92,7 @@ public class SquadraImpDaoQueryForX implements SquadraDao {
 
     @Override
     public SquadraModel aggiungiGiocatore(int idSquadra, GiocatoreDto giocatoreDto) {
-        String sql = "INSERT INTO giocatore (nome_cognome, id_squadra) VALUES (?, ?)";
+        String sql = "insert into giocatore (nome_cognome, id_squadra) values (?, ?)";
         try {
             jdbcTemplate.update(sql, giocatoreDto.getNomeCognome(), idSquadra);
         } catch (DuplicateKeyException e) {
@@ -107,7 +107,7 @@ public class SquadraImpDaoQueryForX implements SquadraDao {
 
             TifoseriaModel tifoseriaModel = getTifoseriaBySquadraId(idSquadra);
             if (tifoseriaModel != null) {
-                String updateSql = "UPDATE tifoseria SET nome_tifoseria = :nomeTifoseria WHERE id_squadra = :idSquadra";
+                String updateSql = "update tifoseria set nome_tifoseria = :nomeTifoseria where id_squadra = :idSquadra";
                 Map<String, Object> params = new HashMap<>();
                 params.put("nomeTifoseria", tifoseriaDTO.getNomeTifoseria());
                 params.put("idSquadra", idSquadra);
@@ -129,13 +129,13 @@ public class SquadraImpDaoQueryForX implements SquadraDao {
     @Override
     public void rimuoviSquadra(int idSquadra) {
         getSquadraById(idSquadra);
-        String sql = "DELETE FROM squadra WHERE id = ?";
+        String sql = "delete from squadra where id = ?";
         jdbcTemplate.update(sql, idSquadra);
     }
 
     @Override
     public TifoseriaModel getTifoseriaBySquadraId(int idSquadra) {
-        String sql = "SELECT * FROM tifoseria WHERE id_squadra = :idSquadra";
+        String sql = "select * from tifoseria where id_squadra = :idSquadra";
         Map<String,Object> params = new HashMap<>();
         params.put("idSquadra",idSquadra);
 
