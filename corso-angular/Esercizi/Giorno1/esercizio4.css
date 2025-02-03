@@ -1,0 +1,38 @@
+.intestazione{
+    background-color: blue;
+    color: white;
+}
+
+table *{
+    border: 1px solid black;   
+}
+
+table{
+    width: 67vw;
+    min-width: 300px;
+    max-width: 1200px;
+    margin-left: auto;
+}
+
+tr:nth-child(even):not(.intestazione){
+    background-color: white;
+}
+
+tr:nth-child(odd):not(.intestazione){
+    background-color: gray;
+}
+
+table tr:last-child td:last-child{
+    background-color: red;
+}
+
+@media screen and  (max-width:768px) {
+    tr:nth-child(even):not(.intestazione){
+        background-color: azure;
+    }
+
+    tr:nth-child(odd):not(.intestazione){
+        background-color: green;
+    }
+    
+}

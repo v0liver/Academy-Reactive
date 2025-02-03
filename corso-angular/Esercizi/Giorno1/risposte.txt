@@ -1,0 +1,21 @@
+I selettori css sono:
+."class" seleziona tutti gli elementi con quella classe
+#"id" seleziona l'elemento con quel' id'
+tag(es. "p") seleziona tutti gli elementi con quei tag ma non i figli
+tag.class per selezionare un elemento che ha quella classe all interno di quel tag
+pseudo elementi es. p::first-line seleziona l'elemento in prima linea di quel tag
+pseudo classi es. a:hover fa qualcosa quando si passa il mouse sopra l'elemento
+selettore per attributo es a[attributo] seleziona gli elementi che hanno quall'attributo o se specificato quel valore dell'attributo
+
+
+I combinatori in css sono 4:
+"spazio" es div p seleziona tutti gli elementi p che discendono da div anche se non sono suoi figli diretti (magari sono dentro a un div e dentro una section)
+> es come "spazio" ma devono essere figli diretti di div
++ es div + p seleziona solo il primp elemento p subito dopo div, non contenuto in div
+~ es div ~ p seleziona tutti gli elementi dopo div che sono al suo stesso livello
+
+Gli elementi del box model sono:
+margine: lo spazio tra il bordo e l'intera pagina web o quello dell'elemento precedente
+bordo: circonda il nostro contenuto
+padding: la distanza tra il contenuto e il bordo
+contenuto: il nostro elemento effettivo es. p
