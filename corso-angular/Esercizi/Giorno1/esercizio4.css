@@ -39,7 +39,7 @@ table tr:last-child td:last-child{
 
 @media screen and  (max-width:768px) {
     tr:nth-child(even):not(.intestazione){
-        background-color: azure;
+        background-color: #ADD8E6;
     }
 
     tr:nth-child(odd):not(.intestazione){
