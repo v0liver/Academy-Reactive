@@ -5,9 +5,11 @@
 
 table *{
     border: 1px solid black;   
+    
 }
 
 table{
+    /* border-collapse: collapse; serve a mettere assieme le righe dei bordi senza spazio */
     width: 67vw;
     height: 67vh;
     min-width: 300px;
@@ -25,6 +27,10 @@ tr:nth-child(odd):not(.intestazione){
 
 table tr:last-child td:last-child{
     background-color: red;
+}
+
+.centrato{
+    text-align: center;
 }
 
 @media screen and  (max-width:768px) {
