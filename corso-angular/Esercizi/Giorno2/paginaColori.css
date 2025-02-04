@@ -1,0 +1,63 @@
+.intestazione{
+    display: flex;
+    justify-content: space-between;
+}
+
+.centro{
+    display: flex;
+    justify-content: space-between;
+    height: 80vh;
+}
+
+.footer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.intestazione>:nth-child(1){
+    flex-grow: 2;
+    background-color: blue;
+}
+
+.intestazione>:nth-child(2){
+    flex-grow: 1;
+    background-color: green;
+}
+
+.intestazione>:nth-child(3){
+    flex-grow: 4;
+    margin-left: 200px;
+    background-color: grey;
+}
+
+
+.centro>:nth-child(1){
+    background-color: rgb(121, 213, 236);
+    width: 50%;
+}
+
+.centro>:nth-child(2){
+    background-color: rgb(224, 117, 117);
+    width: 50%;
+}
+
+.footer>:nth-child(2){
+    background-color: yellow;
+    
+}
+
+.footer> *{
+    width: 33%;
+    height: 100%;
+}
+
+*{
+    margin: 0;
+}
+
+body{
+    height: 50%;
+    width: 100%;
+}
+
+
