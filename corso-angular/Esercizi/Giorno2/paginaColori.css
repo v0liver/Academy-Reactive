@@ -12,6 +12,7 @@
 .footer{
     display: flex;
     justify-content: space-between;
+    height: calc(20vh - 37px);
 }
 
 .intestazione>:nth-child(1){
@@ -55,9 +56,12 @@
     margin: 0;
 }
 
-body{
-    height: 50%;
+
+
+
+/* body{
+    height: 50%; perchè non funziona?
     width: 100%;
-}
+} */
 
 
