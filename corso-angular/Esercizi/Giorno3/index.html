@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <Title>Titolo Sito Web</Title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <button onclick="greetEveryone(), getParagrafs()">Cliccami</button>
+    <button onclick="showTime('clock'), setIntervalloClock('clock',1000)">Clock</button>
+    <div id="clock">Clock</div>
+    <div class="intestazione">
+        <img src="img/logo.png" alt="Logo Pagina Web">
+        <p>Nome Sito Web</p>
+        <p class="saluto">Ciao Vito</p>
+    </div>
+
+    <div class="sfondoImmagine">
+
+        <img src="img/allMight.jpg" alt="Sfondo Pagina" class="allMight">
+        <img src="img/midoria.jpg" alt="Foto Profilo" class="midoria">
+
+        <div class="testoCentrale">
+            <p>Testo Al centro</p>
+        </div>
+    </div>
+    <footer class="footer" onmouseover="changeBackground('footer')" onmouseout="this.style.backgroundColor = ''">
+        <p>Testo</p>
+        <p>Testo</p>
+        <p>Testo</p>
+        <p>Testo</p>
+        <p>Testo Al Centro</p>
+        <img src="img/logo.png" alt="Logo Pagina Web">
+        
+    </footer>
+    <div>
+        <form id="formMyhero">
+            <input type="text" placeholder="nome" id="nome">
+            <input type="text" placeholder="cognome" id="cognome">
+            <input type="datetime-local" id="data" placeholder="data di nascita">
+            <select id="genere">
+                <option value="" selected disabled>Seleziona...</option>
+                <option value="maschio">Maschio</option>
+                <option value="femmina">Femmina</option>
+            </select>
+            <input type="email" id="email" placeholder="email">
+            <input type="submit" value="invia">
+        </form>
+    </div>
+    <script src="script_esecuzione.js"></script>
+</body>
+
+</html>
