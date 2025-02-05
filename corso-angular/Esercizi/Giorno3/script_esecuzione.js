@@ -44,8 +44,12 @@ function validazioneDati(event) {
     const genere = document.getElementById('genere').value;
     const email = document.getElementById('email').value;
 
-    console.log(genere);
-    console.log(nome);
+    alert(`
+        Nome: ${nome} 
+        Cognome: ${cognome}
+        Data di Nascita: ${data_nascita}
+        Genere: ${genere}
+        Email: ${email}`);
     
   }
 
