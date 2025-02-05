@@ -18,9 +18,9 @@ function greetEveryone() {
 function showTime(id) {
 
     const time = new Date();
-    const ore = time.getHours();
-    const minuti = time.getMinutes();
-    const secondi = time.getSeconds();
+    const ore = time.getHours().toString().padStart(2,0);//padStart(2, '0'): Assicura che la stringa abbia una lunghezza di almeno 2 caratteri, aggiungendo 0 all'inizio se necessario.
+    const minuti = time.getMinutes().toString().padStart(2,0);
+    const secondi = time.getSeconds().toString().padStart(2,0);
 
     document.getElementById(id).textContent = `${ore}:${minuti}:${secondi}`;
 
