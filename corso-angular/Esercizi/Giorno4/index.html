@@ -8,14 +8,30 @@
 </head>
 
 <body>
-    <script src="script.js"></script>
-    <button onclick="sum()">Somma Array</button>
-    <button onclick="maxValore()">Valore Massimo</button>
-    <button onclick="removeDuplicates()">Remove Duplicate</button>
-    <button onclick="filterByCriteria()">Filter By Criteria</button>
-    <button onclick="jsonObjToStr()">Json To String</button>
-    <button onclick="jsonStrToObj()">String To Json</button>
-    <button onclick="manipulate(json[0],'eta',15)">Manipulate</button>
+
+    <style>
+        * {
+            border-radius: 10px;
+        }
+    </style>
+    <div>
+        <h1>Array</h1>
+        <script src="script.js"></script>
+        <button onclick="sum()">Somma Array</button>
+        <button onclick="maxValore()">Valore Massimo</button>
+        <button onclick="removeDuplicates()">Remove Duplicate</button>
+        <button onclick="filterByCriteria()">Filter By Criteria</button>
+
+    </div>
+
+    <div>
+        <h1>Json</h1>
+        <button onclick="jsonObjToStr()">Json To String</button>
+        <button onclick="jsonStrToObj()">String To Json</button>
+        <button onclick="manipulate(json[0],'eta',15)">Manipulate</button>
+
+    </div>
+
 </body>
 
 </html>
