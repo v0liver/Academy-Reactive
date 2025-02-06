@@ -4,8 +4,8 @@
     gap: 100px;
     font-size: 30px;
     border: 1px solid;
-    /* border-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet); 
-    border-image-slice: 1; */
+    border-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet); 
+    border-image-slice: 1;
     border-radius: 10px;
     max-width: 100%;
     flex-wrap:wrap;

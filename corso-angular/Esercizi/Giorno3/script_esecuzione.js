@@ -30,6 +30,7 @@ function setIntervalloClock(id, millisecondi) {
     setInterval(() => showTime(id, millisecondi));
 }
 
+
 function changeBackground(className) {
     document.getElementsByClassName(className)[0].style.backgroundColor = 'black';
 }
@@ -37,6 +38,8 @@ function changeBackground(className) {
 function validazioneDati(event) {
     event.preventDefault(); // Evita l'invio del form
 
+    const form= document.forms['formMyhero'];
+    const nome1= form.nome.value;
     
     const nome = document.getElementById('nome').value;
     const cognome = document.getElementById('cognome').value;
@@ -49,11 +52,15 @@ function validazioneDati(event) {
         Cognome: ${cognome}
         Data di Nascita: ${data_nascita}
         Genere: ${genere}
-        Email: ${email}`);
+        Email: ${email}
+        Nome1: ${nome1}
+        `);
+        
     
   }
 
-  document.getElementById('formMyhero').addEventListener("submit", validazioneDati);
+  document.getElementById('formMyhero').addEventListener("submit", validazioneDati)
+  
 
 
 
