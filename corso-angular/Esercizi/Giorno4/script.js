@@ -109,23 +109,27 @@ function removeDuplicates() {
 }
 
 function filterByCriteria() {
+    console.log(array);
     const result = array.filter(element => element > 10);
     console.log(result);
 }
 
 
 function jsonStrToObj() {
+    console.log(stringJson);
     const jsonFromString = JSON.parse(stringJson);
     console.log(jsonFromString);
 
 }
 
 function jsonObjToStr() {
+    console.log(json);
     const stringFromJson = JSON.stringify(json);
     console.log(stringFromJson);
 }
 
 function manipulate(obj, property, value) {
+    console.log(obj);
     obj[property] = value;
     console.log(obj);
 }
