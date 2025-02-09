@@ -76,7 +76,7 @@ function sum() {
         sum += element;
     }
 
-    console.log("Somma: " + sum);
+    console.log("Somma: ", sum);
 
 }
 
@@ -88,7 +88,7 @@ function maxValore() {
             max = element;
         }
     }
-    console.log("Il valore massimo è: " + max);
+    console.log("Il valore massimo è: ", max);
 
 }
 
@@ -133,6 +133,8 @@ function manipulate(obj, property, value) {
     obj[property] = value;
     console.log(obj);
 }
+
+
 
 
 

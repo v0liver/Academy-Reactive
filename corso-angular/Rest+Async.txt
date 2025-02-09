@@ -1,0 +1,128 @@
+async function asincrono() {
+    console.log('2');
+}
+ 
+const asincrono1 = async () => {
+    console.log('2');
+};
+ 
+ 
+function sincrono() {
+    console.log('2');
+}
+ 
+ 
+console.log('1');
+sincrono();
+console.log('3');
+ 
+ 
+console.log('1');
+await asincrono();
+console.log('3');
+ 
+async function fetchData() {
+  try {
+    const response = await fetch('http://localhost:8080/persona');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("error:", error);
+    throw error;
+  }
+}
+ 
+fetchData()
+  .then(data => {
+    console.log("success:", data);
+  })
+  .catch(error => {
+    console.error("error:", error);
+  });
+ 
+console.log("fine");
+ 
+XHR
+
+const xhr = new XMLHttpRequest();
+
+xhr.onload = function() {
+
+  if (this.status === 200) {
+
+    const data = JSON.parse(this.responseText);
+
+  } else {
+
+    console.error("Errore nella richiesta:", this.status);
+
+  }
+
+};
+ 
+const url = 'http://localhost:8080/persona';
+
+xhr.open("GET", url, true);
+ 
+xhr.send();
+ 
+OLD
+
+const persona = {
+
+  nome: "Mario",
+
+  cognome: "Rossi",
+
+  età: 30,
+
+  saluta: function() {
+
+    console.log("Ciao, mi chiamo " + this.nome);
+
+  }
+
+};
+ 
+function Persona(nome, cognome, età) {
+
+  this.nome = nome;
+
+  this.cognome = cognome;
+
+  this.età = età;
+
+  this.saluta = function() {
+
+    console.log("Ciao, mi chiamo " + this.nome);
+
+  };
+
+}
+ 
+const persona = new Persona("Mario", "Rossi", 30);
+
+---
+ 
+class Persona {
+
+  constructor(nome, cognome, età) {
+
+    this.nome = nome;
+
+    this.cognome = cognome;
+
+    this.età = età;
+
+  }
+ 
+  saluta() {
+
+    console.log("Ciao, mi chiamo " + this.nome);
+
+  }
+
+}
+ 
+const persona = new Persona("Mario", "Rossi", 30);
+ 
