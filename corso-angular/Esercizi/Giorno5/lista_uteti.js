@@ -6,11 +6,12 @@ async function fetchSearch(paginaCorrente) {
     const response = await fetch(`https://reqres.in/api/users?page=${paginaCorrente}`);
     const data = await response.json();
     createCards(data.data);
-    const buttonNotExsist = document.getElementsByClassName("pageButton").length===0;
-    if(buttonNotExsist){
+    const buttonNotExsist = document.getElementsByClassName("pageButton").length === 0;
+
+    if (buttonNotExsist) {
       createPageButton(data);
     }
-    
+
   } catch (error) {
     console.error("Errore nel recupero utenti:", error);
   }
@@ -62,7 +63,7 @@ function createCards(user) {
 }
 
 function createPageButton(data) {
-  
+
   const mainUtenti = document.getElementsByTagName("main")
   const cardContainer = document.getElementById("card__container")
   //attributi che troverò in un json se il backend ha utilizato paginazione con Pageable
@@ -70,15 +71,16 @@ function createPageButton(data) {
   const currentPage = data.page;
   const totalElement = data.total;
   const elemetXPage = data.per_page;
+  
   for (let i = 0; i < totalPages; i++) {
     const pageButton = document.createElement("button");
     pageButton.classList.add("pageButton");
-    pageButton.id="pageButton"+ i+1;
+    pageButton.id = "pageButton" + i + 1;
     pageButton.textContent = i + 1;
 
-    pageButton.addEventListener("click", function() {
-      cardContainer.innerHTML="";
-      fetchSearch(i + 1);  
+    pageButton.addEventListener("click", function () {
+      cardContainer.innerHTML = "";
+      fetchSearch(i + 1);
     });
 
     mainUtenti[0].appendChild(pageButton)
