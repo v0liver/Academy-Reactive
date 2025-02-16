@@ -9,7 +9,7 @@
         <p>Cognome: {{ user.last_name }}</p>
         <p>Email: {{ user.email }}</p>
         <img [src]="user.avatar" alt="avatar">
-        <button class="edit-button"><mat-icon fontIcon="edit_square"></mat-icon></button>
+        <button class="edit-button" (click)="openDialog(user)"><mat-icon fontIcon="edit_square"></mat-icon></button>
       </mat-card-content>
     </mat-card>
     <div class="container-button-page-lista-utenti">

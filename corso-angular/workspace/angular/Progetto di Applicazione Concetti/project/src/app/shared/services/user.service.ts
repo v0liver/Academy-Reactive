@@ -31,4 +31,21 @@ export class UserService {
       }
     )
   }
+
+  edit(user:User):Observable<any>{
+    return this.http.put<any>(`https://reqres.in/api/users/${user.id}`,
+      {
+        headers: this.headers
+      }
+    )
+
+  }
+
+  addUser(user:User){
+    return this.http.post<any>(`https://reqres.in/api/users`,user,
+      {
+        headers: this.headers
+      }
+    )
+  }
 }

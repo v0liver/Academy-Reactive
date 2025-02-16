@@ -7,7 +7,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { LoginComponent } from './features/authentication/login/login.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { HeaderComponent } from './shared/header/header.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
@@ -18,6 +18,7 @@ import { ListaUtentiComponent } from './features/lista-utenti/lista-utenti.compo
 import {MatIconModule} from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog'; 
 import { DialogEditUserComponent } from './features/dialog-edit-user/dialog-edit-user.component';
+import { DialogCreateUserComponent } from './features/dialog-create-user/dialog-create-user.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { DialogEditUserComponent } from './features/dialog-edit-user/dialog-edit
     HeaderComponent,
     HomepageComponent,
     ListaUtentiComponent,
-    DialogEditUserComponent
+    DialogEditUserComponent,
+    DialogCreateUserComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +41,8 @@ import { DialogEditUserComponent } from './features/dialog-edit-user/dialog-edit
     MatInputModule,
     HttpClientModule,
     MatIconModule,
-    MatDialogModule 
+    MatDialogModule,
+    FormsModule 
   ],
   providers: [
     provideAnimationsAsync()

@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Create User</h2>
+<mat-dialog-content>
+  <mat-form-field>
+    <input [(ngModel)]="name" type="text" matInput  id="name-dialog-create" placeholder="name" required>
+    <mat-error *ngIf="!name">Name is required</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input [(ngModel)]="job" type="text" matInput  id="job-dialog-create" placeholder="job" required>
+    <mat-error *ngIf="!job">Job is required</mat-error>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close (click)="create()" [disabled]="!name || !job">Edit</button>
+</mat-dialog-actions>

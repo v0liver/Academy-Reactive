@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../shared/services/user.service';
 import { User } from '../../shared/model/user';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
 
 @Component({
   selector: 'app-lista-utenti',
@@ -12,7 +14,7 @@ export class ListaUtentiComponent implements OnInit {
   page: number = 1;
   pages: number = 0;
   
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,public dialog: MatDialog) { }
 
   ngOnInit() {
     this.userService.search(this.page).subscribe({
@@ -32,6 +34,21 @@ export class ListaUtentiComponent implements OnInit {
         console.log(this.users);
       }
     })
+  }
+
+  openDialog(user:User){
+    const dialogRef = this.dialog.open(DialogEditUserComponent, {
+      autoFocus: true,
+      width: '260px',
+      data: { user: user } 
+    });
+    console.log(user);
+    
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog was closed');
+    });
+
   }
 
 }
