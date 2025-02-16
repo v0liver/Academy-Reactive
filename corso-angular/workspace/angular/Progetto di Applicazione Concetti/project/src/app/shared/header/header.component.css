@@ -1,0 +1,25 @@
+:host{
+    display: flex;
+    position: relative;
+    height: 100px;
+}
+
+header{
+    position: fixed;
+    width: 100%;
+    height: 85.5px;
+    background-color: rgb(160, 158, 158);
+    margin: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+
+}
+
+.mat-mdc-raised-button{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    border-radius: 50px;
+   
+}

@@ -1,0 +1,10 @@
+:host{
+    margin-top: auto;
+}
+
+
+footer{
+    height: 85.5px;
+    background-color: rgb(160, 158, 158);
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.3);
+}
