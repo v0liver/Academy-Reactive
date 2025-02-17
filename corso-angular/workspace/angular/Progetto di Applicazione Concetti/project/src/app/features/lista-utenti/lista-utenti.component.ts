@@ -7,7 +7,7 @@ import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.co
 @Component({
   selector: 'app-lista-utenti',
   templateUrl: './lista-utenti.component.html',
-  styleUrls: ['./lista-utenti.component.css']
+  styleUrls: ['./lista-utenti.component.scss']
 })
 export class ListaUtentiComponent implements OnInit {
   users: User[] = [];

@@ -1,17 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; position: relative; display: flex;}
+html,
+body {
+    min-height: 100vh;
+}
 
-app-root{
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    position: relative;
+    display: flex;
+    
+}
+
+app-root {
     display: flex;
     flex-direction: column;
     width: 100%;
-   
+
 }
 
-main{
+main {
     width: 100%;
+    min-height: 80%;
     position: relative;
 }
-

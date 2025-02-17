@@ -20,7 +20,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DialogEditUserComponent } from './features/dialog-edit-user/dialog-edit-user.component';
 
 @NgModule({
-  declarations: [
+  declarations: [												
     AppComponent,
     LoginComponent,
     FooterComponent,
@@ -28,8 +28,7 @@ import { DialogEditUserComponent } from './features/dialog-edit-user/dialog-edit
     HomepageComponent,
     ListaUtentiComponent,
     DialogEditUserComponent,
-    
-  ],
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
