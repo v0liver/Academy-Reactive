@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { DialogCreateUserComponent } from '../../features/dialog-create-user/dialog-create-user.component';
+import { DialogEditUserComponent } from '../../features/dialog-edit-user/dialog-edit-user.component';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
     }
   
     openDialog(){
-        const dialogRef = this.dialog.open(DialogCreateUserComponent, {
+        const dialogRef = this.dialog.open(DialogEditUserComponent, {
           // autoFocus: true,// per aria-hidden??
           width: '260px',
         });

@@ -32,6 +32,9 @@
 .mat-mdc-raised-button{
     border-radius: 50px;
 }
+.mat-mdc-text-field-wrapper .mdc-text-field{
+  background-color: black !important;
+}
 
  /* .mdc-text-field--filled:not(.mdc-text-field--disabled){ perchè non funziona?
   background-color: transparent;

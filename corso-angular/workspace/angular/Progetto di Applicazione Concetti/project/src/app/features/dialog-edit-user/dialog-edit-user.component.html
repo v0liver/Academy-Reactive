@@ -1,14 +1,14 @@
-<h2 mat-dialog-title>Edit User {{user.last_name}}</h2>
+<h2 mat-dialog-title> {{title}}</h2>
 <mat-dialog-content>
   <mat-form-field>
-    <input [(ngModel)]="name" type="text" matInput  id="name-dialog" placeholder="name" required>
+    <input [(ngModel)]="name" type="text" matInput id="name-dialog" placeholder="name" required>
     <mat-error *ngIf="!name">Name is required</mat-error>
   </mat-form-field>
   <mat-form-field>
-    <input [(ngModel)]="job" type="text" matInput  id="job-dialog" placeholder="job" required>
+    <input [(ngModel)]="job" type="text" matInput id="job-dialog" placeholder="job" required>
     <mat-error *ngIf="!job">Job is required</mat-error>
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close (click)="edit()" [disabled]="!name || !job">Edit</button>
+  <button mat-button mat-dialog-close (click)="funzione()" [disabled]="!name || !job">{{buttonName}}</button>
 </mat-dialog-actions>

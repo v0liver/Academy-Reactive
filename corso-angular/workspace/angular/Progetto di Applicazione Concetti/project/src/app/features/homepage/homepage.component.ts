@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { User } from '../../shared/model/user';
-import { DialogCreateUserComponent } from '../dialog-create-user/dialog-create-user.component';
+import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
 
 @Component({
   selector: 'app-homepage',
@@ -21,7 +21,7 @@ export class HomepageComponent implements OnInit {
   }
 
   openDialog(){
-      const dialogRef = this.dialog.open(DialogCreateUserComponent, {
+      const dialogRef = this.dialog.open(DialogEditUserComponent, {
         // autoFocus: true,// per aria-hidden??
         width: '260px',
       });

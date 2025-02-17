@@ -6,7 +6,8 @@
     margin-top: 100px;
     padding-left: 30px;
     padding-right: 30px;
-    /* flex-wrap: wrap; */ 
+    padding-bottom: 70px;
+    flex-wrap: wrap; 
 }
 
 :host{

@@ -18,7 +18,6 @@ import { ListaUtentiComponent } from './features/lista-utenti/lista-utenti.compo
 import {MatIconModule} from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog'; 
 import { DialogEditUserComponent } from './features/dialog-edit-user/dialog-edit-user.component';
-import { DialogCreateUserComponent } from './features/dialog-create-user/dialog-create-user.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +28,7 @@ import { DialogCreateUserComponent } from './features/dialog-create-user/dialog-
     HomepageComponent,
     ListaUtentiComponent,
     DialogEditUserComponent,
-    DialogCreateUserComponent
+    
   ],
   imports: [
     BrowserModule,
