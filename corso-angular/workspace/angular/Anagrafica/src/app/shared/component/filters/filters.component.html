@@ -1,0 +1,58 @@
+<mat-accordion class="example-headers-align" multi>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Filte </mat-panel-title>
+      <mat-panel-description>
+        <mat-icon>account_circle</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <form [formGroup]="filterForm">
+      <mat-form-field>
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="nome"/>
+        <mat-error *ngIf="!filterForm.get('nome')?.valid">Nome non valido</mat-error>
+        
+
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Cognome</mat-label>
+        <input matInput formControlName="cognome"/>
+        @if (!filterForm.get('cognome')?.valid) {
+        <mat-error>Cognome non valido</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email"/>
+        @if (!filterForm.controls.email.valid) {
+        <mat-error>Email non valido</mat-error>
+        }
+        
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Data nascita da-a</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate formControlName="start" placeholder="Start date">
+          <input matEndDate formControlName="end" placeholder="End date">
+        </mat-date-range-input>
+        <mat-hint>DD/MM/YYYY - DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+
+        @if (filterForm.controls.start.hasError('matStartDateInvalid')) {
+        <mat-error>Invalid start date</mat-error>
+        }
+        @if (filterForm.controls.end.hasError('matEndDateInvalid')) {
+        <mat-error>Invalid end date</mat-error>
+        }
+      </mat-form-field>
+    </form>
+
+
+  </mat-expansion-panel>
+
+</mat-accordion>
