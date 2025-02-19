@@ -1,9 +1,9 @@
-<form class="container-login" fxLayout="column" fxLayoutAlign="center center" [formGroup]="formLogin"
-  (submit)="onSubmitLoginForm()">
+<form class="container-login" [formGroup]="formLogin"
+  (submit)="onSubmitLoginForm($event.submitter?.id)">
   <mat-form-field>
-    <mat-label>Email</mat-label>
-    <input matInput type="email" color="primary" formControlName="email">
-    <mat-error *ngIf="!email?.valid">Email non valida</mat-error>
+    <mat-label>Username</mat-label>
+    <input matInput color="primary" formControlName="username">
+    <mat-error *ngIf="!username?.valid">Username non valido</mat-error>
 
   </mat-form-field>
 
@@ -13,6 +13,7 @@
     <mat-error *ngIf="!password?.valid">Password non valida</mat-error>
   </mat-form-field>
 
-  <button mat-raised-button mat-dialog-close [disabled]="!formLogin.valid" color="primary">Login</button>
+  <button mat-raised-button [disabled]="!formLogin.valid" [id]="EnumAuth.Login" color="primary">Login</button>
+  <button mat-raised-button [disabled]="!formLogin.valid" [id]="EnumAuth.Register" color="primary">Register</button>
 
 </form>

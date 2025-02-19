@@ -7,4 +7,5 @@ export interface User {
     avatar?: ImageBitmap;
     job?:string;
     name?:string;
+    username?:string;
 }

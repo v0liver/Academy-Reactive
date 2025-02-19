@@ -1,7 +1,7 @@
 <mat-accordion class="example-headers-align" multi>
   <mat-expansion-panel>
     <mat-expansion-panel-header>
-      <mat-panel-title> Filte </mat-panel-title>
+      <mat-panel-title>Filtro</mat-panel-title>
       <mat-panel-description>
         <mat-icon>account_circle</mat-icon>
       </mat-panel-description>
@@ -34,22 +34,23 @@
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>Data nascita da-a</mat-label>
+        <mat-label>Data di nascita da → a</mat-label>
         <mat-date-range-input [rangePicker]="picker">
-          <input matStartDate formControlName="start" placeholder="Start date">
-          <input matEndDate formControlName="end" placeholder="End date">
+          <input matStartDate formControlName="start" placeholder="Data Inizio">
+          <input matEndDate formControlName="end" placeholder="Data Fine">
         </mat-date-range-input>
         <mat-hint>DD/MM/YYYY - DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
 
         @if (filterForm.controls.start.hasError('matStartDateInvalid')) {
-        <mat-error>Invalid start date</mat-error>
+        <mat-error>Data inizio non valida</mat-error>
         }
         @if (filterForm.controls.end.hasError('matEndDateInvalid')) {
-        <mat-error>Invalid end date</mat-error>
+        <mat-error>Data fine non valida</mat-error>
         }
       </mat-form-field>
+      <button mat-raised-button color="primary">Cerca</button>
     </form>
 
 

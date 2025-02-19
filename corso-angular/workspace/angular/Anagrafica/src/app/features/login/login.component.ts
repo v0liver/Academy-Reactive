@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../core/service/auth/auth.service';
+import { EnumAuth } from '../../shared/enum/enum-auth';
 
 @Component({
   selector: 'app-login',
@@ -7,13 +9,14 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  EnumAuth= EnumAuth;
   formLogin: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email,Validators.min(8)]),
+    username: new FormControl('', [Validators.required,Validators.minLength(8)]),
     password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&#.])[A-Za-z\d$@$!%*?&#.].{8,30}')])
   });
 
 
-  constructor() {
+  constructor(private authservice:AuthService) {
 
   }
 
@@ -21,18 +24,23 @@ export class LoginComponent implements OnInit {
 
   }
 
-  get email(): AbstractControl | null {
-    return this.formLogin.get('email');
+  get username(): AbstractControl | null {
+    return this.formLogin.get('username');
   }
 
   get password() {
     return this.formLogin.get('password');
   }
 
-  onSubmitLoginForm() {
-    if(this.formLogin.valid){
-      
+  onSubmitLoginForm(event:any) {
+    if(event===EnumAuth.Login){
+      this.authservice.login(this.username?.value,this.password?.value).subscribe({
+        next: resp=>{
+          console.log(resp);
+        }
+      })
     }
+    
 
   }
 

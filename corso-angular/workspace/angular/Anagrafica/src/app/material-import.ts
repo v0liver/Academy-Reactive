@@ -4,7 +4,12 @@ import { MatInputModule } from "@angular/material/input";
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatIconModule} from '@angular/material/icon';
-
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import {MatCardModule} from '@angular/material/card';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatGridListModule} from '@angular/material/grid-list';
 
   export  const materiaImport = [
     
@@ -13,5 +18,14 @@ import {MatIconModule} from '@angular/material/icon';
             MatInputModule,
             MatExpansionModule,
             MatDatepickerModule,
-            MatIconModule
+            MatIconModule,
+            MatToolbarModule,
+            MatPaginator,
+            MatPaginatorModule,
+            
+            MatTableModule,
+            MatCardModule,
+            MatDividerModule,
+            MatGridListModule
+
     ]

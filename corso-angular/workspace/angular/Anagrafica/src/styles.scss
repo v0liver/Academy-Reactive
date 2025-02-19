@@ -4,7 +4,7 @@
 @use '@angular/material' as mat;
 @include mat.core();
  
-$anagrafica-primary-color: mat.define-palette(mat.$pink-palette, 500);
+$anagrafica-primary-color: mat.define-palette(mat.$blue-palette, 500);
 $anagrafica-accent-color: mat.define-palette(mat.$indigo-palette, A200,A100,A400);
 $anagrafica-warn-color: mat.define-palette(mat.$red-palette);
  
