@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +13,11 @@ import { FiltersComponent } from './shared/component/filters/filters.component';
 import { HeaderComponent } from './core/header/header.component';
 import { FooterComponent } from './core/footer/footer.component';
 import { HompepageCardComponent } from './features/homepage-card/hompepage-card.component';
+import { NotificationComponent } from './shared/notification/notification.component';
+import { JwInterceptor } from './shared/interceptor/jwt.interceptor';
+import { DialogModificaComponent } from './features/dialog-modifica/dialog-modifica.component';
+import { EditComponent } from './features/edit/edit.component';
+import { NuovaPersonaComponent } from './features/nuova-persona/nuova-persona.component';
 
 
 @NgModule({
@@ -22,7 +27,12 @@ import { HompepageCardComponent } from './features/homepage-card/hompepage-card.
     FiltersComponent,
     HeaderComponent,
     FooterComponent,
-    HompepageCardComponent
+    HompepageCardComponent,
+    NotificationComponent,
+    DialogModificaComponent,
+    EditComponent,
+    NuovaPersonaComponent
+
   ],
   imports: [
     BrowserModule,
@@ -32,10 +42,13 @@ import { HompepageCardComponent } from './features/homepage-card/hompepage-card.
     BrowserAnimationsModule,
     FlexLayoutModule,
     HttpClientModule,
-    ...materiaImport
+    ...materiaImport,
 
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS, useClass: JwInterceptor, multi: true
+  },
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

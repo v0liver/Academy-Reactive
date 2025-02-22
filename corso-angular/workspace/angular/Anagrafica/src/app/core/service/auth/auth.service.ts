@@ -20,6 +20,7 @@ export class AuthService {
     return this.http.post<any>(this._URL + 'registrati', { username, password })
   }
 
+ 
 
 
 }

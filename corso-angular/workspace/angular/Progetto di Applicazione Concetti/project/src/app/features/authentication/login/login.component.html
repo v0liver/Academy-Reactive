@@ -1,11 +1,12 @@
 <mat-card>
   <mat-card-title>Login</mat-card-title>
   <mat-card-content>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit($event)">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <mat-form-field>
-        <input matInput  id="username" formControlName="username" placeholder="Username*" value="eve.holt@reqres.in">
-        <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
-          <span *ngIf="loginForm.get('username')?.errors?.['required']">Username is required</span>
+        <input matInput type="email" id="email" formControlName="email" placeholder="Email*" value="eve.holt@reqres.in">
+        <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+          <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required</span>
+          <span *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format</span>
         </div>
       </mat-form-field>
 
@@ -17,7 +18,6 @@
       </mat-form-field>
       <div class="button">
         <button mat-raised-button type="submit">Login</button>
-        <button mat-raised-button type="submit">Register</button>
       </div>
     </form>
   </mat-card-content>

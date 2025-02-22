@@ -1,0 +1,45 @@
+<div class="vw-100">
+
+  <mat-grid-list cols="1" rowHeight="2:1">
+    <ng-container>
+      <mat-grid-tile>
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-icon>account_circle</mat-icon>
+            <mat-card-title>Nuova Persona</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <form [formGroup]="formCreazione" fxLayout="column" fxLayoutAlign="center center" (submit)="onSubmit()">
+              <mat-form-field>
+                <mat-label>Nome</mat-label>
+                <input matInput type="text" formControlName="nome">
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Cognome</mat-label>
+                <input matInput type="text" formControlName="cognome">
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Città</mat-label>
+                <input matInput type="text" formControlName="citta">
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Data di Nascita</mat-label>
+                <input matInput formControlName="dataNascita" [matDatepicker]="picker">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+
+              </mat-form-field>
+              <button mat-raised-button type="submit" color="primary">Crea</button>
+              <mat-divider></mat-divider>
+            </form>
+          </mat-card-content>
+          <mat-card-actions>
+
+          </mat-card-actions>
+          <mat-card-footer>
+          </mat-card-footer>
+        </mat-card>
+      </mat-grid-tile>
+    </ng-container>
+  </mat-grid-list>
+</div>

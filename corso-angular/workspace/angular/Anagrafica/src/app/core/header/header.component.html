@@ -1,8 +1,10 @@
 <mat-toolbar class="d-flex justify-content-between">
- 
-  <span>Portale Grafica</span>
+  <span>Portale Anagrafica</span>
+
   <div>
-    <button mat-raised-button>Logout</button>
+    <button *ngIf="router.url !=='/'" mat-raised-button color="primary" (click)="logout()">Logout</button>
+    <button *ngIf="router.url !=='/' && router.url !=='/homepage'" mat-raised-button color="primary" (click)="homePage()">HomePage</button>
+    <button *ngIf="router.url !=='/'" mat-raised-button color="primary" (click)="nuovaPersona()">Nuova Persona</button>
   </div>
   
 </mat-toolbar>

@@ -18,21 +18,19 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
 
     this.loginForm = this.formBuilder.group({
-      username: ['eve.holt@reqres.in', [Validators.required]],
+      email: ['eve.holt@reqres.in', [Validators.required, Validators.email]],
       password: ['cityslicka', [Validators.required, Validators.minLength(6)]]
     });
   }
 
 
 
-  onSubmit(event:Event) {
-    console.log(event);
-    
+  onSubmit() {
 
 
     if (this.loginForm.valid) {
       const user: User = {
-        username: this.loginForm.get('username')!.value,
+        email: this.loginForm.get('email')!.value,
         password: this.loginForm.get('password')!.value
       }
       this.userService.login(user).subscribe({

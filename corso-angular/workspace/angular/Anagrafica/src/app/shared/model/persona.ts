@@ -4,21 +4,39 @@ export class Persona {
     private _nome: string;
     private _cognome: string;
     private _dataNascita: Date;
+    private _citta: string;
    
 
-    constructor(nome: string, cognome: string, dataNascita: Date, id?: number) {
+    constructor(nome: string, cognome: string,citta: string, dataNascita: Date, id?: number) {
         this._id = id;
         this._nome = nome;
         this._cognome = cognome;
+        this._citta=citta;
         this._dataNascita = dataNascita;
     }
 
+
+    /**
+     * Getter citta
+     * @return {string}
+     */
+	public get citta(): string {
+		return this._citta;
+	}
+
+    /**
+     * Setter citta
+     * @param {string} value
+     */
+	public set citta(value: string) {
+		this._citta = value;
+	}
 
 
 	
     
 
-    public get id(): Number | undefined {
+    public get id(): number | undefined {
         return this._id;
     }
 

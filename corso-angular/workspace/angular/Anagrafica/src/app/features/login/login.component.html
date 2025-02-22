@@ -1,19 +1,29 @@
-<form class="container-login" [formGroup]="formLogin"
-  (submit)="onSubmitLoginForm($event.submitter?.id)">
-  <mat-form-field>
-    <mat-label>Username</mat-label>
-    <input matInput color="primary" formControlName="username">
-    <mat-error *ngIf="!username?.valid">Username non valido</mat-error>
+<div class="d-flex align-items-center justify-content-center  vh-100 vw-100">
 
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Password</mat-label>
-    <input matInput type="password" color="primary" formControlName="password">
-    <mat-error *ngIf="!password?.valid">Password non valida</mat-error>
-  </mat-form-field>
-
-  <button mat-raised-button [disabled]="!formLogin.valid" [id]="EnumAuth.Login" color="primary">Login</button>
-  <button mat-raised-button [disabled]="!formLogin.valid" [id]="EnumAuth.Register" color="primary">Register</button>
-
-</form>
+  <form class="form-login-container w-25 h-50" fxLayout="column" fxLayoutAlign="center center" [formGroup]="formLogin"
+    (submit)="onSubmitLoginForm($event.submitter?.id)">
+    <h2 class="pt-1">Login</h2>
+    <div class="h-100 d-flex flex-column align-items-center justify-content-center " >
+      <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput color="primary" formControlName="username">
+        <mat-error *ngIf="!username?.valid">Username non valido</mat-error>
+    
+      </mat-form-field>
+    
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput type="password" color="primary" formControlName="password">
+        <mat-error *ngIf="!password?.valid">Password non valida</mat-error>
+      </mat-form-field>
+      <div class="d-flex gap-3">
+        <button mat-raised-button [disabled]="!formLogin.valid" [id]="EnumAuth.Login" color="primary">Login</button>
+        <button mat-raised-button [disabled]="!formLogin.valid" [id]="EnumAuth.Register" color="accent" style="color: white;">Register</button>
+      </div>
+    </div>
+    </form>
+</div>
+  
+  
+  
+  

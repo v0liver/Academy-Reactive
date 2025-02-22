@@ -10,6 +10,10 @@ import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { MatDialogModule } from '@angular/material/dialog'; 
+
+
+
 
   export  const materiaImport = [
     
@@ -26,6 +30,6 @@ import {MatGridListModule} from '@angular/material/grid-list';
             MatTableModule,
             MatCardModule,
             MatDividerModule,
-            MatGridListModule
-
+            MatGridListModule,
+            MatDialogModule,
     ]

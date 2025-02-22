@@ -1,0 +1,53 @@
+
+<div class=" vw-100">
+
+  <mat-grid-list  cols="1" rowHeight="2:1" [(ngModel)]="persona"  >
+    <ng-container>
+      <mat-grid-tile >
+          <mat-card class="example-card">
+              <mat-card-header>
+                  <mat-icon>account_circle</mat-icon>
+                  <mat-card-title>{{persona.nome}} {{persona.cognome}}</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <form [formGroup]="formModifica" (submit)="onSubmit()" fxLayout="column" >
+                  <mat-form-field>
+                    <mat-label>Nome</mat-label>
+
+                    <input matInput type="text"   formControlName="nome">
+                  </mat-form-field>
+                  <mat-form-field>
+                    <mat-label>Cognome</mat-label>
+
+                    <input matInput type="text"   formControlName="cognome">
+                  </mat-form-field>
+                  <mat-form-field>
+                    <mat-label>Città</mat-label>
+
+                    <input matInput type="text"   formControlName="citta">
+                  </mat-form-field>
+                  <mat-form-field>
+                    <mat-label>Data di Nascita</mat-label>
+                    <input matInput    formControlName="dataNascita" [matDatepicker]="picker">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field >
+                  <div fxLayout="row" fxLayoutAlign="center">
+
+                    <button *ngIf="!isDisable" mat-raised-button type="submit" color="primary">Modifica</button>
+                  </div>
+                  <!-- <mat-divider></mat-divider> inserisce ina riga che divide -->
+                </form>
+              </mat-card-content>
+              <mat-card-actions fxLayout="row" fxLayoutAlign="center" >
+                  <button *ngIf="isDisable" mat-raised-button (click)="modifica(persona)" color="primary">Modifica</button>
+                  <button *ngIf="!isDisable" mat-raised-button (click)="delete(persona)" color="warn" >Elimina</button>
+              </mat-card-actions>
+              <mat-card-footer>
+              </mat-card-footer>
+          </mat-card>
+      </mat-grid-tile>
+    </ng-container>
+  </mat-grid-list>
+</div>
+

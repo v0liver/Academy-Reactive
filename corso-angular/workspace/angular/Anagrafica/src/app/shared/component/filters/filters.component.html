@@ -7,7 +7,7 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
 
-    <form [formGroup]="filterForm">
+    <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
       <mat-form-field>
         <mat-label>Nome</mat-label>
         <input matInput formControlName="nome"/>
@@ -25,10 +25,10 @@
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email"/>
-        @if (!filterForm.controls.email.valid) {
-        <mat-error>Email non valido</mat-error>
+        <mat-label>Città</mat-label>
+        <input matInput formControlName="citta"/>
+        @if (!filterForm.controls.citta.valid) {
+        <mat-error>Città non valida</mat-error>
         }
         
       </mat-form-field>
@@ -36,21 +36,21 @@
       <mat-form-field>
         <mat-label>Data di nascita da → a</mat-label>
         <mat-date-range-input [rangePicker]="picker">
-          <input matStartDate formControlName="start" placeholder="Data Inizio">
-          <input matEndDate formControlName="end" placeholder="Data Fine">
+          <input matStartDate formControlName="dataNascitaMin" placeholder="Data Inizio">
+          <input matEndDate formControlName="dataNascitaMax" placeholder="Data Fine">
         </mat-date-range-input>
-        <mat-hint>DD/MM/YYYY - DD/MM/YYYY</mat-hint>
+        <mat-hint>YYYY/MM/DD - YYYY/MM/DD</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>
 
-        @if (filterForm.controls.start.hasError('matStartDateInvalid')) {
+        @if (filterForm.controls.dataNascitaMin.hasError('matStartDateInvalid')) {
         <mat-error>Data inizio non valida</mat-error>
         }
-        @if (filterForm.controls.end.hasError('matEndDateInvalid')) {
+        @if (filterForm.controls.dataNascitaMax.hasError('matEndDateInvalid')) {
         <mat-error>Data fine non valida</mat-error>
         }
       </mat-form-field>
-      <button mat-raised-button color="primary">Cerca</button>
+      <button mat-raised-button color="primary">Filtra</button>
     </form>
 
 
