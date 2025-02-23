@@ -20,6 +20,7 @@ import { EditComponent } from './features/edit/edit.component';
 import { NuovaPersonaComponent } from './features/nuova-persona/nuova-persona.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { HomepageTableComponent } from './features/homepage-table/homepage-table.component';
+import { ThemeToggleComponent } from './shared/component/theme-toggle/theme-toggle.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { HomepageTableComponent } from './features/homepage-table/homepage-table
     DialogModificaComponent,
     EditComponent,
     NuovaPersonaComponent,
-    HomepageTableComponent
+    HomepageTableComponent,
+    ThemeToggleComponent
 
   ],
   imports: [
