@@ -13,6 +13,7 @@ import { Route, Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  passwordVisible = false;
  
   durationInSeconds = 5;
   protected readonly EnumAuth = EnumAuth;
@@ -80,6 +81,10 @@ export class LoginComponent implements OnInit {
     }
 
 
+  }
+
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
   }
 
 }
