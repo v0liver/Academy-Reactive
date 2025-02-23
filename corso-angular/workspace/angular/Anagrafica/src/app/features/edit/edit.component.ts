@@ -39,12 +39,12 @@ export class EditComponent implements OnInit {
     this.isDisable = state.isDisable
     console.log(state);
 
-    const formattedDate = this.datePipe.transform(this.persona.dataNascita, 'dd/MM/yyyy');
+    // const formattedDate = this.datePipe.transform(this.persona.dataNascita, 'dd/MM/yyyy');
     this.formModifica = new FormGroup({
       nome: new FormControl({ value: this.persona.nome, disabled: this.isDisable }),
       cognome: new FormControl({ value: this.persona.cognome, disabled: this.isDisable }),
       citta: new FormControl({ value: this.persona.citta, disabled: this.isDisable }),
-      dataNascita: new FormControl({ value:formattedDate , disabled: this.isDisable })
+      dataNascita: new FormControl({ value: new Date(this.persona.dataNascita), disabled: this.isDisable })
     });
   }
 

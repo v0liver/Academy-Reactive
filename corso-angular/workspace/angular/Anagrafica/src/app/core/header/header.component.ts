@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public router:Router) { }
+  constructor(public router:Router,) { }
 
   ngOnInit() {
   }
@@ -19,7 +19,9 @@ export class HeaderComponent implements OnInit {
   }
 
   homePage(){
+    if(this.router.url!=='/'){
     this.router.navigate(['/homepage']);
+  }
 
   }
 

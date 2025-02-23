@@ -1,10 +1,13 @@
-<mat-toolbar class="d-flex justify-content-between">
-  <span>Portale Anagrafica</span>
+<mat-toolbar class="d-flex justify-content-center vw-100 position-relative">
+  <span (click)="homePage()" style="cursor: pointer;">Portale Anagrafica</span>
+  
 
-  <div>
+    <button class="ms-auto position-absolute" *ngIf="router.url !=='/' && router.url !=='/homepage'" mat-raised-button color="primary" (click)="homePage()">HomePage</button>
+
+
+  <div class="ms-auto me-3">
+    <button class="me-3" *ngIf="router.url !=='/'" mat-raised-button color="primary" (click)="nuovaPersona()">Nuova Persona</button>
     <button *ngIf="router.url !=='/'" mat-raised-button color="primary" (click)="logout()">Logout</button>
-    <button *ngIf="router.url !=='/' && router.url !=='/homepage'" mat-raised-button color="primary" (click)="homePage()">HomePage</button>
-    <button *ngIf="router.url !=='/'" mat-raised-button color="primary" (click)="nuovaPersona()">Nuova Persona</button>
   </div>
   
 </mat-toolbar>

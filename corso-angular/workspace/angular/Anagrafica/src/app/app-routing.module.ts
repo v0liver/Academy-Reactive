@@ -4,6 +4,7 @@ import { LoginComponent } from './features/login/login.component';
 import { HompepageCardComponent } from './features/homepage-card/hompepage-card.component';
 import { EditComponent } from './features/edit/edit.component';
 import { NuovaPersonaComponent } from './features/nuova-persona/nuova-persona.component';
+import { HomepageTableComponent } from './features/homepage-table/homepage-table.component';
 
 const routes: Routes = [
   
@@ -11,7 +12,7 @@ const routes: Routes = [
     path: '', component: LoginComponent
   },
   {
-    path: 'homepage', component: HompepageCardComponent
+    path: 'homepage', component: HomepageTableComponent
   },
   {
     path: 'edit', component: EditComponent

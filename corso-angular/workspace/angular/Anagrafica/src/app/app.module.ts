@@ -18,6 +18,8 @@ import { JwInterceptor } from './shared/interceptor/jwt.interceptor';
 import { DialogModificaComponent } from './features/dialog-modifica/dialog-modifica.component';
 import { EditComponent } from './features/edit/edit.component';
 import { NuovaPersonaComponent } from './features/nuova-persona/nuova-persona.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { HomepageTableComponent } from './features/homepage-table/homepage-table.component';
 
 
 @NgModule({
@@ -31,7 +33,8 @@ import { NuovaPersonaComponent } from './features/nuova-persona/nuova-persona.co
     NotificationComponent,
     DialogModificaComponent,
     EditComponent,
-    NuovaPersonaComponent
+    NuovaPersonaComponent,
+    HomepageTableComponent
 
   ],
   imports: [
@@ -48,6 +51,9 @@ import { NuovaPersonaComponent } from './features/nuova-persona/nuova-persona.co
   providers: [{
     provide: HTTP_INTERCEPTORS, useClass: JwInterceptor, multi: true
   },
+  {
+    provide: MAT_DATE_LOCALE, useValue: 'en-GB'
+  }
 ],
   bootstrap: [AppComponent]
 })
