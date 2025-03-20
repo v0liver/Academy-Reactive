@@ -22,7 +22,7 @@ export class FiltersComponent implements OnInit {
     citta: new FormControl<string >('',[Validators.minLength(3)]),
     dataNascitaMin: new FormControl<string >(''),
     dataNascitaMax: new FormControl<string >(''),
-    page: new FormControl<number>(1),
+    page: new FormControl<number>(0),
     pageSize: new FormControl<number>(5),
     sortBy: new FormControl<string>(''),
     sortDirection: new FormControl<string>(''),
